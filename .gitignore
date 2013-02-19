@@ -18,5 +18,9 @@
 *.app
 *.elf
 
+# Log/Trace files
+*.log
+*.trc
+
 # Others
 *.lst
