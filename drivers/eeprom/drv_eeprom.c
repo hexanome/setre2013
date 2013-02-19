@@ -12,7 +12,7 @@
 //P4.1  SCL
 //P4.0  SDA
 
-/*
+//* Plateform
 #define SDA_1       P4OUT |=  BIT0              //SDA = 1
 #define SDA_0       P4OUT &= ~BIT0              //SDA = 0
 #define SCL_1       P4OUT |=  BIT1              //SCL = 1
@@ -20,13 +20,16 @@
 #define DIR_IN      P4DIR &= ~BIT0 		// SDA as input
 #define DIR_OUT     P4DIR |=  BIT0              // SDA as output
 #define SDA_IN      (P4IN & 0x01)        	// Read SDA 
-*/
+//*/
 
+// P4.0 and P4.1 are set to interact with peripheral (bit = 1)
+#define SEL_SDA		P4SEL |= BIT0
+#define SEL_SCL		P4SEL |= BIT1
 //
 #define I2C_ADDR_READ	0xA1
 //
 #define I2C_ADDR_WRITE	0xA0
-//
+// The EEPROM model works at a maximum frequency of 400KHz, which means 1/400KHz = 
 #define TIMING		4
 
 
@@ -53,16 +56,24 @@ static void delayx100us_iic(unsigned int b)
 
 //////////////////////////////////
 
-
+// From the 3rd page of the documentation concerning the EEPROM, there is a special boot sequence we will decompose
+// using the following static functions
+//
+////
+// For the first parameter
+//
 static void init(void)
 {
 	// SCL = 1 et SDA  = 1
 	SCL_1;
+	// 4us delay
 	delay_iic(TIMING);
 	SDA_1;
+	// 4us delay
 	delay_iic(TIMING);
 }
 
+// Cf doc slaa208 p3
 static void start(void)
 {
 	SDA_1;
@@ -75,6 +86,7 @@ static void start(void)
 	delay_iic(TIMING);
 }
 
+// Cf doc slaa208 p3
 static void stop(void)
 {
 	SDA_0;
@@ -84,6 +96,7 @@ static void stop(void)
 	SDA_1;
 	delay_iic(TIMING);
 }
+
 
 static void write_byte(unsigned char write_data)
 {
@@ -184,7 +197,7 @@ static void acknowledge(void)
 	SCL_0;
 }
 
-// Lecture d'un octet a une adresse donnee 
+// Lecture d'un octet a une adresse donnee
 unsigned char eeprom_random_read(unsigned int address) 
 {
 	unsigned char data = 0;
@@ -205,6 +218,7 @@ unsigned char eeprom_random_read(unsigned int address)
 	write_byte(addr_lo);				// send addr LSB
 	receive_ack();					// wait for ACK
 
+	// Traditionnal read
 	start();					// send start condition
 	write_byte(I2C_ADDR_READ);			// send ctrl byte (read mode)	
 	receive_ack();					// wait for ACK
@@ -230,6 +244,7 @@ unsigned char eeprom_current_read(void)
 	write_byte(I2C_ADDR_READ); 		// send ctrl byte (write mode)
 	receive_ack();				// wait for ACK
 	data  = read_byte();
+	// 15us delay to simulate NACK (where did level goes to 1?)
 	delay_iic(15);				// NACK
 	stop();					// stop condition
 	
@@ -260,6 +275,8 @@ void eeprom_byte_write(	unsigned int address, unsigned char data)
 	write_byte(data);
 	receive_ack();
 	stop();
+
+	// 2000us = 2ms delay ?
 	delay_iic(2000);
 	
 	OS_EXIT_CRITICAL();
