@@ -2,7 +2,7 @@
  *****                                                        *****
  *****  Name: display.c                                       *****
  *****  modified version of Andreas Dannenberg                *****
- *****  Includes only display specific code.		      *****                                                        *****
+ *****  Includes only display specific code.		              *****                                                        *****
  ******************************************************************/
 
 
@@ -13,21 +13,20 @@
 #define bitset(var,bitno) ((var) |= 1 << (bitno))
 #define bitclr(var,bitno) ((var) &= ~(1 << (bitno)))
 
-#define         DISP_ON                 0x0c            //LCD control constants
-#define         DISP_OFF                0x08            //
-#define         CLR_DISP                0x01            //
-#define         CUR_HOME                0x02            //
-#define         ENTRY_INC               0x06            //
-#define         DD_RAM_ADDR             0x80            //
-#define         DD_RAM_ADDR2            0xc0            //
-#define         DD_RAM_ADDR3            0x28            //
-#define         CG_RAM_ADDR             0x40            //
+// LCD Control Constants
+#define         DISP_ON                 0x0c 
+#define         DISP_OFF                0x08
+#define         CLR_DISP                0x01
+#define         CUR_HOME                0x02
+#define         ENTRY_INC               0x06
+#define         DD_RAM_ADDR             0x80
+#define         DD_RAM_ADDR2            0xc0
+#define         DD_RAM_ADDR3            0x28
+#define         CG_RAM_ADDR             0x40
 
 // Necessaire a cause d'un bug d'insight
 int variableGlobalePourBSS;
-int variableGlobalePourDATA=1;
-
-
+int variableGlobalePourDATA = 1;
 
 void _E(void)
 {
@@ -47,37 +46,36 @@ static char HexDigit(int digitvalue)
 static void Send_Cmd (unsigned char e)
 {
         int temp;
-	Delayx100us(10);                //10ms
-	temp = e & 0xf0;		//get upper nibble	
+	Delayx100us(10);   // 10ms
+	temp = e & 0xf0;   // Get upper nibble	
 	LCD_Data &= 0x0f;
-	LCD_Data |= temp;               //send CMD to LCD
-	bitclr(P2OUT,RS);     	        //set LCD to CMD mode
-	_E();                           //toggle E for LCD
+	LCD_Data |= temp;  // Send CMD to LCD
+	bitclr(P2OUT,RS);  // Set LCD to CMD mode
+	_E();              // Toggle E for LCD
 	temp = e & 0x0f;
-	temp = temp << 4;               //get down nibble
+	temp = temp << 4;  // Get down nibble
 	LCD_Data &= 0x0f;
 	LCD_Data |= temp;
-	bitclr(P2OUT,RS);   	        //set LCD to CMD mode
-	_E();                           //toggle E for LCD
+	bitclr(P2OUT,RS);  // Set LCD to CMD mode
+	_E();              // Toggle E for LCD
 }
 
 static void Send_Char (unsigned char d)
 {
         int temp;
-	Delayx100us(5);                 //.5ms	
-	temp = d & 0xf0;		//get upper nibble	
+	Delayx100us(5);    //.5ms	
+	temp = d & 0xf0;   // Get upper nibble	
 	LCD_Data &= 0x0f;
 	LCD_Data |= temp;
-	bitset(P2OUT,RS);     	        //set LCD to data mode
-	_E();                           //toggle E for LCD
+	bitset(P2OUT,RS);  // Set LCD to data mode
+	_E();              // Toggle E for LCD
 	temp = d & 0x0f;
-	temp = temp << 4;               //get down nibble
+	temp = temp << 4;  // Get down nibble
 	LCD_Data &= 0x0f;
 	LCD_Data |= temp;
-	bitset(P2OUT,RS);   	        //set LCD to data mode
-	_E();                           //toggle E for LCD
+	bitset(P2OUT,RS);  // Set LCD to data mode
+	_E();              // Toggle E for LCD
 }
-
 
 void LCD_Clear(void)
 {
@@ -87,13 +85,11 @@ void LCD_Clear(void)
 
 void LCD_First_Line(void)
 {
-//    Send_Cmd(CLR_DISP);
     Send_Cmd(DD_RAM_ADDR);
 }
 
 void LCD_Second_Line(void)
 {
-//    Send_Cmd(CLR_DISP);
     Send_Cmd(DD_RAM_ADDR2);
 }
 
@@ -129,7 +125,7 @@ void LCD_Print_Hex(unsigned int number)
 
 void LCD_Print_Decimal(int number)
 {
-  // need to move to long int to account for
+  // Need to move to long int to account for
   // negative 32768
   char DecimalBuffer[7];
   long lNumber = number;
@@ -154,20 +150,20 @@ void LCD_Print_Decimal(int number)
 void LCD_Init(void)
 {
     bitclr(P2OUT,RS);
-    Delayx100us(250);                   //Delay 100ms
+    Delayx100us(250);             // Delay 100ms
     Delayx100us(250);
     Delayx100us(250);
     Delayx100us(250);
-    LCD_Data |= BIT4 | BIT5;            //D7-D4 = 0011
+    LCD_Data |= BIT4 | BIT5;      // D7-D4 = 0011
     LCD_Data &= ~BIT6 & ~BIT7;
-    _E();                               //toggle E for LCD
-    Delayx100us(100);                   //10ms
-    _E();                               //toggle E for LCD
-    Delayx100us(100);                   //10ms
-    _E();                               //toggle E for LCD
-    Delayx100us(100);                   //10ms
+    _E();                         // Toggle E for LCD
+    Delayx100us(100);             // 10ms
+    _E();                         // Toggle E for LCD
+    Delayx100us(100);             // 10ms
+    _E();                         // Toggle E for LCD
+    Delayx100us(100);             // 10ms
     LCD_Data &= ~BIT4;
-    _E();                               //toggle E for LCD
+    _E();                         // Toggle E for LCD
 
     Send_Cmd(DISP_ON);
     Send_Cmd(CLR_DISP);
@@ -176,6 +172,3 @@ void LCD_Init(void)
     Delayx100us(250);
     Delayx100us(250);
 }
-
-
-
