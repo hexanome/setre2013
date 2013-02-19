@@ -114,7 +114,7 @@ void Bargraph_Print(unsigned char segment, unsigned char state)
 	SEL_ON;	
 }
 
-void Barpraph_Rise_On(void)
+void Bargraph_Rise_On(void)
 {
 	unsigned char i=0;
 	
