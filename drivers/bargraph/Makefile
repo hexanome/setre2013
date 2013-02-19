@@ -2,8 +2,8 @@
 NAME            = bargraph_test
 OBJECTS         = test.o bargraph.o platform.o
 CPU             = msp430f149
-INCLUDE		= ../
-VPATH		= ../
+INCLUDE			= ../
+VPATH			= ../
 
 CFLAGS          = -mmcu=${CPU} -O2 -Wall -g -I${INCLUDE}
 
