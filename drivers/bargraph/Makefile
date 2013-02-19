@@ -1,14 +1,21 @@
 # makfile configuration
 NAME            = bargraph_test
 OBJECTS         = test.o bargraph.o platform.o
-CPU             = msp430f149
 INCLUDE		= ../
 VPATH		= ../
-
 CFLAGS          = -mmcu=${CPU} -O2 -Wall -g -I${INCLUDE}
 
 #switch the compiler (for the internal make rules)
 CC              = msp430-gcc
+
+CCVER		= ${msp430-gcc -dumpversion}
+
+ifeq (${CCVER}, 4.4.4)
+	CPU	= msp430x149
+else
+	CPU	= msp430f149
+endif
+
 
 .PHONY: all FORCE clean download download-jtag download-bsl dist
 
