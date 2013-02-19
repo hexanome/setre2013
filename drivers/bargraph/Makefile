@@ -1,8 +1,15 @@
 # makfile configuration
 NAME            = bargraph_test
 OBJECTS         = test.o bargraph.o platform.o
+<<<<<<< HEAD
 INCLUDE		= ../
 VPATH		= ../
+=======
+CPU             = msp430f149
+INCLUDE			= ../
+VPATH			= ../
+
+>>>>>>> ca97d25e6802669b7929096de5794d43caf0e249
 CFLAGS          = -mmcu=${CPU} -O2 -Wall -g -I${INCLUDE}
 
 #switch the compiler (for the internal make rules)
