@@ -1,4 +1,5 @@
 #include <msp430x14x.h>
+#include <stdlib.h>
 
 #include "platform.h"
 #include "spi/spi.h"
@@ -6,7 +7,6 @@
 
 void DAC_Print(int nb)
 {
-	char bin[11];
 
 	SEL_OFF;		// select DAC path
 	CS_ON;
@@ -33,7 +33,6 @@ void DAC_Print(int nb)
 }
 void POT_Print(int cmd, int nb)
 {
-	char bin[8];
 	
 	SEL_ON;				// select POT-NUM path
 	CS_ON;

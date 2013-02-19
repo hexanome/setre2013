@@ -1,5 +1,18 @@
 #include "platform.h"
 
+void delay(unsigned int minor, unsigned int major)
+{
+  int i,j;
+  for(j=0; j < major; j++)
+    {
+      for (i = 0; i<minor; i++) 
+           {
+             nop();
+             nop();
+           }
+    }
+}
+
 void Delay (unsigned int a)
 {
   int k;
@@ -16,6 +29,7 @@ void Delayx100us(unsigned char b)
   int j;
   for (j=0; j!=b; ++j) Delay (_100us);
 }
+
 
 void PF_Init_Osc(void)
 {

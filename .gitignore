@@ -4,6 +4,7 @@
 # Libraries
 *.lib
 *.a
+*.a43
 
 # Shared objects (inc. Windows DLLs)
 *.dll
@@ -15,3 +16,7 @@
 *.exe
 *.out
 *.app
+*.elf
+
+# Others
+*.lst

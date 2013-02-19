@@ -61,6 +61,7 @@
 #define			TXD0_ON				P3OUT |= BIT4     	//P3.4
 #define			TXD0_OFF			P3OUT &= ~BIT4     	//P3.4
 
+void delay(unsigned int minor, unsigned int major);
 
 void Delay (unsigned int a);
 

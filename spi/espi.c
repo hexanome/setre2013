@@ -36,7 +36,7 @@ int SPI_Send_Word(unsigned int wlen, unsigned int txWord, unsigned int *rxWord)
 		}
 		else
 		{	/* If zero instead */
-			DIN_OFF0;	// DIN=1
+			DIN_OFF;	// DIN=1
 			SCLK_ON;	//SCLK=1
 			SCLK_OFF;	// SCLK=0
 			if (rxWord)
@@ -48,4 +48,3 @@ int SPI_Send_Word(unsigned int wlen, unsigned int txWord, unsigned int *rxWord)
 	return i;
 }
 
-#endif /* _SPI_H_ */
