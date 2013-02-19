@@ -10,7 +10,7 @@ CC              = msp430-gcc
 
 CCVER		= ${msp430-gcc -dumpversion}
 
-ifeq (${CCVER}, 4.4.4)
+ifeq (,$(findstring 4.4., $(CCVER)))
 	CPU	= msp430x149
 else
 	CPU	= msp430f149
