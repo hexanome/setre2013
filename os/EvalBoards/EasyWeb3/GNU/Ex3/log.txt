@@ -1,1 +1,0 @@
-msp430-gcc -mmcu=msp430x1611 -I./ -I/cygdrive/c/MICRIUM/SOFTWARE/uCOS-II/Source -I/cygdrive/c/MICRIUM/SOFTWARE/uCOS-II/Ports/MSP430/F1611/GNU -Wall -c -g -o obj/app.o app.c

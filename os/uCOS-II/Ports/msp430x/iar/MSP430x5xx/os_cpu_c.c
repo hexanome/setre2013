@@ -3,23 +3,21 @@
 *                                                uC/OS-II
 *                                          The Real-Time Kernel
 *
-*                              (c) Copyright 2002, Micrium, Inc., Weston, FL
+*                              (c) Copyright 2008, Micrium, Inc., Weston, FL
 *                                           All Rights Reserved
 *
-*                                                TI MSP430
+*                                                TI MSP430X
+*                                                MSP430x5xx
 *
 *
 * File         : OS_CPU_C.C
-* By           : Adaptation semdisys, contact@semdisys.fr
-*				Jian Chen (yenger@hotmail.com)
-*				 
-*				 Jean J. Labrosse
-* Compiler     : msp430-gcc (GCC) 3.2.3 /test with windows XP 
+* By           : Jian Chen (yenger@hotmail.com)
+*                Jean J. Labrosse
+* Compiler     : IAR System Embedded Workbench for TI MSP430 V4.11B
 *********************************************************************************************************
 */
 
 #define  OS_CPU_GLOBALS
-//#include "includes.h"
 #include <ucos_ii.h>
 
 /*
@@ -70,7 +68,7 @@ void  OSInitHookEnd (void)
 * Note(s)    : 1) Interrupts are disabled during this call.
 *********************************************************************************************************
 */
-#if OS_CPU_HOOKS_EN > 0 
+#if OS_CPU_HOOKS_EN > 0
 void  OSTaskCreateHook (OS_TCB *ptcb)
 {
     ptcb = ptcb;                       /* Prevent compiler warning                                     */
@@ -89,7 +87,7 @@ void  OSTaskCreateHook (OS_TCB *ptcb)
 * Note(s)    : 1) Interrupts are disabled during this call.
 *********************************************************************************************************
 */
-#if OS_CPU_HOOKS_EN > 0 
+#if OS_CPU_HOOKS_EN > 0
 void  OSTaskDelHook (OS_TCB *ptcb)
 {
     ptcb = ptcb;                       /* Prevent compiler warning                                     */
@@ -100,7 +98,7 @@ void  OSTaskDelHook (OS_TCB *ptcb)
 *********************************************************************************************************
 *                                             IDLE TASK HOOK
 *
-* Description: This function is called by the idle task.  This hook has been added to allow you to do  
+* Description: This function is called by the idle task.  This hook has been added to allow you to do
 *              such things as STOP the CPU to conserve power.
 *
 * Arguments  : none
@@ -112,8 +110,8 @@ void  OSTaskDelHook (OS_TCB *ptcb)
 void  OSTaskIdleHook (void)
 {
 #if 0
-    LPM0;                                         /* Enter low power mode                              */
-#endif    
+    LPM0;                                                               /* Enter low power mode                              */
+#endif
 }
 #endif
 
@@ -121,14 +119,14 @@ void  OSTaskIdleHook (void)
 *********************************************************************************************************
 *                                           STATISTIC TASK HOOK
 *
-* Description: This function is called every second by uC/OS-II's statistics task.  This allows your 
+* Description: This function is called every second by uC/OS-II's statistics task.  This allows your
 *              application to add functionality to the statistics task.
 *
 * Arguments  : none
 *********************************************************************************************************
 */
 
-#if OS_CPU_HOOKS_EN > 0 
+#if OS_CPU_HOOKS_EN > 0
 void  OSTaskStatHook (void)
 {
 }
@@ -148,7 +146,7 @@ void  OSTaskStatHook (void)
 *                            when the task first executes.
 *
 *              ptos          is a pointer to the top of stack.  It is assumed that 'ptos' points to
-*                            a 'free' entry on the task stack.  If OS_STK_GROWTH is set to 1 then 
+*                            a 'free' entry on the task stack.  If OS_STK_GROWTH is set to 1 then
 *                            'ptos' will contain the HIGHEST valid address of the stack.  Similarly, if
 *                            OS_STK_GROWTH is set to 0, the 'ptos' will contains the LOWEST valid address
 *                            of the stack.
@@ -175,42 +173,41 @@ void  OSTaskStatHook (void)
 
 OS_STK  *OSTaskStkInit (void (*task)(void *pd), void *p_arg, OS_STK *ptos, INT16U opt)
 {
+    INT16U   tmp;
     INT16U  *top;
 
 
-    opt    = opt;                 
+    opt    = opt;
     top    = (INT16U *)ptos;
-    top--;  
-    *top = (INT16U)task;
     top--;
-    *top = (INT16U)task;                          /* Interrupt return pointer                          */
-    top--;
-    *top = (INT16U)0x0008;                        /* Status register                                   */
-    top--;
-    *top = (INT16U)0x0404;
-    top--;
-    *top = (INT16U)0x0505;
-    top--;
-    *top = (INT16U)0x0606;
-    top--;
-    *top = (INT16U)0x0707;
-    top--;
-    *top = (INT16U)0x0808;
-    top--;
-    *top = (INT16U)0x0909;
-    top--;
-    *top = (INT16U)0x1010;
-    top--;
-    *top = (INT16U)0x1111;
-    top--;
-    *top = (INT16U)0x1212;           /* IAR Only */  /* Pass 'p_arg' through register R12                 */
-    top--;
-    *top = (INT16U)0x1313;
-    top--;
-    *top = (INT16U)0x1414;                         
-    top--;
-    *top = (INT16U)p_arg;           /* GCC uses r15 */
-    return ((OS_STK *)top);    
+    *top-- = (INT16U) ((INT32U)task &  0xFFFF);                         /* Interrupt return pointer                          */
+     tmp   = (INT32U)(((INT32U)task & 0xF0000) >> 4);
+    *top-- = (INT16U)0x0008 | tmp;                                      /* Status register                                   */
+    *top-- = (INT16U)0x0015;
+    *top-- = (INT16U)0x1515;
+    *top-- = (INT16U)0x0014;
+    *top-- = (INT16U)0x1414;
+    *top-- = (INT16U)0x0013;
+    *top-- = (INT16U)0x1313;
+    *top-- = (INT16U)((INT32U)p_arg >>     16);                         /* Pass 'p_arg' through register R12                 */
+    *top-- = (INT16U)((INT32U)p_arg && 0xFFFF);                         /* Pass 'p_arg' through register R12                 */
+    *top-- = (INT16U)0x0011;        
+    *top-- = (INT16U)0x1111;
+    *top-- = (INT16U)0x0010;
+    *top-- = (INT16U)0x1010;
+    *top-- = (INT16U)0x0009;
+    *top-- = (INT16U)0x0909;
+    *top-- = (INT16U)0x0008;
+    *top-- = (INT16U)0x0808;
+    *top-- = (INT16U)0x0007;
+    *top-- = (INT16U)0x0707;
+    *top-- = (INT16U)0x0006;
+    *top-- = (INT16U)0x0606;
+    *top-- = (INT16U)0x0005;
+    *top-- = (INT16U)0x0505;
+    *top-- = (INT16U)0x0004;
+    *top   = (INT16U)0x0404;
+    return ((OS_STK *)top);
 }
 
 /*$PAGE*/
@@ -225,7 +222,7 @@ OS_STK  *OSTaskStkInit (void (*task)(void *pd), void *p_arg, OS_STK *ptos, INT16
 *
 * Note(s)    : 1) Interrupts are disabled during this call.
 *              2) It is assumed that the global pointer 'OSTCBHighRdy' points to the TCB of the task that
-*                 will be 'switched in' (i.e. the highest priority task) and, 'OSTCBCur' points to the 
+*                 will be 'switched in' (i.e. the highest priority task) and, 'OSTCBCur' points to the
 *                 task being switched out (i.e. the preempted task).
 *********************************************************************************************************
 */

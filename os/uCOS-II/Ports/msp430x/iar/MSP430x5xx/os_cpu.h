@@ -3,10 +3,11 @@
 *                                                uC/OS-II
 *                                          The Real-Time Kernel
 *
-*                              (c) Copyright 2002, Micrium, Inc., Weston, FL
+*                              (c) Copyright 2008, Micrium, Inc., Weston, FL
 *                                           All Rights Reserved
 *
-*                                               TI MSP430 
+*                                               TI MSP430X
+*                                               MSP430x5xx
 *
 *
 * File         : OS_CPU.H
@@ -14,6 +15,9 @@
 *                Jean J. Labrosse
 *********************************************************************************************************
 */
+
+#ifndef  OS_CPU_H
+#define  OS_CPU_H
 
 #ifdef  OS_CPU_GLOBALS
 #define OS_CPU_EXT
@@ -64,8 +68,8 @@ typedef unsigned int   OS_CPU_SR;                /* Define size of CPU status re
 
 
 #if      OS_CRITICAL_METHOD == 1
-#define  OS_ENTER_CRITICAL()		_DINT()				  /* Disable interrupts                        */
-#define  OS_EXIT_CRITICAL()			_EINT()				  /* Enable  interrupts                        */
+#define  OS_ENTER_CRITICAL()        _DINT()               /* Disable interrupts                        */
+#define  OS_EXIT_CRITICAL()         _EINT()               /* Enable  interrupts                        */
 #endif
 
 #if      OS_CRITICAL_METHOD == 2
@@ -74,8 +78,8 @@ typedef unsigned int   OS_CPU_SR;                /* Define size of CPU status re
 #endif
 
 #if      OS_CRITICAL_METHOD == 3
-#define  OS_ENTER_CRITICAL()  (cpu_sr = OSCPUSaveSR())    /* Disable interrupts                        */
-#define  OS_EXIT_CRITICAL()   (OSCPURestoreSR(cpu_sr))    /* Enable  interrupts                        */
+#define  OS_ENTER_CRITICAL()  (cpu_sr = OS_CPU_SR_Save())    /* Disable interrupts                        */
+#define  OS_EXIT_CRITICAL()   (OS_CPU_SR_Restore(cpu_sr))    /* Enable  interrupts                        */
 #endif
 
 /*
@@ -86,7 +90,7 @@ typedef unsigned int   OS_CPU_SR;                /* Define size of CPU status re
 
 #define  OS_STK_GROWTH        1                       /* Stack grows from HIGH to LOW memory on MSP430 */
 
-#define  OS_TASK_SW()         OSCtxSw()				  /* Task level context switch routine             */
+#define  OS_TASK_SW()         OSCtxSw()               /* Task level context switch routine             */
 
 /*
 *********************************************************************************************************
@@ -102,5 +106,13 @@ OS_CPU_EXT  OS_STK  *OSISRStkPtr;                    /* Pointer to top-of ISR st
 *********************************************************************************************************
 */
 
-OS_CPU_SR  OSCPUSaveSR(void);
-void       OSCPURestoreSR(OS_CPU_SR cpu_sr);
+#if OS_CRITICAL_METHOD == 3u                               /* See OS_CPU_A.S85                                          */
+OS_CPU_SR  OS_CPU_SR_Save        (void);
+void       OS_CPU_SR_Restore     (OS_CPU_SR   cpu_sr);
+#endif
+
+void       OSCtxSw               (void);
+void       OSIntCtxSw            (void);
+void       OSStartHighRdy        (void);
+
+#endif
