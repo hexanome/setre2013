@@ -36,24 +36,25 @@ ActionState=1
 Enabled=0
 ShowSource=1
 [State Storage]
-Control Register=-1
+Control Register=0
 [EEM State Storage]
-Buffer=BAAAAAAADAAAAAAAAAAAAAAA
+Buffer=BAAAAAAAAAAAAAAAAAAAAAAA
 [Sequencer]
-Control Register=-1
-NextState0=-1
-NextState1=-1
+Control Register=0
+NextState0=0
+NextState1=0
 [Action Register]
-Break=-1
-State Storage=-1
+Break=0
+State Storage=0
 [DebugChecksum]
-Checksum=1110903839
+Checksum=-295265409
 [CallStack]
 ShowArgs=0
 [Disassembly]
 MixedMode=1
 [Breakpoints]
-Count=0
+Bp0=_ "STD_CODE" "{$PROJ_DIR$\source\tasks\main_task.c}.16.9" 1 0 0 0 "" 0 ""
+Count=1
 [FET]
 Clock mode=14
 Extended Clock mode=-1
