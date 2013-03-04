@@ -1981,10 +1981,22 @@
     <group>
       <name>Tasks</name>
       <file>
+        <name>$PROJ_DIR$\source\tasks\lcd_task.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\source\tasks\lcd_task.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$\source\tasks\main_task.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$\source\tasks\main_task.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\source\tasks\record_task.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\source\tasks\record_task.h</name>
       </file>
     </group>
     <file>

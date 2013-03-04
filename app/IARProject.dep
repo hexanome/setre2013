@@ -2,7 +2,7 @@
 
 <project>
   <fileVersion>2</fileVersion>
-  <fileChecksum>1066517605</fileChecksum>
+  <fileChecksum>3135887618</fileChecksum>
   <configuration>
     <name>Debug</name>
     <outputs>
@@ -173,6 +173,12 @@
       <file>$PROJ_DIR$\source\tasks\main_task.h</file>
       <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\uCOS-II\app2.c</file>
       <file>$PROJ_DIR$\source\tasks\main_task.c</file>
+      <file>$PROJ_DIR$\Debug\Obj\record_task.r43</file>
+      <file>$PROJ_DIR$\Debug\Obj\record_task.pbi</file>
+      <file>$PROJ_DIR$\source\tasks\lcd_task.h</file>
+      <file>$PROJ_DIR$\source\tasks\record_task.c</file>
+      <file>$PROJ_DIR$\source\tasks\lcd_task.c</file>
+      <file>$PROJ_DIR$\source\tasks\record_task.h</file>
     </outputs>
     <file>
       <name>$PROJ_DIR$\source\app.c</name>
@@ -189,11 +195,11 @@
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 4 21 22 45 29 153 102 111 101 123 32 104 26 28 94 86 95 69 89 98 90 88 77 43 17 6 15 163 87 55 67 134 164</file>
+          <file> 4 21 22 45 29 153 102 111 101 123 32 104 26 28 94 86 95 69 89 98 90 88 77 43 17 6 15 163 87 55 67 134 164 172 169</file>
         </tool>
         <tool>
           <name>ICC430</name>
-          <file> 4 21 22 45 29 153 102 111 101 123 32 104 26 28 94 86 95 69 89 98 90 88 77 43 17 6 15 163 87 55 67 134 164</file>
+          <file> 4 21 22 45 29 153 102 111 101 123 32 104 26 28 94 86 95 69 89 98 90 88 77 43 17 6 15 163 87 55 67 134 164 172 169</file>
         </tool>
       </inputs>
     </file>
@@ -793,7 +799,7 @@
       <inputs>
         <tool>
           <name>XLINK</name>
-          <file> 24 103 49 13 30 5 34 119 160 125 148 44 20 147 46 10 19 42 47 151 35 159 143 126 121 135 132 114 112 105 18 124 118 122 130 156</file>
+          <file> 24 103 49 13 30 5 34 119 160 125 148 44 20 147 46 10 19 42 47 151 35 159 143 126 121 135 132 114 112 105 18 124 118 122 130 167 156</file>
         </tool>
       </inputs>
     </file>
@@ -996,17 +1002,44 @@
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 164 4 21 22 45 29 153 102 111 101 123 32 104 26 28 94 86 95 69 89 98 90 88 77 43 17 6 15 163 87 55 67 134</file>
+          <file> 164 4 21 22 45 29 153 102 111 101 123 32 104 26 28 94 86 95 69 89 98 90 88 77 43 17 6 15 163 87 55 67 134 172 169</file>
         </tool>
         <tool>
           <name>ICC430</name>
-          <file> 164 4 21 22 45 29 153 102 111 101 123 32 104 26 28 94 86 95 69 89 98 90 88 77 43 17 6 15 163 87 55 67 134</file>
+          <file> 164 4 21 22 45 29 153 102 111 101 123 32 104 26 28 94 86 95 69 89 98 90 88 77 43 17 6 15 163 87 55 67 134 172 169</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\source\tasks\record_task.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 168</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 167</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 172 4 21 22 45 29 153 102 111 101 123 32 104 26 28 94 86 95 69 89 98 90 88 77 43 17 6 15 163 87 55 67 134</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 172 4 21 22 45 29 153 102 111 101 123 32 104 26 28 94 86 95 69 89 98 90 88 77 43 17 6 15 163 87 55 67 134</file>
         </tool>
       </inputs>
     </file>
     <forcedrebuild>
       <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_adc.c</name>
       <tool>ICC430</tool>
+    </forcedrebuild>
+    <forcedrebuild>
+      <name>[MULTI_TOOL]</name>
+      <tool>XLINK</tool>
     </forcedrebuild>
   </configuration>
   <configuration>

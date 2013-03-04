@@ -19,6 +19,9 @@
 
 void main (void)
 {
+    // Disable interrupts until we are ready to accept them.
+    BSP_IntDisAll();
+    
     // Initialize uC/OS-II.
     OSInit();
     

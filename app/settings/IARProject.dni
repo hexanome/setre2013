@@ -47,13 +47,13 @@ NextState1=0
 Break=0
 State Storage=0
 [DebugChecksum]
-Checksum=-295265409
+Checksum=-318561826
 [CallStack]
 ShowArgs=0
 [Disassembly]
 MixedMode=1
 [Breakpoints]
-Bp0=_ "STD_CODE" "{$PROJ_DIR$\source\tasks\main_task.c}.16.9" 1 0 0 0 "" 0 ""
+Bp0=_ "STD_CODE" "{$PROJ_DIR$\source\tasks\main_task.c}.40.9" 1 0 0 0 "" 0 ""
 Count=1
 [FET]
 Clock mode=14

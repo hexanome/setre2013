@@ -1,26 +1,22 @@
-#ifndef __MAINTASK_H__
-#define __MAINTASK_H__
+#ifndef __RECORDTASK_H__
+#define __RECORDTASK_H__
 
 #include <includes.h>
-
-#include "record_task.h"
-#include "lcd_task.h"
 
 /*******************************************************************************
 * Variables.
 *******************************************************************************/
 
 // Tasks.
-static OS_STK MainTaskStack[MAIN_TASK_STACK_SIZE];
+static OS_STK RecordTaskStack[RECORD_TASK_STACK_SIZE];
 
 /*******************************************************************************
 * Function prototypes.
 *******************************************************************************/
 
 // Public.
-void MainTask(void *args);
+void RecordTask(void *args);
 
 // Private.
-static void TasksCreate();
 
 #endif
