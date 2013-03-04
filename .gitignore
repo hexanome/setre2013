@@ -24,3 +24,6 @@
 
 # Others
 *.lst
+
+# Debug directory
+Debug
