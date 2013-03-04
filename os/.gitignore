@@ -1,0 +1,34 @@
+# Object files
+*.o
+
+# Libraries
+*.lib
+*.a
+*.a43
+
+# Shared objects (inc. Windows DLLs)
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Executables
+*.exe
+*.out
+*.app
+*.elf
+
+# Log/Trace files
+*.log
+*.trc
+
+# Others
+*.lst
+
+# Mic folder
+uCOS-II
+uC-LIB
+uC-CPU/cpu_*
+uC-CPU/msp430x/iar
+EvalBoards/ti/MSP-EXP430F5438/iar
+
