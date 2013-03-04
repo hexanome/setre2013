@@ -45,7 +45,7 @@
         </option>
         <option>
           <name>OGDouble</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>GRuntimeLibSelect</name>
@@ -58,11 +58,11 @@
         </option>
         <option>
           <name>RTConfigPath</name>
-          <state>$TOOLKIT_DIR$\LIB\DLIB\dl430xsfn.h</state>
+          <state>$TOOLKIT_DIR$\LIB\DLIB\dl430xldn.h</state>
         </option>
         <option>
           <name>RTLibraryPath</name>
-          <state>$TOOLKIT_DIR$\LIB\DLIB\dl430xsfn.r43</state>
+          <state>$TOOLKIT_DIR$\LIB\DLIB\dl430xldn.r43</state>
         </option>
         <option>
           <name>Input variant</name>
@@ -97,7 +97,7 @@
         </option>
         <option>
           <name>OGChipSelectMenu</name>
-          <state>MSP430F5438	MSP430F5438</state>
+          <state>MSP430F5438A	MSP430F5438A</state>
         </option>
         <option>
           <name>GStackHeapOverride</name>
@@ -113,7 +113,7 @@
         </option>
         <option>
           <name>RadioDataModelType</name>
-          <state>0</state>
+          <state>2</state>
         </option>
         <option>
           <name>GHeap20Size</name>
@@ -229,7 +229,7 @@
         <option>
           <name>CCAllowList</name>
           <version>1</version>
-          <state>00000</state>
+          <state>11111</state>
         </option>
         <option>
           <name>CCObjUseModuleName</name>
@@ -354,7 +354,7 @@
         </option>
         <option>
           <name>CCOptLevel</name>
-          <state>1</state>
+          <state>3</state>
         </option>
         <option>
           <name>CCOptStrategy</name>
@@ -363,7 +363,7 @@
         </option>
         <option>
           <name>CCOptLevelSlave</name>
-          <state>1</state>
+          <state>3</state>
         </option>
         <option>
           <name>CInput</name>
@@ -503,7 +503,7 @@
         </option>
         <option>
           <name>ADefines</name>
-          <state></state>
+          <state>DISABLE_WATCHDOG</state>
         </option>
         <option>
           <name>AList</name>
@@ -727,7 +727,7 @@
         </option>
         <option>
           <name>XclFile</name>
-          <state>$TOOLKIT_DIR$\CONFIG\lnk430F5438.xcl</state>
+          <state>$TOOLKIT_DIR$\CONFIG\lnk430F5438A.xcl</state>
         </option>
         <option>
           <name>XclFileSlave</name>
