@@ -26,8 +26,7 @@
 *.lst
 
 # Mic folder
-uCOS-II/Doc
-uCOS-II/Source
+uCOS-II
 uC-LIB
 uC-CPU/cpu_*
 uC-CPU/msp430x/iar
