@@ -2004,6 +2004,18 @@
       <file>
         <name>$PROJ_DIR$\source\tasks\record_task.h</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$\source\tasks\rx_task.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\source\tasks\rx_task.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\source\tasks\tx_task.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\source\tasks\tx_task.h</name>
+      </file>
     </group>
     <file>
       <name>$PROJ_DIR$\source\app.c</name>
@@ -2013,12 +2025,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$\source\includes.h</name>
-    </file>
-  </group>
-  <group>
-    <name>App2</name>
-    <file>
-      <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\uCOS-II\app2.c</name>
     </file>
   </group>
   <group>
@@ -2131,7 +2137,7 @@
     <group>
       <name>MSP430X</name>
       <file>
-        <name>$PROJ_DIR$\..\os\uC-CPU\MSP430X\IAR\cpu.h</name>
+        <name>$PROJ_DIR$\..\os\uC-CPU\msp430x\IAR\cpu.h</name>
       </file>
     </group>
     <file>
