@@ -29,6 +29,17 @@ void MainTask(void *args)
 // Start the different child tasks.
 void TasksCreate()
 {
+    // Start the buttons task.
+    OSTaskCreateExt(ButtonsTask, 
+                    (void *)0,
+                    (OS_STK *)&ButtonsTaskStack[BUTTONS_TASK_STACK_SIZE - 1],
+                    BUTTONS_TASK_PRIORITY,
+                    BUTTONS_TASK_PRIORITY,
+                    (OS_STK *)&ButtonsTaskStack[0],
+                    BUTTONS_TASK_STACK_SIZE,
+                    (void *)0,
+                    OS_TASK_OPT_STK_CHK | OS_TASK_OPT_STK_CLR);
+    
     // Start the Microphone Recording task.
     OSTaskCreateExt(RecordTask, 
                     (void *)0,

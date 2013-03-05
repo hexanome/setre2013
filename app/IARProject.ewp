@@ -1981,6 +1981,12 @@
     <group>
       <name>Tasks</name>
       <file>
+        <name>$PROJ_DIR$\source\tasks\buttons_task.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\source\tasks\buttons_task.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$\source\tasks\lcd_task.c</name>
       </file>
       <file>

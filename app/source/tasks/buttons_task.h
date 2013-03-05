@@ -1,27 +1,30 @@
-#ifndef __MAINTASK_H__
-#define __MAINTASK_H__
+#ifndef __BUTTONSTASK_H__
+#define __BUTTONSTASK_H__
 
 #include <includes.h>
+#include <hal_buttons.h>
 
-#include "buttons_task.h"
-#include "record_task.h"
-#include "lcd_task.h"
+/*******************************************************************************
+* Defines
+*******************************************************************************/
+
+#define BUTTON_PORT_VECTOR PORT2_VECTOR
 
 /*******************************************************************************
 * Variables.
 *******************************************************************************/
 
 // Tasks.
-static OS_STK MainTaskStack[MAIN_TASK_STACK_SIZE];
+static OS_STK ButtonsTaskStack[BUTTONS_TASK_STACK_SIZE];
 
 /*******************************************************************************
 * Function prototypes.
 *******************************************************************************/
 
 // Public.
-void MainTask(void *args);
+void ButtonsTask(void *args);
 
 // Private.
-static void TasksCreate();
+static void InitializeButtons();
 
 #endif

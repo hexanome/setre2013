@@ -22,6 +22,9 @@ void main (void)
     // Disable interrupts until we are ready to accept them.
     BSP_IntDisAll();
     
+    // Set up interrupt vector to Context Switch (TRAP #0).
+    //*((int *)0x80) = (int)OSCtxSw;
+    
     // Initialize uC/OS-II.
     OSInit();
     
