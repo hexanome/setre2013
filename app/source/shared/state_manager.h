@@ -1,38 +1,30 @@
-#ifndef __BUTTONSTASK_H__
-#define __BUTTONSTASK_H__
+#ifndef __STATEMANAGER_H__
+#define __STATEMANAGER_H__
 
-#include <includes.h>
-#include <hal_buttons.h>
+#include "includes.h"
 
 /*******************************************************************************
 * Defines.
 *******************************************************************************/
 
-#define BUTTON_PORT_VECTOR PORT2_VECTOR
+#define STATE_IDLE      0
+#define STATE_RECORDING 1
+#define STATE_LOADING   2
 
 /*******************************************************************************
 * Variables.
 *******************************************************************************/
 
-// Tasks.
-static OS_STK ButtonsTaskStack[BUTTONS_TASK_STACK_SIZE];
-
-// Values.
-static ButtonFlags buttons;
-
-// Synchronization.
-static void *qButtonsData[1];
-static OS_EVENT *qButtons;
+static AppState _state;
 
 /*******************************************************************************
 * Function prototypes.
 *******************************************************************************/
 
 // Public.
-void ButtonsTask(void *args);
-
-// Private.
-static void InitializeButtons();
-static void InitializeQueue();
+void SetupStateManager();
+AppState GetState();
+void SetState(AppState state);
+void SetNextState();
 
 #endif

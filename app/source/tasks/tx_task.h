@@ -1,28 +1,22 @@
-#ifndef __MAINTASK_H__
-#define __MAINTASK_H__
+#ifndef __TX_TASK__
+#define __TX_TASK__
 
 #include <includes.h>
-
-#include "buttons_task.h"
-#include "record_task.h"
-#include "lcd_task.h"
 
 /*******************************************************************************
 * Variables.
 *******************************************************************************/
 
 // Tasks.
-static TaskStack MainTaskStack[MAIN_TASK_STACK_SIZE];
+static OS_STK TxTaskStack[TX_TASK_STACK_SIZE];
 
 /*******************************************************************************
 * Function prototypes.
 *******************************************************************************/
 
 // Public.
-void MainTask(void *args);
+void TxTask(void *args);
 
 // Private.
-static void TasksCreate();
-static void TaskStart(void (*task)(void *), int priority, TaskStack *stack, int stackSize);
 
 #endif

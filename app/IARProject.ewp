@@ -1979,6 +1979,24 @@
   <group>
     <name>App</name>
     <group>
+      <name>Shared</name>
+      <file>
+        <name>$PROJ_DIR$\source\shared\state_manager.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\source\shared\state_manager.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\source\shared\synchronization.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\source\shared\synchronization.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\source\shared\types.h</name>
+      </file>
+    </group>
+    <group>
       <name>Tasks</name>
       <file>
         <name>$PROJ_DIR$\source\tasks\buttons_task.c</name>
@@ -2003,6 +2021,18 @@
       </file>
       <file>
         <name>$PROJ_DIR$\source\tasks\record_task.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\source\tasks\rx_task.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\source\tasks\rx_task.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\source\tasks\tx_task.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\source\tasks\tx_task.h</name>
       </file>
     </group>
     <file>

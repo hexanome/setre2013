@@ -1,38 +1,33 @@
-#ifndef __BUTTONSTASK_H__
-#define __BUTTONSTASK_H__
+#ifndef __SYNCHRONIZATION_H__
+#define __SYNCHRONIZATION_H__
 
-#include <includes.h>
-#include <hal_buttons.h>
+#include "includes.h"
 
 /*******************************************************************************
 * Defines.
 *******************************************************************************/
 
-#define BUTTON_PORT_VECTOR PORT2_VECTOR
+#define QUEUE_LCDREFRESH_LENGTH         1
+#define QUEUE_TOGGLERECORD_LENGTH       1
 
 /*******************************************************************************
 * Variables.
 *******************************************************************************/
 
-// Tasks.
-static OS_STK ButtonsTaskStack[BUTTONS_TASK_STACK_SIZE];
+// Queues.
+static void *qLcdRefreshData[QUEUE_LCDREFRESH_LENGTH];
+static Queue *qLcdRefresh;
 
-// Values.
-static ButtonFlags buttons;
-
-// Synchronization.
-static void *qButtonsData[1];
-static OS_EVENT *qButtons;
+static void *qToggleRecordData[QUEUE_TOGGLERECORD_LENGTH];
+static Queue *qToggleRecord;
 
 /*******************************************************************************
 * Function prototypes.
 *******************************************************************************/
 
 // Public.
-void ButtonsTask(void *args);
-
-// Private.
-static void InitializeButtons();
-static void InitializeQueue();
+void SetupSynchronization();
+void WaitOn(Queue *queue);
+void Trigger(Queue *queue);
 
 #endif
