@@ -2016,12 +2016,6 @@
     </file>
   </group>
   <group>
-    <name>App2</name>
-    <file>
-      <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\uCOS-II\app2.c</name>
-    </file>
-  </group>
-  <group>
     <name>BSP</name>
     <group>
       <name>F5xx_F6xx_Core_Lib</name>

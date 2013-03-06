@@ -2,850 +2,196 @@
 
 <project>
   <fileVersion>2</fileVersion>
-  <fileChecksum>3261947756</fileChecksum>
+  <fileChecksum>4431695</fileChecksum>
   <configuration>
     <name>Debug</name>
     <outputs>
+      <file>$PROJ_DIR$\source\tasks\lcd_task.c</file>
+      <file>$PROJ_DIR$\source\tasks\lcd_task.h</file>
+      <file>$PROJ_DIR$\source\tasks\buttons_task.h</file>
+      <file>$PROJ_DIR$\..\os\uC-LIB\lib_str.c</file>
+      <file>$PROJ_DIR$\..\os\uC-LIB\lib_str.h</file>
+      <file>$PROJ_DIR$\source\tasks\buttons_task.c</file>
+      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\uCOS-II\cpu_cfg.h</file>
       <file>$PROJ_DIR$\..\os\uC-CPU\MSP430X\IAR\cpu.h</file>
-      <file>$PROJ_DIR$\..\os\uC-CPU\cpu_core.c</file>
+      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\bsp.c</file>
+      <file>$PROJ_DIR$\..\os\uC-LIB\lib_mem.c</file>
+      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\cc2500.h</file>
+      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\F5xx_F6xx_Core_lib\HAL_UCS.h</file>
+      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_board.h</file>
+      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_lcd.c</file>
+      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\uCOS-II\cstartup.s43</file>
       <file>$PROJ_DIR$\..\os\uC-CPU\cpu_core.h</file>
       <file>$PROJ_DIR$\..\os\uC-CPU\cpu_def.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\os_mutex.r43</file>
-      <file>$PROJ_DIR$\Debug\Obj\main.r43</file>
-      <file>$PROJ_DIR$\main.c</file>
-      <file>$PROJ_DIR$\Debug\Obj\os_mem.r43</file>
-      <file>$PROJ_DIR$\Debug\Obj\os_mbox.r43</file>
-      <file>$PROJ_DIR$\Debug\Obj\lib_ascii.r43</file>
-      <file>$PROJ_DIR$\Debug\Obj\os_core.pbi</file>
-      <file>$TOOLKIT_DIR$\inc\dlib\c\DLib_Product.h</file>
-      <file>$TOOLKIT_DIR$\inc\dlib\c\xencoding_limits.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\HAL_FLASH.r43</file>
-      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\uCOS-II\includes.h</file>
-      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\uCOS-II\app.c</file>
-      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\uCOS-II\app_cfg.h</file>
-      <file>$TOOLKIT_DIR$\inc\dlib\c\DLib_Threads.h</file>
-      <file>$TOOLKIT_DIR$\inc\dlib\c\stdlib.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\os_q.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\HAL_PMM.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\lib_mem.pbi</file>
-      <file>$TOOLKIT_DIR$\config\multiplier32_loc2.xcl</file>
-      <file>$PROJ_DIR$\Debug\Exe\IARProject.d43</file>
-      <file>$PROJ_DIR$\Debug\Obj\app_hooks.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\os_mem.pbi</file>
-      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_rtc.h</file>
-      <file>$TOOLKIT_DIR$\inc\dlib\c\DLib_Defaults.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\hal_usb.r43</file>
-      <file>$PROJ_DIR$\Debug\Obj\HAL_UCS.r43</file>
-      <file>$TOOLKIT_DIR$\inc\dlib\c\yvals.h</file>
-      <file>$TOOLKIT_DIR$\inc\dlib\c\ystdio.h</file>
-      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_adc.c</file>
-      <file>$TOOLKIT_DIR$\inc\dlib\c\string.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\HAL_PMM.r43</file>
-      <file>$PROJ_DIR$\Debug\Obj\os_flag.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\bsp.pbi</file>
-      <file>$TOOLKIT_DIR$\inc\io430x54x.h</file>
-      <file>$TOOLKIT_DIR$\inc\msp430.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\HAL_FLASH.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\lib_str.r43</file>
-      <file>$PROJ_DIR$\Debug\Obj\hal_usb.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\cpu_core.r43</file>
-      <file>$PROJ_DIR$\Debug\Obj\hal_buttons.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\hal_buttons.r43</file>
-      <file>$PROJ_DIR$\Debug\Obj\hal_lcd.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\main.pbi</file>
-      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_buttons.h</file>
-      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\F5xx_F6xx_Core_Lib\HAL_PMAP.c</file>
-      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\F5xx_F6xx_Core_lib\HAL_MACROS.h</file>
-      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_lcd.h</file>
-      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_lcd_fonts.h</file>
+      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_buttons.c</file>
+      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_MSP-EXP430F5438.h</file>
       <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_rf.h</file>
-      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\uCOS-II\cstartup.s43</file>
-      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\F5xx_F6xx_Core_Lib\HAL_UCS.c</file>
-      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\cc2500.h</file>
-      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_rf.c</file>
-      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\bsp.c</file>
+      <file>$PROJ_DIR$\..\os\uC-LIB\lib_mem.h</file>
+      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_adc.h</file>
+      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\uCOS-II\app_hooks.c</file>
+      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_usb.c</file>
+      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_board.c</file>
+      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_lcd_fonts.h</file>
+      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_buttons.h</file>
       <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\uCOS-II\os_cfg.h</file>
-      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\uCOS-II\cpu_cfg.h</file>
-      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\F5xx_F6xx_Core_lib\HAL_UCS.h</file>
       <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\bsp.h</file>
-      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_lcd.c</file>
+      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_rf.c</file>
+      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_usb.h</file>
+      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_lcd.h</file>
       <file>$PROJ_DIR$\..\os\uC-LIB\lib_ascii.c</file>
+      <file>$PROJ_DIR$\..\os\uC-CPU\cpu_core.c</file>
+      <file>$PROJ_DIR$\..\os\uC-LIB\lib_ascii.h</file>
+      <file>$PROJ_DIR$\..\os\uC-LIB\lib_def.h</file>
+      <file>$PROJ_DIR$\source\tasks\main_task.h</file>
+      <file>$PROJ_DIR$\source\includes.h</file>
+      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\F5xx_F6xx_Core_Lib\HAL_UCS.c</file>
+      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\F5xx_F6xx_Core_Lib\HAL_FLASH.c</file>
+      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\F5xx_F6xx_Core_Lib\HAL_FLASH.h</file>
+      <file>$PROJ_DIR$\source\app.c</file>
+      <file>$PROJ_DIR$\source\tasks\record_task.c</file>
+      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\F5xx_F6xx_Core_lib\HAL_MACROS.h</file>
+      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\F5xx_F6xx_Core_Lib\HAL_PMAP.c</file>
+      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\F5xx_F6xx_Core_Lib\HAL_PMAP.h</file>
+      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\F5xx_F6xx_Core_Lib\HAL_PMM.c</file>
+      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\F5xx_F6xx_Core_lib\HAL_TLV.h</file>
+      <file>$PROJ_DIR$\source\tasks\main_task.c</file>
+      <file>$PROJ_DIR$\source\app_config.h</file>
+      <file>$PROJ_DIR$\source\tasks\record_task.h</file>
       <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\F5xx_F6xx_Core_lib\HAL_PMM.h</file>
       <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\F5xx_F6xx_Core_Lib\HAL_TLV.c</file>
-      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\F5xx_F6xx_Core_lib\HAL_TLV.h</file>
-      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_adc.h</file>
-      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_usb.c</file>
-      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\F5xx_F6xx_Core_Lib\HAL_FLASH.h</file>
-      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_MSP-EXP430F5438.h</file>
-      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\F5xx_F6xx_Core_Lib\HAL_PMM.c</file>
-      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\uCOS-II\app_hooks.c</file>
-      <file>$PROJ_DIR$\Debug\Obj\hal_board.pbi</file>
-      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_usb.h</file>
-      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\F5xx_F6xx_Core_Lib\HAL_PMAP.h</file>
-      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_board.h</file>
-      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_buttons.c</file>
-      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_board.c</file>
-      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\uCOS-II\app2.c</file>
-      <file>$PROJ_DIR$\source\tasks\lcd_task.c</file>
-      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\F5xx_F6xx_Core_Lib\HAL_FLASH.c</file>
-      <file>$PROJ_DIR$\source\tasks\main_task.c</file>
-      <file>$PROJ_DIR$\source\tasks\main_task.h</file>
-      <file>$PROJ_DIR$\source\tasks\record_task.c</file>
-      <file>$PROJ_DIR$\source\app.c</file>
-      <file>$PROJ_DIR$\source\includes.h</file>
-      <file>$PROJ_DIR$\source\tasks\record_task.h</file>
-      <file>$PROJ_DIR$\source\tasks\lcd_task.h</file>
-      <file>$PROJ_DIR$\source\app_config.h</file>
-      <file>$PROJ_DIR$\..\os\uC-LIB\lib_mem.c</file>
-      <file>$PROJ_DIR$\..\os\uCOS-II\Source\os_flag.c</file>
-      <file>$PROJ_DIR$\..\os\uC-LIB\lib_ascii.h</file>
-      <file>$PROJ_DIR$\..\os\uCOS-II\Source\os_task.c</file>
-      <file>$PROJ_DIR$\..\os\uCOS-II\Source\os_mem.c</file>
-      <file>$PROJ_DIR$\..\os\uCOS-II\Source\os_time.c</file>
-      <file>$PROJ_DIR$\..\os\uCOS-II\Source\os_tmr.c</file>
-      <file>$PROJ_DIR$\..\os\uCOS-II\Source\os_sem.c</file>
-      <file>$PROJ_DIR$\..\os\uCOS-II\Ports\MSP430X\IAR\MSP430x5xx\os_dbg.c</file>
-      <file>$PROJ_DIR$\..\os\uC-LIB\lib_def.h</file>
-      <file>$PROJ_DIR$\..\os\uCOS-II\Ports\MSP430X\IAR\MSP430x5xx\os_cpu.h</file>
-      <file>$PROJ_DIR$\..\os\uCOS-II\Source\os_core.c</file>
-      <file>$PROJ_DIR$\..\os\uC-LIB\lib_str.h</file>
-      <file>$PROJ_DIR$\..\os\uCOS-II\Ports\MSP430X\IAR\MSP430x5xx\os_cpu_a.s43</file>
-      <file>$PROJ_DIR$\..\os\uCOS-II\Source\os_mbox.c</file>
-      <file>$PROJ_DIR$\..\os\uCOS-II\Source\os_mutex.c</file>
+      <file>$PROJ_DIR$\..\os\uCOS-II\Source\ucos_ii.h</file>
+      <file>$PROJ_DIR$\main.c</file>
       <file>$PROJ_DIR$\..\os\uCOS-II\Source\os_q.c</file>
-      <file>$PROJ_DIR$\..\os\uC-LIB\lib_str.c</file>
+      <file>$PROJ_DIR$\..\os\uCOS-II\Source\os_task.c</file>
+      <file>$PROJ_DIR$\..\os\uCOS-II\Source\os_tmr.c</file>
+      <file>$PROJ_DIR$\..\os\uCOS-II\Ports\MSP430X\IAR\MSP430x5xx\os_dbg.c</file>
+      <file>$PROJ_DIR$\..\os\uCOS-II\Ports\MSP430X\IAR\MSP430x5xx\os_cpu.h</file>
+      <file>$PROJ_DIR$\..\os\uCOS-II\Source\os_mutex.c</file>
       <file>$PROJ_DIR$\..\os\uCOS-II\Ports\MSP430X\IAR\MSP430x5xx\os_cpu_c.c</file>
-      <file>$PROJ_DIR$\..\os\uC-LIB\lib_mem.h</file>
+      <file>$PROJ_DIR$\..\os\uCOS-II\Source\os_flag.c</file>
+      <file>$PROJ_DIR$\..\os\uCOS-II\Source\os_time.c</file>
+      <file>$PROJ_DIR$\..\os\uCOS-II\Source\os_mem.c</file>
+      <file>$PROJ_DIR$\Debug\Obj\os_mutex.r43</file>
+      <file>$PROJ_DIR$\..\os\uCOS-II\Ports\MSP430X\IAR\MSP430x5xx\os_cpu_a.s43</file>
+      <file>$PROJ_DIR$\..\os\uCOS-II\Source\os_core.c</file>
+      <file>$PROJ_DIR$\..\os\uCOS-II\Source\os_mbox.c</file>
+      <file>$PROJ_DIR$\Debug\Obj\main.r43</file>
+      <file>$PROJ_DIR$\..\os\uCOS-II\Source\os_sem.c</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\DLib_Product.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\os_mem.r43</file>
+      <file>$PROJ_DIR$\Debug\Obj\lib_ascii.r43</file>
+      <file>$PROJ_DIR$\Debug\Obj\HAL_FLASH.r43</file>
+      <file>$PROJ_DIR$\Debug\Exe\IARProject.d43</file>
+      <file>$PROJ_DIR$\Debug\Obj\os_core.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\os_mbox.r43</file>
+      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\uCOS-II\includes.h</file>
+      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\uCOS-II\app.c</file>
+      <file>$PROJ_DIR$\Debug\Obj\os_q.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\stdlib.h</file>
+      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\uCOS-II\app_cfg.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\HAL_PMM.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\DLib_Threads.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\lib_mem.pbi</file>
+      <file>$TOOLKIT_DIR$\config\multiplier32_loc2.xcl</file>
+      <file>$PROJ_DIR$\Debug\Obj\IARProject.pbd</file>
+      <file>$PROJ_DIR$\Debug\Obj\app_hooks.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\xencoding_limits.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\os_flag.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\hal_board.pbi</file>
+      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\uCOS-II\app2.c</file>
+      <file>$PROJ_DIR$\Debug\Obj\hal_buttons.r43</file>
+      <file>$PROJ_DIR$\Debug\Obj\HAL_UCS.r43</file>
+      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_adc.c</file>
+      <file>$PROJ_DIR$\Debug\Obj\main.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\DLib_Defaults.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\hal_usb.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\hal_lcd.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\hal_usb.r43</file>
+      <file>$PROJ_DIR$\Debug\Obj\HAL_PMM.r43</file>
+      <file>$PROJ_DIR$\Debug\Obj\cpu_core.r43</file>
+      <file>$PROJ_DIR$\Debug\Obj\bsp.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\string.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\HAL_FLASH.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\io430x54x.h</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\yvals.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\hal_buttons.pbi</file>
+      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_rtc.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\lib_str.r43</file>
+      <file>$TOOLKIT_DIR$\inc\msp430.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\os_mem.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\ystdio.h</file>
       <file>$TOOLKIT_DIR$\inc\dlib\c\stdarg.h</file>
       <file>$PROJ_DIR$\Debug\Obj\HAL_PMAP.pbi</file>
-      <file>$TOOLKIT_DIR$\inc\in430.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\HAL_PMAP.r43</file>
-      <file>$PROJ_DIR$\..\os\uCOS-II\Source\ucos_ii.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\HAL_TLV.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\os_q.r43</file>
       <file>$PROJ_DIR$\Debug\Obj\HAL_TLV.r43</file>
-      <file>$PROJ_DIR$\Debug\Obj\hal_lcd.r43</file>
       <file>$TOOLKIT_DIR$\inc\intrinsics.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\os_q.r43</file>
+      <file>$PROJ_DIR$\Debug\Obj\hal_lcd.r43</file>
       <file>$TOOLKIT_DIR$\inc\dlib\c\ycheck.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\hal_adc.pbi</file>
       <file>$PROJ_DIR$\Debug\Obj\HAL_UCS.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\HAL_TLV.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\HAL_PMAP.r43</file>
+      <file>$TOOLKIT_DIR$\inc\in430.h</file>
       <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\&lt;invalid loc&gt;</file>
-      <file>$TOOLKIT_DIR$\config\lnk430F5438A.xcl</file>
-      <file>$PROJ_DIR$\Debug\Obj\app.pbi</file>
       <file>$TOOLKIT_DIR$\inc\msp430f5438a.h</file>
       <file>$TOOLKIT_DIR$\inc\dlib\c\stdio.h</file>
       <file>$PROJ_DIR$\Debug\Obj\os_task.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\hal_rf.pbi</file>
       <file>$PROJ_DIR$\Debug\Obj\hal_rf.r43</file>
       <file>$PROJ_DIR$\Debug\Obj\cstartup.r43</file>
+      <file>$PROJ_DIR$\Debug\Obj\hal_adc.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\app.pbi</file>
       <file>$TOOLKIT_DIR$\inc\dlib\c\stdint.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\hal_rf.pbi</file>
+      <file>$TOOLKIT_DIR$\config\lnk430F5438A.xcl</file>
       <file>$PROJ_DIR$\Debug\Obj\os_cpu_c.pbi</file>
       <file>$PROJ_DIR$\Debug\Obj\os_tmr.r43</file>
-      <file>$PROJ_DIR$\Debug\Obj\IARProject.pbd</file>
-      <file>$TOOLKIT_DIR$\inc\dlib\c\ysizet.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\os_cpu_a.r43</file>
-      <file>$PROJ_DIR$\Debug\Obj\os_time.r43</file>
-      <file>$TOOLKIT_DIR$\inc\io430.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\os_core.r43</file>
-      <file>$PROJ_DIR$\Debug\Obj\os_time.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\os_cpu_c.r43</file>
-      <file>$PROJ_DIR$\Debug\Obj\app.r43</file>
-      <file>$PROJ_DIR$\Debug\Obj\os_task.r43</file>
-      <file>$PROJ_DIR$\Debug\Obj\lib_str.pbi</file>
       <file>$PROJ_DIR$\Debug\Obj\hal_board.r43</file>
-      <file>$PROJ_DIR$\Debug\Obj\os_sem.r43</file>
+      <file>$PROJ_DIR$\Debug\Obj\os_cpu_a.r43</file>
+      <file>$PROJ_DIR$\Debug\Obj\os_time.pbi</file>
       <file>$PROJ_DIR$\Debug\Obj\os_dbg.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\os_dbg.r43</file>
-      <file>$PROJ_DIR$\Debug\Obj\bsp.r43</file>
-      <file>$PROJ_DIR$\Debug\Obj\os_flag.r43</file>
-      <file>$TOOLKIT_DIR$\inc\macros.m43</file>
-      <file>$PROJ_DIR$\Debug\Obj\os_mbox.pbi</file>
       <file>$PROJ_DIR$\Debug\Obj\os_mutex.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\app_hooks.r43</file>
       <file>$PROJ_DIR$\Debug\Obj\os_sem.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\lib_ascii.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\os_dbg.r43</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\ysizet.h</file>
       <file>$TOOLKIT_DIR$\lib\dlib\dl430xsfn.h</file>
       <file>$TOOLKIT_DIR$\lib\dlib\dl430xldn.r43</file>
-      <file>$PROJ_DIR$\Debug\Obj\record_task.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\app2.r43</file>
-      <file>$PROJ_DIR$\Debug\Obj\main_task.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\lib_mem.r43</file>
-      <file>$PROJ_DIR$\Debug\Obj\cpu_core.pbi</file>
-      <file>$TOOLKIT_DIR$\lib\dlib\dl430xldn.h</file>
-      <file>$TOOLKIT_DIR$\inc\cfi.m43</file>
+      <file>$PROJ_DIR$\Debug\Obj\app_hooks.r43</file>
+      <file>$PROJ_DIR$\Debug\Obj\lib_ascii.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\buttons_task.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\os_time.r43</file>
+      <file>$PROJ_DIR$\Debug\Obj\app.r43</file>
+      <file>$PROJ_DIR$\Debug\Obj\lib_str.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\bsp.r43</file>
+      <file>$TOOLKIT_DIR$\inc\macros.m43</file>
+      <file>$PROJ_DIR$\Debug\Obj\os_mbox.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\os_task.r43</file>
+      <file>$PROJ_DIR$\Debug\Obj\os_core.r43</file>
+      <file>$PROJ_DIR$\Debug\Obj\os_flag.r43</file>
+      <file>$PROJ_DIR$\Debug\Obj\os_sem.r43</file>
+      <file>$TOOLKIT_DIR$\inc\io430.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\os_cpu_c.r43</file>
       <file>$PROJ_DIR$\Debug\Exe\IARProject.ulp</file>
-      <file>$PROJ_DIR$\Debug\Obj\record_task.r43</file>
-      <file>$PROJ_DIR$\Debug\Obj\main_task.r43</file>
       <file>$TOOLKIT_DIR$\inc\msp430f5438.h</file>
       <file>$PROJ_DIR$\Debug\Obj\os_tmr.pbi</file>
       <file>$PROJ_DIR$\Debug\Obj\lcd_task.r43</file>
+      <file>$PROJ_DIR$\Debug\Obj\record_task.r43</file>
+      <file>$PROJ_DIR$\Debug\Obj\record_task.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\cpu_core.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\app2.r43</file>
       <file>$PROJ_DIR$\Debug\Obj\lcd_task.pbi</file>
       <file>$PROJ_DIR$\Debug\Obj\app2.pbi</file>
-      <file>$PROJ_DIR$\source\tasks\buttons_task.h</file>
-      <file>$PROJ_DIR$\source\tasks\buttons_task.c</file>
-      <file>$PROJ_DIR$\Debug\Obj\buttons_task.pbi</file>
+      <file>$TOOLKIT_DIR$\lib\dlib\dl430xldn.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\main_task.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\lib_mem.r43</file>
+      <file>$TOOLKIT_DIR$\inc\cfi.m43</file>
+      <file>$PROJ_DIR$\Debug\Obj\main_task.r43</file>
       <file>$PROJ_DIR$\Debug\Obj\buttons_task.r43</file>
     </outputs>
-    <file>
-      <name>$PROJ_DIR$\..\os\uC-CPU\cpu_core.c</name>
-      <outputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 42</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 164</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 2 0 3 59 99 109 16 102 92</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 2 0 3 59 99 109 16 102 92</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>[ROOT_NODE]</name>
-      <outputs>
-        <tool>
-          <name>XLINK</name>
-          <file> 23</file>
-        </tool>
-        <tool>
-          <name>ULP430</name>
-          <file> 167</file>
-        </tool>
-      </outputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\main.c</name>
-      <outputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 5</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 46</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 139 37 119</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 139 37 119</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\uCOS-II\app.c</name>
-      <outputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 143</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 125</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 14 127 120 30 27 165 11 12 17 136 31 18 110 33 99 0 3 59 109 2 102 92 16 38 126 112 119 100 58 61 114</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 14 127 120 30 27 165 11 12 17 136 31 18 110 33 99 0 3 59 109 2 102 92 16 38 126 112 119 100 58 61 114</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Debug\Exe\IARProject.d43</name>
-      <inputs>
-        <tool>
-          <name>XLINK</name>
-          <file> 124 22 13 113 34 117 29 143 161 155 150 178 42 131 146 44 118 130 28 172 9 163 40 169 140 137 142 149 151 8 7 4 116 147 144 138 134 168 159</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_adc.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 121</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 38 170 112 119 70 64 132 120 30 27 158 11 12 17 49 60 50 47 67 76 74 52 26 66</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 38 170 112 119 70 64 132 120 30 27 158 11 12 17 49 60 50 47 67 76 74 52 26 66 123</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\F5xx_F6xx_Core_Lib\HAL_PMAP.c</name>
-      <outputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 113</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 111</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 38 126 112 119 75 132 120 30 27 165 11 12 17</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 38 126 112 119 75 132 120 30 27 165 11 12 17</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\uCOS-II\cstartup.s43</name>
-      <outputs>
-        <tool>
-          <name>A430</name>
-          <file> 131</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>A430</name>
-          <file> 152 166 38 126</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\F5xx_F6xx_Core_Lib\HAL_UCS.c</name>
-      <outputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 29</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 122</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 38 126 112 119 60 132 120 30 27 165 11 12 17 49</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 38 126 112 119 60 132 120 30 27 165 11 12 17 49</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_rf.c</name>
-      <outputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 130</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 129</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 38 126 112 119 70 64 132 120 30 27 165 11 12 17 49 60 50 47 67 76 74 52 26 66 55</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 38 126 112 119 70 64 132 120 30 27 165 11 12 17 49 60 50 47 67 76 74 52 26 66 55</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\bsp.c</name>
-      <outputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 150</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 36</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 86 127 120 30 27 165 11 12 17 136 31 18 110 33 99 0 3 59 109 2 102 92 16 38 126 112 119 89 100 58 61 114 70 64 132 49 60 50 47 67 76 74 52 26 66</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 86 127 120 30 27 165 11 12 17 136 31 18 110 33 99 0 3 59 109 2 102 92 16 38 126 112 119 89 100 58 61 114 70 64 132 49 60 50 47 67 76 74 52 26 66</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_lcd.c</name>
-      <outputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 118</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 45</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 38 126 112 119 70 64 132 120 30 27 165 11 12 17 49 60 50 47 67 76 74 52 26 66 51</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 38 126 112 119 70 64 132 120 30 27 165 11 12 17 49 60 50 47 67 76 74 52 26 66 51</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\os\uC-LIB\lib_ascii.c</name>
-      <outputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 9</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 157</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 92 0 3 59 99</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 92 0 3 59 99</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\F5xx_F6xx_Core_Lib\HAL_TLV.c</name>
-      <outputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 117</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 115</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 38 126 112 119 66 132 120 30 27 165 11 12 17</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 38 126 112 119 66 132 120 30 27 165 11 12 17</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_usb.c</name>
-      <outputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 28</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 41</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 38 126 112 119 70 64 132 120 30 27 165 11 12 17 49 60 50 47 67 76 74 52 26 66</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 38 126 112 119 70 64 132 120 30 27 165 11 12 17 49 60 50 47 67 76 74 52 26 66</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\F5xx_F6xx_Core_Lib\HAL_PMM.c</name>
-      <outputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 34</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 20</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 38 126 112 119 64 132 120 30 27 165 11 12 17 49</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 38 126 112 119 64 132 120 30 27 165 11 12 17 49</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\uCOS-II\app_hooks.c</name>
-      <outputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 155</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 24</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 86 127 120 30 27 165 11 12 17 136 31 18 110 33 99 0 3 59 109 2 102 92 16 38 126 112 119 89 100 58 61 114</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 86 127 120 30 27 165 11 12 17 136 31 18 110 33 99 0 3 59 109 2 102 92 16 38 126 112 119 89 100 58 61 114</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_buttons.c</name>
-      <outputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 44</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 43</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 38 126 112 119 70 64 132 120 30 27 165 11 12 17 49 60 50 47 67 76 74 52 26 66</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 38 126 112 119 70 64 132 120 30 27 165 11 12 17 49 60 50 47 67 76 74 52 26 66</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_board.c</name>
-      <outputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 146</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 73</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 38 126 112 119 70 64 132 120 30 27 165 11 12 17 49 60 50 47 67 76 74 52 26 66</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 38 126 112 119 70 64 132 120 30 27 165 11 12 17 49 60 50 47 67 76 74 52 26 66</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\uCOS-II\app2.c</name>
-      <outputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 161</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 174</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 86 127 120 30 27 165 11 12 17 136 31 18 110 33 99 0 3 59 109 2 102 92 16 38 126 112 119 89 100 58 61 114</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 86 127 120 30 27 165 11 12 17 136 31 18 110 33 99 0 3 59 109 2 102 92 16 38 126 112 119 89 100 58 61 114</file>
-        </tool>
-      </inputs>
-    </file>
     <file>
       <name>$PROJ_DIR$\source\tasks\lcd_task.c</name>
       <outputs>
         <tool>
           <name>ICC430</name>
-          <file> 172</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 173</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 88 86 127 120 30 27 165 11 12 17 136 31 18 110 33 99 0 3 59 109 2 102 92 16 38 126 112 119 89 100 58 61 114</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 88 86 127 120 30 27 165 11 12 17 136 31 18 110 33 99 0 3 59 109 2 102 92 16 38 126 112 119 89 100 58 61 114</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\F5xx_F6xx_Core_Lib\HAL_FLASH.c</name>
-      <outputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 13</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 39</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 38 126 112 119 69 132 120 30 27 165 11 12 17</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 38 126 112 119 69 132 120 30 27 165 11 12 17</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\source\tasks\main_task.c</name>
-      <outputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 169</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 162</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 83 86 127 120 30 27 165 11 12 17 136 31 18 110 33 99 0 3 59 109 2 102 92 16 38 126 112 119 89 100 58 61 114 175 87 88</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 83 86 127 120 30 27 165 11 12 17 136 31 18 110 33 99 0 3 59 109 2 102 92 16 38 126 112 119 89 100 58 61 114 175 47 87 88</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\source\tasks\record_task.c</name>
-      <outputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 168</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 160</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 87 86 127 120 30 27 165 11 12 17 136 31 18 110 33 99 0 3 59 109 2 102 92 16 38 126 112 119 89 100 58 61 114</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 87 86 127 120 30 27 165 11 12 17 136 31 18 110 33 99 0 3 59 109 2 102 92 16 38 126 112 119 89 100 58 61 114</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\source\app.c</name>
-      <outputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 143</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 125</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 86 127 120 30 27 165 11 12 17 136 31 18 110 33 99 0 3 59 109 2 102 92 16 38 126 112 119 89 100 58 61 114 83 175 87 88</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 86 127 120 30 27 165 11 12 17 136 31 18 110 33 99 0 3 59 109 2 102 92 16 38 126 112 119 89 100 58 61 114 83 175 47 87 88</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\os\uC-LIB\lib_mem.c</name>
-      <outputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 163</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 21</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 109 0 3 59 2 99 102 92 16</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 109 0 3 59 2 99 102 92 16</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\os\uCOS-II\Source\os_flag.c</name>
-      <outputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 151</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 35</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 114 16 58 100</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 114 16 58 100</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\os\uCOS-II\Source\os_task.c</name>
-      <outputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 144</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 128</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 114 16 58 100</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 114 16 58 100</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\os\uCOS-II\Source\os_mem.c</name>
-      <outputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 7</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 25</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 114 16 58 100</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 114 16 58 100</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\os\uCOS-II\Source\os_time.c</name>
-      <outputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 138</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 141</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 114 16 58 100</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 114 16 58 100</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\os\uCOS-II\Source\os_tmr.c</name>
-      <outputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 134</file>
+          <file> 166</file>
         </tool>
         <tool>
           <name>BICOMP</name>
@@ -855,104 +201,20 @@
       <inputs>
         <tool>
           <name>ICC430</name>
-          <file> 114 16 58 100</file>
+          <file> 1 37 127 120 107 97 173 71 89 84 145 113 81 114 104 35 7 16 6 20 15 4 34 82 111 126 124 117 49 59 27 28 53</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 114 16 58 100</file>
+          <file> 1 37 127 120 107 97 173 71 89 84 145 113 81 114 104 35 7 16 6 20 15 4 34 82 111 126 124 117 49 59 27 28 53</file>
         </tool>
       </inputs>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\os\uCOS-II\Source\os_sem.c</name>
+      <name>$PROJ_DIR$\..\os\uC-LIB\lib_str.c</name>
       <outputs>
         <tool>
           <name>ICC430</name>
-          <file> 147</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 156</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 114 16 58 100</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 114 16 58 100</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\os\uCOS-II\Ports\MSP430X\IAR\MSP430x5xx\os_dbg.c</name>
-      <outputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 149</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 148</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 114 16 58 100</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 114 16 58 100</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\os\uCOS-II\Source\os_core.c</name>
-      <outputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 140</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 10</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 114 16 58 100</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 114 16 58 100</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\os\uCOS-II\Ports\MSP430X\IAR\MSP430x5xx\os_cpu_a.s43</name>
-      <outputs>
-        <tool>
-          <name>A430</name>
-          <file> 137</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>A430</name>
-          <file> 38 126</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\os\uCOS-II\Source\os_mbox.c</name>
-      <outputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 8</file>
+          <file> 110</file>
         </tool>
         <tool>
           <name>BICOMP</name>
@@ -962,103 +224,11 @@
       <inputs>
         <tool>
           <name>ICC430</name>
-          <file> 114 16 58 100</file>
+          <file> 4 7 16 6 35 34 82</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 114 16 58 100</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\os\uCOS-II\Source\os_mutex.c</name>
-      <outputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 4</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 154</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 114 16 58 100</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 114 16 58 100</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\os\uCOS-II\Source\os_q.c</name>
-      <outputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 116</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 19</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 114 16 58 100</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 114 16 58 100</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\os\uC-LIB\lib_str.c</name>
-      <outputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 40</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 145</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 102 0 3 59 99 92 16</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 102 0 3 59 99 92 16</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\os\uCOS-II\Ports\MSP430X\IAR\MSP430x5xx\os_cpu_c.c</name>
-      <outputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 142</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 133</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 114 16 58 100</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 114 16 58 100</file>
+          <file> 4 7 16 6 35 34 82</file>
         </tool>
       </inputs>
     </file>
@@ -1071,17 +241,847 @@
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 177</file>
+          <file> 150</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>ICC430</name>
-          <file> 175 86 127 120 30 27 165 11 12 17 136 31 18 110 33 99 0 3 59 109 2 102 92 16 38 126 112 119 89 100 58 61 114</file>
+          <file> 2 37 127 120 107 97 173 71 89 84 145 113 81 114 104 35 7 16 6 20 15 4 34 82 111 126 124 117 49 59 27 28 53 26</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 175 86 127 120 30 27 165 11 12 17 136 31 18 110 33 99 0 3 59 109 2 102 92 16 38 126 112 119 89 100 58 61 114 47</file>
+          <file> 2 37 127 120 107 97 173 71 89 84 145 113 81 114 104 35 7 16 6 20 15 4 34 82 111 126 124 117 49 59 27 28 53 26</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>[ROOT_NODE]</name>
+      <outputs>
+        <tool>
+          <name>ULP430</name>
+          <file> 163</file>
+        </tool>
+        <tool>
+          <name>XLINK</name>
+          <file> 75</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\bsp.c</name>
+      <outputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 154</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 103</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 37 127 120 107 97 173 71 89 84 145 113 81 114 104 35 7 16 6 20 15 4 34 82 111 126 124 117 49 59 27 28 53 18 51 133 43 11 31 26 21 12 30 19 109 47</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 37 127 120 107 97 173 71 89 84 145 113 81 114 104 35 7 16 6 20 15 4 34 82 111 126 124 117 49 59 27 28 53 18 51 133 43 11 31 26 21 12 30 19 109 47</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\os\uC-LIB\lib_mem.c</name>
+      <outputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 175</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 85</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 20 7 16 6 15 35 4 34 82</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 20 7 16 6 15 35 4 34 82</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_lcd.c</name>
+      <outputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 119</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 99</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 111 126 124 117 18 51 133 120 107 97 173 71 89 84 43 11 31 26 21 12 30 19 109 47 25</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 111 126 124 117 18 51 133 120 107 97 173 71 89 84 43 11 31 26 21 12 30 19 109 47 25</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\uCOS-II\cstartup.s43</name>
+      <outputs>
+        <tool>
+          <name>A430</name>
+          <file> 130</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>A430</name>
+          <file> 155 176 111 126</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_buttons.c</name>
+      <outputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 93</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 108</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 111 126 124 117 18 51 133 120 107 97 173 71 89 84 43 11 31 26 21 12 30 19 109 47</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 111 126 124 117 18 51 133 120 107 97 173 71 89 84 43 11 31 26 21 12 30 19 109 47</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\uCOS-II\app_hooks.c</name>
+      <outputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 148</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 88</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 37 127 120 107 97 173 71 89 84 145 113 81 114 104 35 7 16 6 20 15 4 34 82 111 126 124 117 49 59 27 28 53</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 37 127 120 107 97 173 71 89 84 145 113 81 114 104 35 7 16 6 20 15 4 34 82 111 126 124 117 49 59 27 28 53</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_usb.c</name>
+      <outputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 100</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 98</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 111 126 124 117 18 51 133 120 107 97 173 71 89 84 43 11 31 26 21 12 30 19 109 47</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 111 126 124 117 18 51 133 120 107 97 173 71 89 84 43 11 31 26 21 12 30 19 109 47</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_board.c</name>
+      <outputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 138</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 91</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 111 126 124 117 18 51 133 120 107 97 173 71 89 84 43 11 31 26 21 12 30 19 109 47</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 111 126 124 117 18 51 133 120 107 97 173 71 89 84 43 11 31 26 21 12 30 19 109 47</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_rf.c</name>
+      <outputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 129</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 134</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 111 126 124 117 18 51 133 120 107 97 173 71 89 84 43 11 31 26 21 12 30 19 109 47 10</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 111 126 124 117 18 51 133 120 107 97 173 71 89 84 43 11 31 26 21 12 30 19 109 47 10</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\os\uC-LIB\lib_ascii.c</name>
+      <outputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 73</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 149</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 34 7 16 6 35</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 34 7 16 6 35</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\os\uC-CPU\cpu_core.c</name>
+      <outputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 102</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 169</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 15 7 16 6 35 20 82 4 34</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 15 7 16 6 35 20 82 4 34</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\F5xx_F6xx_Core_Lib\HAL_UCS.c</name>
+      <outputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 94</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 121</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 111 126 124 117 11 133 120 107 97 173 71 89 84 43</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 111 126 124 117 11 133 120 107 97 173 71 89 84 43</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\F5xx_F6xx_Core_Lib\HAL_FLASH.c</name>
+      <outputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 74</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 105</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 111 126 124 117 40 133 120 107 97 173 71 89 84</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 111 126 124 117 40 133 120 107 97 173 71 89 84</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\source\app.c</name>
+      <outputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 152</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 132</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 37 127 120 107 97 173 71 89 84 145 113 81 114 104 35 7 16 6 20 15 4 34 82 111 126 124 117 49 59 27 28 53 36 2 26 50 1</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 37 127 120 107 97 173 71 89 84 145 113 81 114 104 35 7 16 6 20 15 4 34 82 111 126 124 117 49 59 27 28 53 36 2 26 50 1</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\source\tasks\record_task.c</name>
+      <outputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 167</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 168</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 50 37 127 120 107 97 173 71 89 84 145 113 81 114 104 35 7 16 6 20 15 4 34 82 111 126 124 117 49 59 27 28 53</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 50 37 127 120 107 97 173 71 89 84 145 113 81 114 104 35 7 16 6 20 15 4 34 82 111 126 124 117 49 59 27 28 53</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\F5xx_F6xx_Core_Lib\HAL_PMAP.c</name>
+      <outputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 123</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 115</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 111 126 124 117 45 133 120 107 97 173 71 89 84</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 111 126 124 117 45 133 120 107 97 173 71 89 84</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\F5xx_F6xx_Core_Lib\HAL_PMM.c</name>
+      <outputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 101</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 83</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 111 126 124 117 51 133 120 107 97 173 71 89 84 43</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 111 126 124 117 51 133 120 107 97 173 71 89 84 43</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\source\tasks\main_task.c</name>
+      <outputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 177</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 174</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 36 37 127 120 107 97 173 71 89 84 145 113 81 114 104 35 7 16 6 20 15 4 34 82 111 126 124 117 49 59 27 28 53 2 26 50 1</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 36 37 127 120 107 97 173 71 89 84 145 113 81 114 104 35 7 16 6 20 15 4 34 82 111 126 124 117 49 59 27 28 53 2 26 50 1</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\F5xx_F6xx_Core_Lib\HAL_TLV.c</name>
+      <outputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 116</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 122</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 111 126 124 117 47 133 120 107 97 173 71 89 84</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 111 126 124 117 47 133 120 107 97 173 71 89 84</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\main.c</name>
+      <outputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 69</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 96</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 161 106 117</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 161 106 117</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\os\uCOS-II\Source\os_q.c</name>
+      <outputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 118</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 80</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 53 82 27 59</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 53 82 27 59</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\os\uCOS-II\Source\os_task.c</name>
+      <outputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 157</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 128</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 53 82 27 59</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 53 82 27 59</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\os\uCOS-II\Source\os_tmr.c</name>
+      <outputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 137</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 165</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 53 82 27 59</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 53 82 27 59</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\os\uCOS-II\Ports\MSP430X\IAR\MSP430x5xx\os_dbg.c</name>
+      <outputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 144</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 141</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 53 82 27 59</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 53 82 27 59</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\os\uCOS-II\Source\os_mutex.c</name>
+      <outputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 65</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 142</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 53 82 27 59</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 53 82 27 59</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\os\uCOS-II\Ports\MSP430X\IAR\MSP430x5xx\os_cpu_c.c</name>
+      <outputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 162</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 136</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 53 82 27 59</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 53 82 27 59</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\os\uCOS-II\Source\os_flag.c</name>
+      <outputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 159</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 90</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 53 82 27 59</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 53 82 27 59</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\os\uCOS-II\Source\os_time.c</name>
+      <outputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 151</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 140</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 53 82 27 59</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 53 82 27 59</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\os\uCOS-II\Source\os_mem.c</name>
+      <outputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 72</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 112</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 53 82 27 59</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 53 82 27 59</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\os\uCOS-II\Ports\MSP430X\IAR\MSP430x5xx\os_cpu_a.s43</name>
+      <outputs>
+        <tool>
+          <name>A430</name>
+          <file> 139</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>A430</name>
+          <file> 111 126</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\os\uCOS-II\Source\os_core.c</name>
+      <outputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 158</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 76</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 53 82 27 59</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 53 82 27 59</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\os\uCOS-II\Source\os_mbox.c</name>
+      <outputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 77</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 156</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 53 82 27 59</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 53 82 27 59</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\os\uCOS-II\Source\os_sem.c</name>
+      <outputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 160</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 143</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 53 82 27 59</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 53 82 27 59</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Debug\Exe\IARProject.d43</name>
+      <inputs>
+        <tool>
+          <name>XLINK</name>
+          <file> 135 86 74 123 101 116 94 152 148 154 178 102 130 138 93 119 129 100 166 73 175 110 177 158 139 162 144 159 77 72 65 118 160 157 151 137 167 147</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\uCOS-II\app.c</name>
+      <outputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 152</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 132</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 78 127 120 107 97 173 71 89 84 145 113 81 114 104 35 7 16 6 20 15 4 34 82 111 126 124 117 59 27 28 53</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 78 127 120 107 97 173 71 89 84 145 113 81 114 104 35 7 16 6 20 15 4 34 82 111 126 124 117 59 27 28 53</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\uCOS-II\app2.c</name>
+      <outputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 170</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 172</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 37 127 120 107 97 173 71 89 84 145 113 81 114 104 35 7 16 6 20 15 4 34 82 111 126 124 117 49 59 27 28 53</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 37 127 120 107 97 173 71 89 84 145 113 81 114 104 35 7 16 6 20 15 4 34 82 111 126 124 117 49 59 27 28 53</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_adc.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 131</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICC430</name>
+          <file> 111 164 124 117 18 51 133 120 107 97 146 71 89 84 43 11 31 26 21 12 30 19 109 47</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 111 164 124 117 18 51 133 120 107 97 146 71 89 84 43 11 31 26 21 12 30 19 109 47 125</file>
         </tool>
       </inputs>
     </file>

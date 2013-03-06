@@ -5,10 +5,16 @@
 #include <hal_buttons.h>
 
 /*******************************************************************************
-* Defines
+* Defines.
 *******************************************************************************/
 
 #define BUTTON_PORT_VECTOR PORT2_VECTOR
+
+/*******************************************************************************
+* Types.
+*******************************************************************************/
+
+typedef unsigned char ButtonFlags;
 
 /*******************************************************************************
 * Variables.
@@ -16,6 +22,13 @@
 
 // Tasks.
 static OS_STK ButtonsTaskStack[BUTTONS_TASK_STACK_SIZE];
+
+// Values.
+static ButtonFlags buttons;
+
+// Synchronization.
+static void *qButtonsData[1];
+static OS_EVENT *qButtons;
 
 /*******************************************************************************
 * Function prototypes.
@@ -26,5 +39,6 @@ void ButtonsTask(void *args);
 
 // Private.
 static void InitializeButtons();
+static void InitializeQueue();
 
 #endif
