@@ -8,14 +8,14 @@
 *******************************************************************************/
 
 // Tasks.
-static OS_STK TXTaskStack[TX_TASK_STACK_SIZE];
+static OS_STK TxTaskStack[TX_TASK_STACK_SIZE];
 
 /*******************************************************************************
 * Function prototypes.
 *******************************************************************************/
 
 // Public.
-void TXTask(void *args);
+void TxTask(void *args);
 
 // Private.
 
