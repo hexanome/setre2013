@@ -25,5 +25,6 @@ static AppState _state;
 void SetupStateManager();
 AppState GetState();
 void SetState(AppState state);
+void SetNextState();
 
 #endif

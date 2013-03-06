@@ -1992,6 +1992,9 @@
       <file>
         <name>$PROJ_DIR$\source\shared\synchronization.h</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$\source\shared\types.h</name>
+      </file>
     </group>
     <group>
       <name>Tasks</name>

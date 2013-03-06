@@ -25,7 +25,7 @@ void ButtonsTask(void *args)
         if ((pressedButtons & buttons) == 0) continue;
         
         // React to the pressed buttons.
-        
+        SetNextState();
     }
 }
 
@@ -61,7 +61,7 @@ __interrupt void BUTTON_PORT_ISR(void)
     
 //    char error[1];
 //    if (err == OS_ERR_NONE)
-//    {
+//    { 
 //        error[0] = 'A';
 //    }
 //    else if (err == OS_ERR_Q_FULL)

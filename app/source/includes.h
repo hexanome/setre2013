@@ -15,6 +15,8 @@
 #include <os_cfg.h>
 #include <bsp.h>
 #include <ucos_ii.h>
-#include "source/shared/types.h"       
+#include "source/shared/types.h"  
+#include "source/shared/state_manager.h" 
+#include "source/shared/synchronization.h"      
 
 #endif

@@ -12,6 +12,10 @@ void MainTask(void *args)
     // Initialize BSP functions.
     BSP_Init();
     
+    // Setup the shared components.
+    SetupStateManager();
+    SetupSynchronization();
+    
     // Start the child tasks.
     TasksCreate();
     
@@ -30,35 +34,24 @@ void MainTask(void *args)
 void TasksCreate()
 {
     // Start the buttons task.
-    OSTaskCreateExt(ButtonsTask, 
-                    (void *)0,
-                    (OS_STK *)&ButtonsTaskStack[BUTTONS_TASK_STACK_SIZE - 1],
-                    BUTTONS_TASK_PRIORITY,
-                    BUTTONS_TASK_PRIORITY,
-                    (OS_STK *)&ButtonsTaskStack[0],
-                    BUTTONS_TASK_STACK_SIZE,
-                    (void *)0,
-                    OS_TASK_OPT_STK_CHK | OS_TASK_OPT_STK_CLR);
+    TaskStart(ButtonsTask, BUTTONS_TASK_PRIORITY, ButtonsTaskStack, BUTTONS_TASK_STACK_SIZE);
     
     // Start the Microphone Recording task.
-    OSTaskCreateExt(RecordTask, 
-                    (void *)0,
-                    (OS_STK *)&RecordTaskStack[RECORD_TASK_STACK_SIZE - 1],
-                    RECORD_TASK_PRIORITY,
-                    RECORD_TASK_PRIORITY,
-                    (OS_STK *)&RecordTaskStack[0],
-                    RECORD_TASK_STACK_SIZE,
-                    (void *)0,
-                    OS_TASK_OPT_STK_CHK | OS_TASK_OPT_STK_CLR);
+    TaskStart(RecordTask, RECORD_TASK_PRIORITY, RecordTaskStack, RECORD_TASK_STACK_SIZE);
     
     // Start the LCD task.
-    OSTaskCreateExt(LcdTask, 
+    TaskStart(LcdTask, LCD_TASK_PRIORITY, LcdTaskStack, LCD_TASK_STACK_SIZE);
+}
+
+void TaskStart(void (*task)(void *), int priority, TaskStack *stack, int stackSize)
+{
+    OSTaskCreateExt(task, 
                     (void *)0,
-                    (OS_STK *)&LcdTaskStack[LCD_TASK_STACK_SIZE - 1],
-                    LCD_TASK_PRIORITY,
-                    LCD_TASK_PRIORITY,
-                    (OS_STK *)&LcdTaskStack[0],
-                    LCD_TASK_STACK_SIZE,
+                    (OS_STK *)&stack[stackSize - 1],
+                    priority,
+                    priority,
+                    (OS_STK *)&stack[0],
+                    stackSize,
                     (void *)0,
                     OS_TASK_OPT_STK_CHK | OS_TASK_OPT_STK_CLR);
 }
