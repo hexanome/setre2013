@@ -1979,6 +1979,21 @@
   <group>
     <name>App</name>
     <group>
+      <name>Shared</name>
+      <file>
+        <name>$PROJ_DIR$\source\shared\state_manager.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\source\shared\state_manager.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\source\shared\synchronization.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\source\shared\synchronization.h</name>
+      </file>
+    </group>
+    <group>
       <name>Tasks</name>
       <file>
         <name>$PROJ_DIR$\source\tasks\buttons_task.c</name>
@@ -2137,7 +2152,7 @@
     <group>
       <name>MSP430X</name>
       <file>
-        <name>$PROJ_DIR$\..\os\uC-CPU\msp430x\IAR\cpu.h</name>
+        <name>$PROJ_DIR$\..\os\uC-CPU\MSP430X\IAR\cpu.h</name>
       </file>
     </group>
     <file>
