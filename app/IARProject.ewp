@@ -2016,12 +2016,6 @@
     </file>
   </group>
   <group>
-    <name>App2</name>
-    <file>
-      <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\uCOS-II\app2.c</name>
-    </file>
-  </group>
-  <group>
     <name>BSP</name>
     <group>
       <name>F5xx_F6xx_Core_Lib</name>
@@ -2068,13 +2062,13 @@
         <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_adc.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_board.c</name>
+        <name>$PROJ_DIR$\..\os\EVALBOARDS\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_board.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_board.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_buttons.c</name>
+        <name>$PROJ_DIR$\..\os\EVALBOARDS\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_buttons.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_buttons.h</name>
@@ -2105,7 +2099,7 @@
       </file>
     </group>
     <file>
-      <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\bsp.c</name>
+      <name>$PROJ_DIR$\..\os\EVALBOARDS\TI\MSP-EXP430F5438\IAR\BSP\bsp.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\bsp.h</name>
