@@ -8,14 +8,14 @@
 *******************************************************************************/
 
 // Tasks.
-static OS_STK RXTaskStack[RX_TASK_STACK_SIZE];
+static OS_STK RxTaskStack[RX_TASK_STACK_SIZE];
 
 /*******************************************************************************
 * Function prototypes.
 *******************************************************************************/
 
 // Public.
-void RXTask(void *args);
+void RxTask(void *args);
 
 // Private.
 
