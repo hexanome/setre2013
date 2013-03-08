@@ -1992,6 +1992,9 @@
       <file>
         <name>$PROJ_DIR$\source\shared\synchronization.h</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$\source\shared\types.h</name>
+      </file>
     </group>
     <group>
       <name>Tasks</name>
@@ -2089,13 +2092,13 @@
         <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_adc.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_board.c</name>
+        <name>$PROJ_DIR$\..\os\EVALBOARDS\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_board.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_board.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_buttons.c</name>
+        <name>$PROJ_DIR$\..\os\EVALBOARDS\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_buttons.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_buttons.h</name>
@@ -2126,7 +2129,7 @@
       </file>
     </group>
     <file>
-      <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\bsp.c</name>
+      <name>$PROJ_DIR$\..\os\EVALBOARDS\TI\MSP-EXP430F5438\IAR\BSP\bsp.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\bsp.h</name>

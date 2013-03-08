@@ -12,7 +12,7 @@
 *******************************************************************************/
 
 // Tasks.
-static OS_STK MainTaskStack[MAIN_TASK_STACK_SIZE];
+static TaskStack MainTaskStack[MAIN_TASK_STACK_SIZE];
 
 /*******************************************************************************
 * Function prototypes.
@@ -23,5 +23,6 @@ void MainTask(void *args);
 
 // Private.
 static void TasksCreate();
+static void TaskStart(void (*task)(void *), int priority, TaskStack *stack, int stackSize);
 
 #endif
