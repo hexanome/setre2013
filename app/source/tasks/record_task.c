@@ -1,4 +1,18 @@
 #include "record_task.h"
+#include "hal_adc.h"
+#include "hal_flash.h"
+
+
+/* A SUPPRIMER PAR LA SUITE */
+OS_EVENT * msgQBufferTx;
+OS_EVENT * msgQSyncDMA0;
+
+typedef struct {
+   unsigned long startAddr;
+   unsigned long endAddr;
+} audioChunk;
+/*******/
+
 
 /*******************************************************************************
 * The Record Task.
@@ -7,13 +21,156 @@
 *******************************************************************************/
 
 void RecordTask(void *args)
+{   
+  unsigned char i;
+  // TODO internal Q creation
+  while (1) {
+    setupRecord();
+    
+    // Erase in flash the audio sample previously recorded 
+    flashEraseBank(AUDIO_MEM_START[0]);
+    flashEraseBank(AUDIO_MEM_START[1]);
+    flashEraseBank(AUDIO_MEM_START[2]);
+    flashErase(AUDIO_MEM_START[3], AUDIO_MEM_START[4]); 
+
+    // Record the user voice
+    // TODO : loop on the previous segments ... 1,2,3,1,2,3 ...
+    for (i=0;i<3;i++) {  
+      // Set the destination of the DMA to the start address in flash
+      __data16_write_addr((unsigned short)DMA0DA_,
+                          (unsigned long)AUDIO_MEM_START[i]); 
+      // Set the size in byte of the "page"
+      DMA0SZ = AUDIO_MEM_START[i+1] - AUDIO_MEM_START[i] - 1;      
+
+      record();     
+
+      if (DMA0SZ != AUDIO_MEM_START[i+1] - AUDIO_MEM_START[i] - 1) {
+        lastAudioByte = AUDIO_MEM_START[i+1] - DMA0SZ;
+        break;
+      }
+      else 
+        lastAudioByte = AUDIO_MEM_START[i+1]-1;
+   
+      // Sending addresses for entire data
+      audioChunk chunk = {
+        .startAddr = AUDIO_MEM_START[i], 
+        .endAddr = lastAudioByte
+      };    
+      
+      OSQPost(msgQBufferTx, (void *) &chunk);
+    }  		
+
+    stopRecord();   
+    OSTaskSuspend(RECORD_TASK_PRIORITY);  
+  }
+}
+
+/*******************************************************************************
+* Method implementations.
+*******************************************************************************/
+
+static void setupRecord(void)
 {
-    // TODO: Do something.
-    for (;;)
-    {
-        WaitOn(qLcdRefresh);
-        
-        // Delay 100ms.
-        OSTimeDlyHMSM(0, 0, 0, 100);
-    }   
+  AUDIO_PORT_OUT |= MIC_POWER_PIN;
+  AUDIO_PORT_OUT &= ~MIC_INPUT_PIN;
+  AUDIO_PORT_SEL |= MIC_INPUT_PIN;
+    
+  // Use SMCLK as TIMER B source
+  TBCTL = TBSSEL_2;
+  // Initialize the TIMER B count
+  TBR = 0;
+  // Set TIMER B comparison value
+  TBCCR0 = 2047;
+  TBCCR1= 2047- 100;
+  // Set ouput mode to reset/set
+  TBCCTL1 = OUTMOD_7;   
+
+  // Enabling MODOSC requests
+  UCSCTL8 |= MODOSCREQEN;
+  // Select 8-bit resolution
+  ADC12CTL2 = ADC12RES_0;
+  // Turn ON the ADC and set the sampling period to 16 ADC12CLK cycles
+  ADC12CTL0 = ADC12ON + ADC12SHT02 ;  
+  // SAMPCON signal is sourced from the sampling timer
+  // Conversion sequence mode = Repeat-single-channel
+  // Source clock selected : MCLK
+  // Sample-and-hold source : Timer source
+  ADC12CTL1 = ADC12SHP + ADC12CONSEQ_2 + ADC12SSEL_2 + ADC12SHS_3;     
+  // Input channel selected : A5, Indicates the last conversion in a sequence
+  ADC12MCTL0 = MIC_INPUT_CHAN | ADC12EOS  ; 
+  // Enable conversion
+  ADC12CTL0 |= ADC12ENC;
+  //Start conversion
+  ADC12CTL0 |= ADC12SC;                     
+  
+  // ADC12IFGx triggers DMA0
+  DMACTL0 = DMA0TSEL_24;
+  // Src address = ADC12 module
+  __data16_write_addr((unsigned short)DMA0SA_,(unsigned long)ADC12MEM0_);
+}
+
+static void stopRecord(void)
+{   
+  TBCTL &= ~MC0;
+  ADC12CTL0 &= ~( ADC12ENC + ADC12ON );  
+
+  // Disable Flash write
+  FCTL1 = FWKEY;
+  // Lock Flash memory 
+  FCTL3 = FWKEY + LOCK;
+
+  // Stop conversion immediately
+  ADC12CTL1 &= ~ADC12CONSEQ_2;
+  // Disable ADC12 conversion
+  ADC12CTL0 &= ~ADC12ENC;
+  // Switch off ADC12 & ref voltage 
+  ADC12CTL0 = 0;
+
+  // Disable Timer_B
+  TBCTL = 0;                                
+
+  // Turn of MIC 
+  AUDIO_PORT_OUT &= ~MIC_POWER_PIN;           
+  AUDIO_PORT_SEL &= ~MIC_INPUT_PIN;   
+
+  // Store lastAudioByte to Flash
+  //saveSettings();                           
+}
+
+static void record(void)
+{  
+  unsigned int syncMessage;
+  INTU8 err;
+  
+  // Unlock the flash for write
+  FCTL3 = FWKEY; 
+  // Long word write
+  FCTL1 = FWKEY + BLKWRT;                        
+  
+  DMA0CTL = DMADSTINCR_3 + DMAEN + DMADSTBYTE +  DMASRCBYTE + DMAIE;
+  // Enable Long-Word write, all 32 bits will be written once 
+  // 4 bytes are loaded
+  
+  TBCCTL1 &= ~CCIFG;
+  TBCTL |= MC0;                             
+  
+  // Enable interrupts 
+  __bis_SR_register(GIE);        
+  
+  syncMessage = (unsigned int) OSQPend(msgQSyncDMA0,0 , &err);
+  
+  TBCTL &= ~MC0;
+  DMA0CTL &= ~( DMAEN + DMAIE);
+  
+  FCTL3 = FWKEY + LOCK;                     // Lock the flash from write 
+}
+
+/*******************************************************************************
+* Interrupt routines.
+*******************************************************************************/
+#pragma vector=DMA_VECTOR
+__interrupt void DMA_ISR(void)
+{
+  DMA0CTL &= ~ DMAIFG;
+  OSQPost(msgQSyncDMA0, (void *) 1);
 }

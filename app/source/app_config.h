@@ -22,4 +22,8 @@
 #define RX_TASK_STACK_SIZE              256
 #define TX_TASK_STACK_SIZE              256
 
+// Buffer sizes
+
+#define TX_BUFFER_SIZE                  256
+
 #endif
