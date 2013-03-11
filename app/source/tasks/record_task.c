@@ -5,6 +5,7 @@
 
 /* A SUPPRIMER PAR LA SUITE */
 OS_EVENT * msgQBufferTx;
+OS_EVENT * msgQSyncDMA0;
 
 typedef struct {
    unsigned long startAddr;
@@ -22,10 +23,9 @@ typedef struct {
 void RecordTask(void *args)
 {   
   unsigned char i;
-  
+  // TODO internal Q creation
   while (1) {
     setupRecord();
-    OSTaskSuspend(RECORD_TASK_PRIORITY);    
     
     // Erase in flash the audio sample previously recorded 
     flashEraseBank(AUDIO_MEM_START[0]);
@@ -34,6 +34,7 @@ void RecordTask(void *args)
     flashErase(AUDIO_MEM_START[3], AUDIO_MEM_START[4]); 
 
     // Record the user voice
+    // TODO : loop on the previous segments ... 1,2,3,1,2,3 ...
     for (i=0;i<3;i++) {  
       // Set the destination of the DMA to the start address in flash
       __data16_write_addr((unsigned short)DMA0DA_,
@@ -41,30 +42,26 @@ void RecordTask(void *args)
       // Set the size in byte of the "page"
       DMA0SZ = AUDIO_MEM_START[i+1] - AUDIO_MEM_START[i] - 1;      
 
-      record();      
+      record();     
 
       if (DMA0SZ != AUDIO_MEM_START[i+1] - AUDIO_MEM_START[i] - 1) {
         lastAudioByte = AUDIO_MEM_START[i+1] - DMA0SZ;
         break;
       }
-      else lastAudioByte = AUDIO_MEM_START[i+1]-1;   
-    }        
-    
-    // Wait for the end of the recording
-    while (1 /* CHTO attente msgfin */) {  
-      // TODO : Sending addresses for partial data
-       OSTimeDlyHMSM(0, 0, 0, 100);
-    }		
+      else 
+        lastAudioByte = AUDIO_MEM_START[i+1]-1;
+   
+      // Sending addresses for entire data
+      audioChunk chunk = {
+        .startAddr = AUDIO_MEM_START[i], 
+        .endAddr = lastAudioByte
+      };    
+      
+      OSQPost(msgQBufferTx, (void *) &chunk);
+    }  		
 
-    stopRecord();
-    
-    // Sending addresses for entire data
-    audioChunk chunk = {
-      .startAddr = AUDIO_MEM_START[0], 
-      .endAddr = lastAudioByte
-    };
-    
-    OSQPost(msgQBufferTx, (void *) &chunk);
+    stopRecord();   
+    OSTaskSuspend(RECORD_TASK_PRIORITY);  
   }
 }
 
@@ -142,6 +139,9 @@ static void stopRecord(void)
 
 static void record(void)
 {  
+  unsigned int syncMessage;
+  INTU8 err;
+  
   // Unlock the flash for write
   FCTL3 = FWKEY; 
   // Long word write
@@ -154,8 +154,10 @@ static void record(void)
   TBCCTL1 &= ~CCIFG;
   TBCTL |= MC0;                             
   
-  __bis_SR_register(LPM0_bits + GIE);       // Enable interrupts, enter LPM0  
-  __no_operation(); 
+  // Enable interrupts 
+  __bis_SR_register(GIE);        
+  
+  syncMessage = (unsigned int) OSQPend(msgQSyncDMA0,0 , &err);
   
   TBCTL &= ~MC0;
   DMA0CTL &= ~( DMAEN + DMAIE);
@@ -170,5 +172,5 @@ static void record(void)
 __interrupt void DMA_ISR(void)
 {
   DMA0CTL &= ~ DMAIFG;
-  __bic_SR_register_on_exit(LPM0_bits);    // Exit LPM0 on reti
+  OSQPost(msgQSyncDMA0, (void *) 1);
 }
