@@ -1,7 +1,7 @@
 #ifndef __SYNCHRONIZATION_H__
 #define __SYNCHRONIZATION_H__
 
-#include "includes.h"
+#include <includes.h>
 
 /*******************************************************************************
 * Defines.
@@ -15,11 +15,11 @@
 *******************************************************************************/
 
 // Queues.
-static void *qLcdRefreshData[QUEUE_LCDREFRESH_LENGTH];
-static Queue *qLcdRefresh;
+static QueueData qLcdRefreshData[QUEUE_LCDREFRESH_LENGTH];
+extern Queue qLcdRefresh;
 
-static void *qToggleRecordData[QUEUE_TOGGLERECORD_LENGTH];
-static Queue *qToggleRecord;
+static QueueData qToggleRecordData[QUEUE_TOGGLERECORD_LENGTH];
+extern Queue qToggleRecord;
 
 /*******************************************************************************
 * Function prototypes.
@@ -27,7 +27,7 @@ static Queue *qToggleRecord;
 
 // Public.
 void SetupSynchronization();
-void WaitOn(Queue *queue);
-void Trigger(Queue *queue);
+void WaitOn(Queue queue);
+void Trigger(Queue queue);
 
 #endif

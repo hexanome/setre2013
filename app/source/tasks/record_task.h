@@ -1,7 +1,7 @@
 #ifndef __RECORDTASK_H__
 #define __RECORDTASK_H__
 
-#include <includes.h>
+#include <includes.h>  
 
 /*******************************************************************************
 * Variables.
@@ -16,7 +16,5 @@ static OS_STK RecordTaskStack[RECORD_TASK_STACK_SIZE];
 
 // Public.
 void RecordTask(void *args);
-
-// Private.
 
 #endif

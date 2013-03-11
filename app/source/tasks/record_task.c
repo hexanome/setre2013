@@ -9,9 +9,11 @@
 void RecordTask(void *args)
 {
     // TODO: Do something.
-    
-    while (1) {
+    for (;;)
+    {
+        WaitOn(qLcdRefresh);
+        
         // Delay 100ms.
         OSTimeDlyHMSM(0, 0, 0, 100);
-    }
+    }   
 }

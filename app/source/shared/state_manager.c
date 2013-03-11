@@ -26,14 +26,14 @@ void SetState(AppState state)
         case STATE_IDLE:
             break;
         case STATE_RECORDING:
-            Trigger(qToggleRecord);
+            //Trigger(qToggleRecord);
             break;
         case STATE_LOADING:
             break;
     }
     
     // In any case, refresh the display.
-    Trigger(qLcdRefresh);
+    //Trigger(qLcdRefresh);
     
     // Update the state value.
     _state = state;

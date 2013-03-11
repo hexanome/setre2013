@@ -38,12 +38,12 @@ void TasksCreate()
     
     // Start the Microphone Recording task.
     TaskStart(RecordTask, RECORD_TASK_PRIORITY, RecordTaskStack, RECORD_TASK_STACK_SIZE);
-    
+        
     // Start the LCD task.
-    TaskStart(LcdTask, LCD_TASK_PRIORITY, LcdTaskStack, LCD_TASK_STACK_SIZE);
+    //TaskStart(LcdTask, LCD_TASK_PRIORITY, LcdTaskStack, LCD_TASK_STACK_SIZE);
 }
 
-void TaskStart(void (*task)(void *), int priority, TaskStack *stack, int stackSize)
+void TaskStart(void (*task)(void *), int priority, OS_STK *stack, int stackSize)
 {
     OSTaskCreateExt(task, 
                     (void *)0,
