@@ -68,7 +68,8 @@ Graph=0
 Symbiont=0
 Exclusions=
 [Breakpoints]
-Count=0
+Bp0=_ "STD_CODE" "{$PROJ_DIR$\..\OS\EVALBOARDS\TI\MSP-EXP430F5438\IAR\BSP\F5XX_F6XX_CORE_LIB\HAL_FLASH.h}.24.2" 1 0 0 0 "" 0 ""
+Count=1
 [FET]
 Clock mode=14
 Extended Clock mode=-1

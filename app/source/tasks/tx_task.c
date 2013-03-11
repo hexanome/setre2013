@@ -19,7 +19,7 @@
 *******************************************************************************/
 
 // Temp variable for IPC
-OS_EVENT* msgQBufferTx	= NULL; // type: struct audioChunk
+//OS_EVENT* msgQBufferTx	= NULL; // type: struct audioChunk
 OS_EVENT* syncDMA				= NULL; // type: INT8U
 
 /*******************************************************************************
@@ -76,7 +76,7 @@ void TxTask(void *args)
 	while (1)
 	{
 		// Waits for a new block to read in the flash memory
-		blockToRead = (audioChunk*) OSQPend(msgQBufferTx, 0, &err);
+		//blockToRead = (audioChunk*) OSQPend(msgQBufferTx, 0, &err);
 		// Keeps a local copy of memory addresses
 		memoryBegPtr = blockToRead->startAddr;
 		memoryEndPtr = blockToRead->endAddr;

@@ -15,7 +15,7 @@
 *******************************************************************************/
 
 // Tasks.
-static OS_STK ButtonsTaskStack[BUTTONS_TASK_STACK_SIZE];
+extern OS_STK ButtonsTaskStack[BUTTONS_TASK_STACK_SIZE];
 
 // Values.
 static ButtonFlags buttons;
