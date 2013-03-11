@@ -2,7 +2,6 @@
 #include "hal_adc.h"
 #include "hal_flash.h"
 
-
 /* A SUPPRIMER PAR LA SUITE */
 OS_EVENT * msgQBufferTx;
 OS_EVENT * msgQSyncDMA0;
@@ -140,7 +139,7 @@ static void stopRecord(void)
 static void record(void)
 {  
   unsigned int syncMessage;
-  INTU8 err;
+  INT8U err;
   
   // Unlock the flash for write
   FCTL3 = FWKEY; 

@@ -19,7 +19,7 @@
 *******************************************************************************/
 
 // Temp variable for IPC
-OS_EVENT* msgQBufferTx	= NULL; // type: struct audioChunk
+//OS_EVENT* msgQBufferTx	= NULL; // type: struct audioChunk
 OS_EVENT* syncDMA				= NULL; // type: INT8U
 
 typedef struct
@@ -82,7 +82,7 @@ void TxTask(void *args)
 	while (1)
 	{
 		// Waits for a new block to read in the flash memory
-		blockToRead = (audioChunk*) OSQPend(msgQBufferTx, 0, &err);
+		//blockToRead = (audioChunk*) OSQPend(msgQBufferTx, 0, &err);
 		// Keeps a local copy of memory addresses
 		memoryBegPtr = blockToRead->startAddr;
 		memoryEndPtr = blockToRead->endAddr;
@@ -152,22 +152,22 @@ void TxTask(void *args)
 
 // DMA can handle message blocks up to 65535 bytes
 
-// NB: In another file
-#pragma vector=DMA_VECTOR
-__interrupt void DMA_ISR(void)
-{
-	// Interrupt source from channel 0
-	if ( DMAIV & 0x02 )
-		DMA0CTL &= ~DMAIFG;
-	// Interrupt source from channel 1
-	else if ( DMAIV & 0x04 )
-	{
-		OSQPost(syncDMA, (void*) 1);
-		DMA1CTL &= ~DMAIFG;
-	}
-	// Exit LPM0 on reti
- 	__bic_SR_register_on_exit(LPM0_bits);
-}
+//// NB: In another file
+//#pragma vector=DMA_VECTOR
+//__interrupt void DMA_ISR(void)
+//{
+//	// Interrupt source from channel 0
+//	if ( DMAIV & 0x02 )
+//		DMA0CTL &= ~DMAIFG;
+//	// Interrupt source from channel 1
+//	else if ( DMAIV & 0x04 )
+//	{
+//		OSQPost(syncDMA, (void*) 1);
+//		DMA1CTL &= ~DMAIFG;
+//	}
+//	// Exit LPM0 on reti
+// 	__bic_SR_register_on_exit(LPM0_bits);
+//}
 
 #if TIM_
 #pragma vector=TIMER0_A1_VECTOR
