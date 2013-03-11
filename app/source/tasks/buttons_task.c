@@ -30,6 +30,12 @@ void ButtonsTask(void *args)
 }
 
 /*******************************************************************************
+* Variable definition.
+*******************************************************************************/
+
+OS_STK ButtonsTaskStack[BUTTONS_TASK_STACK_SIZE];
+
+/*******************************************************************************
 * Method implementations.
 *******************************************************************************/
 
@@ -44,7 +50,8 @@ void InitializeButtons()
 
 void InitializeQueue()
 {
-    qButtons = OSQCreate(&qButtonsData[0], 1); 
+    void *data[1];
+    qButtons = OSQCreate(&data[0], 1); 
 }
 
 /*******************************************************************************
@@ -58,26 +65,4 @@ __interrupt void BUTTON_PORT_ISR(void)
     OSQPost(qButtons, &data[0]);
     
     BUTTON_PORT_IFG = 0;
-    
-//    char error[1];
-//    if (err == OS_ERR_NONE)
-//    { 
-//        error[0] = 'A';
-//    }
-//    else if (err == OS_ERR_Q_FULL)
-//    {
-//        error[0] = 'B';
-//    }
-//    else if (err == OS_ERR_EVENT_TYPE)
-//    {
-//        error[0] = 'C';
-//    }
-//    else if (err == OS_ERR_PEVENT_NULL)
-//    {
-//        error[0] = 'D';
-//    }
-//    else
-//    {
-//        error[0] = 'E';
-//    }
 }

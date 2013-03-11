@@ -119,7 +119,7 @@ void halUsbSendString(char string[], unsigned char length)
 
 // Temp variable for IPC
 OS_EVENT* qRxBuffer = NULL;
-OS_EVENT* qLcdRefresh = NULL;
+//OS_EVENT* qLcdRefresh = NULL;
 
 static void* bufferRx [SIZEOF_BLOCK];
 
@@ -149,7 +149,7 @@ void RxTask(void *args)
 		//halUsbReceiveString (textToRead, &aLength);
 		
 		// Post the recognized text to be displayed on the LCD screen
-		err = OSQPost (qLcdRefresh, textToRead);
+		//err = OSQPost (qLcdRefresh, textToRead);
 	}
 }
 

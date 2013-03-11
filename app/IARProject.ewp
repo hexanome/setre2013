@@ -1993,6 +1993,12 @@
         <name>$PROJ_DIR$\source\shared\synchronization.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$\source\shared\task_helpers.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\source\shared\task_helpers.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$\source\shared\types.h</name>
       </file>
     </group>
@@ -2053,7 +2059,7 @@
         <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\F5xx_F6xx_Core_Lib\HAL_FLASH.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\F5xx_F6xx_Core_Lib\HAL_FLASH.h</name>
+        <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\F5xx_F6xx_Core_lib\hal_flash.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\F5xx_F6xx_Core_lib\HAL_MACROS.h</name>

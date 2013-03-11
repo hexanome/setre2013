@@ -20,6 +20,7 @@
 *******************************************************************************/
 
 // Temp variable for IPC
+//OS_EVENT* msgQBufferTx	= NULL; // type: struct audioChunk
 OS_EVENT* qSyncDMA1	= NULL; // type: INT8U
 
 /*******************************************************************************
@@ -158,7 +159,7 @@ void TxTask(void *args)
 //	// Interrupt source from channel 1
 //	else if ( DMAIV & 0x04 )
 //	{
-//		OSQPost(msgQSyncDMA1, (void*) 1);
+//		OSQPost(qSyncDMA1, (void*) 1);
 //		DMA1CTL &= ~DMAIFG;
 //	}
 //	// Exit LPM0 on reti
