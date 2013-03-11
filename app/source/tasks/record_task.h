@@ -7,12 +7,13 @@
 * Defines.
 *******************************************************************************/
 
-#define Memstart          0x10000
-#define Memend            0x45BFF
-#define MemstartTest      0x40000 
-#define REC_TERM          1
-#define REC_START         0
-#define REC_SEND          2
+#define Memstart                        0x10000
+#define Memend                          0x45BFF
+#define MemstartTest                    0x40000 
+#define REC_TERM                        1
+#define REC_START                       0
+#define REC_SEND                        2
+#define QUEUE_SYNCDMA_LENGTH            1
 
 /*******************************************************************************
 * Variables.
@@ -25,6 +26,10 @@ static unsigned long AUDIO_MEM_START[] = {0x10000, 0x20000, 0x30000, 0x40000, 0x
 static unsigned long lastAudioByte = 0;
 static unsigned long PlaybackPtr;
 extern unsigned char recordEn;
+
+// Queues.
+static void *qSyncDMAData[QUEUE_SYNCDMA_LENGTH];
+static Queue *qSyncDMA;
 
 /*******************************************************************************
 * Function prototypes.

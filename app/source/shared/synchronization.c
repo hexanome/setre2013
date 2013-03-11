@@ -11,6 +11,9 @@ void SetupSynchronization()
     
     // Create the ToggleRecord queue.
     qToggleRecord = OSQCreate(&qToggleRecordData[0], QUEUE_TOGGLERECORD_LENGTH);
+
+    // Create the TxBuffer queue.
+    qTxBuffer = OSQCreate(&qTxBufferData[0], QUEUE_TXBUFFER_LENGTH);
 }
 
 void WaitOn(Queue *queue)

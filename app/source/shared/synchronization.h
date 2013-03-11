@@ -9,6 +9,7 @@
 
 #define QUEUE_LCDREFRESH_LENGTH         1
 #define QUEUE_TOGGLERECORD_LENGTH       1
+#define QUEUE_TXBUFFER_LENGTH           10
 
 /*******************************************************************************
 * Variables.
@@ -20,6 +21,9 @@ static Queue *qLcdRefresh;
 
 static void *qToggleRecordData[QUEUE_TOGGLERECORD_LENGTH];
 static Queue *qToggleRecord;
+
+static void *qTxBufferData[QUEUE_TXBUFFER_LENGTH];
+static Queue *qTxBuffer;
 
 /*******************************************************************************
 * Function prototypes.

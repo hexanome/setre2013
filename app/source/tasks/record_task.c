@@ -3,17 +3,6 @@
 #include "hal_flash.h"
 
 
-/* A SUPPRIMER PAR LA SUITE */
-OS_EVENT * msgQBufferTx;
-OS_EVENT * msgQSyncDMA0;
-
-typedef struct {
-   unsigned long startAddr;
-   unsigned long endAddr;
-} audioChunk;
-/*******/
-
-
 /*******************************************************************************
 * The Record Task.
 * Responsible for:
@@ -23,7 +12,9 @@ typedef struct {
 void RecordTask(void *args)
 {   
   unsigned char i;
-  // TODO internal Q creation
+  
+  
+  
   while (1) {
     setupRecord();
     
@@ -140,7 +131,7 @@ static void stopRecord(void)
 static void record(void)
 {  
   unsigned int syncMessage;
-  INTU8 err;
+  INT8U err;
   
   // Unlock the flash for write
   FCTL3 = FWKEY; 
