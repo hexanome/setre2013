@@ -29,7 +29,6 @@ extern unsigned char recordEn;
 
 // Queues.
 static void *qSyncDMAData[QUEUE_SYNCDMA_LENGTH];
-static Queue *qSyncDMA;
 
 /*******************************************************************************
 * Function prototypes.
@@ -42,5 +41,7 @@ void RecordTask(void *args);
 static void setupRecord(void);
 static void stopRecord(void);
 static void record(void);
+static void flashEraseBank(INT16U Flash_ptr);
+static void flashErase(INT16U Mem_start, INT16U Mem_end);
 
 #endif

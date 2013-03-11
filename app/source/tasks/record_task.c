@@ -2,6 +2,7 @@
 #include "hal_adc.h"
 #include "hal_flash.h"
 
+OS_EVENT *qSyncDMA;
 
 /*******************************************************************************
 * The Record Task.
@@ -48,7 +49,7 @@ void RecordTask(void *args)
         .endAddr = lastAudioByte
       };    
       
-      OSQPost(msgQBufferTx, (void *) &chunk);
+      OSQPost(qTxBuffer, (void *) &chunk);
     }  		
 
     stopRecord();   
@@ -129,10 +130,7 @@ static void stopRecord(void)
 }
 
 static void record(void)
-{  
-  unsigned int syncMessage;
-  INT8U err;
-  
+{    
   // Unlock the flash for write
   FCTL3 = FWKEY; 
   // Long word write
@@ -148,12 +146,43 @@ static void record(void)
   // Enable interrupts 
   __bis_SR_register(GIE);        
   
-  syncMessage = (unsigned int) OSQPend(msgQSyncDMA0,0 , &err);
+  WaitOn(qSyncDMA);
   
   TBCTL &= ~MC0;
   DMA0CTL &= ~( DMAEN + DMAIE);
   
   FCTL3 = FWKEY + LOCK;                     // Lock the flash from write 
+}
+
+void flashEraseBank(INT16U Flash_ptr)
+{
+    FCTL3 = FWKEY;
+    while (FCTL3 & BUSY) ;
+    FCTL1 = FWKEY + MERAS;
+
+    __data20_write_char(Flash_ptr, 0x00);      // Dummy write to start erase
+
+    while (FCTL3 & BUSY) ;
+    FCTL1 = FWKEY;
+    FCTL3 = FWKEY +  LOCK;
+}
+
+void flashErase(INT16U Mem_start, INT16U Mem_end) 
+{
+    uint16_t Flash_ptr = Mem_start;        // Start of record memory array
+    FCTL3 = FWKEY;                          // Unlock Flash memory for write
+    do {
+        if ((Flash_ptr & 0xFFFF) == 0x0000)    // Use bit 12 to toggle LED
+            P1OUT ^= 0x01;
+        FCTL1 = FWKEY + ERASE;
+        
+        __data20_write_char(Flash_ptr, 0x00);  // Dummy write to activate
+        
+        while (FCTL3 & BUSY) ;              // Segment erase
+        Flash_ptr += 0x0200;                   // Point to next segment
+    } while (Flash_ptr < Mem_end);
+    FCTL1 = FWKEY;
+    FCTL3 = FWKEY +  LOCK;
 }
 
 /*******************************************************************************
@@ -163,5 +192,5 @@ static void record(void)
 __interrupt void DMA_ISR(void)
 {
   DMA0CTL &= ~ DMAIFG;
-  OSQPost(msgQSyncDMA0, (void *) 1);
+  Trigger(qSyncDMA);
 }

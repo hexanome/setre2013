@@ -8,7 +8,7 @@
 
 // Temp variable for IPC
 OS_EVENT* msgQBufferRx = NULL;
-OS_EVENT* qLcdRefresh = NULL;
+//OS_EVENT* qLcdRefresh = NULL;
 
 
 void RxTask(void *args)
@@ -22,7 +22,7 @@ void RxTask(void *args)
 		textToRead = OSQPend(msgQBufferRx, 0, &err);
 		
 		// Post the recognized text to be displayed on the LCD screen
-		err = OSQPost (qLcdRefresh, textToRead);
+		//err = OSQPost (qLcdRefresh, textToRead);
 		
 		// Delay 100ms.
 		//OSTimeDlyHMSM(0, 0, 0, 100);
