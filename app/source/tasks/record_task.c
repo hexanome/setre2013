@@ -199,7 +199,7 @@ static INT32U getSegmentAddress(INT8U index)
   {
      return 0;
   }
-  return Memstart + index * SIZE_OF_SEGMENTS
+  return Memstart + index * SIZE_OF_SEGMENTS;
 }
 
 /*******************************************************************************

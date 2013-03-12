@@ -115,6 +115,8 @@ void halUsbSendString(char string[], unsigned char length)
 *   Receiving text packet received on the serial USB link from the computer
 *******************************************************************************/
 
+#define DEBUG 1
+
 // The reception buffer is symbolized by a message queue
 static OS_EVENT* qRxBuffer = NULL;
 static void* bufferRx [BUFFER_SIZE];
@@ -131,14 +133,25 @@ void RxTask(void *args)
 	
 	while (1)
 	{
+		// (Re-)Init the string's length
+		aLength = 0;
 		// Read the text
 		do
-		{	
+		{
 			// Wait for the message queue to be filled by the interrupt routine
 			receivedChar = (INT8U) OSQPend(qRxBuffer, 0, &err);
+
+#if DEBUG > 0
+			printf("Received character is %c\n", receivedChar);
+#endif
+			
 			textToRead[aLength++] = receivedChar;
 		}
 		while ( receivedChar != '\0' );
+		
+#if DEBUG > 0
+		printf("# %s #\n", textToRead);
+#endif
 		
 		//halUsbReceiveString (textToRead, &aLength);
 		
