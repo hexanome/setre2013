@@ -2,7 +2,6 @@
 #include "hal_adc.h"
 #include "hal_flash.h"
 
-OS_EVENT *qSyncDMA;
 
 /*******************************************************************************
 * The Record Task.
@@ -17,12 +16,15 @@ unsigned char audioBuffer4[SIZE_OF_AUDIO_BUFFER];
 unsigned char * audioBuffers[] = {audioBuffer1, audioBuffer2, 
                                   audioBuffer3, audioBuffer4 };
 
+void InitializeQSyncDMA()
+{
+	// Create the DMA Synchronization queue.
+	qSyncDMA = OSQCreate(qSyncDMAData, QUEUE_SYNCDMA_LENGTH);
+}
+
 void RecordTask(void *args)
 {   
   unsigned char index = 0;
-  
-  // Create the DMA Synchronization queue.
-  qSyncDMA = OSQCreate(qSyncDMAData, QUEUE_SYNCDMA_LENGTH);
 	
   while (1) {
     

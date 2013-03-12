@@ -14,20 +14,21 @@ OS_EVENT *qTxBuffer;
 
 void SetupSynchronization()
 {
-    // Create the LcdRefresh queue.
-    qLcdRefresh = OSQCreate(&qLcdRefreshData[0], QUEUE_LCDREFRESH_LENGTH);
-    
-    // Create the ToggleRecord queue.
-    qToggleRecord = OSQCreate(&qToggleRecordData[0], QUEUE_TOGGLERECORD_LENGTH);
+	// Create the LcdRefresh queue.
+	qLcdRefresh = OSQCreate(qLcdRefreshData, QUEUE_LCDREFRESH_LENGTH);
+  
+  // Create the ToggleRecord queue.
+	qToggleRecord = OSQCreate(qToggleRecordData, QUEUE_TOGGLERECORD_LENGTH);
 
-    // Create the TxBuffer queue.
-    qTxBuffer = OSQCreate(&qTxBufferData[0], QUEUE_TXBUFFER_LENGTH);
+	// Create the TxBuffer queue.
+	qTxBuffer = OSQCreate(qTxBufferData, QUEUE_TXBUFFER_LENGTH);
 }
 
+// Blocking on a message queue
 void WaitOn(Queue queue)
 {
-    INT8U err;
-    OSQPend(queue, 0, &err);
+	INT8U err;
+	OSQPend(queue, 0, &err);
             
 //    char error[1];
 //    if (err == OS_ERR_NONE)
@@ -52,15 +53,16 @@ void WaitOn(Queue queue)
 //    }
 }
 
+// Non-blocking waiting on a message queue
 bool PeekOn(Queue queue)
 {
-  INT8U err;
-  OSQAccept(queue, &err);
-  return err == OS_ERR_NONE;
+	INT8U err;
+	OSQAccept(queue, &err);
+	return err == OS_ERR_NONE;
 }
-    
+
+// Simply posts a NULL-pointer message, used only for signaling	
 void Trigger(Queue queue)
-{    
-    int data[1] = { 0 };
-    OSQPost(queue, &data[0]);
+{
+	OSQPost(queue, (void*)0);
 }

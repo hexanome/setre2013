@@ -3,11 +3,13 @@
 
 #include <includes.h>
 
-#include "../shared/task_helpers.h"
+//#include "../shared/task_helpers.h"
 
 #include "buttons_task.h"
 #include "record_task.h"
 #include "lcd_task.h"
+#include "rx_task.h"
+#include "tx_task.h"
 
 /*******************************************************************************
 * Variables.

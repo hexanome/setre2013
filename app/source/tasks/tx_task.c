@@ -15,9 +15,7 @@
 *   Transmitting voice packet on the serial USB link to make them analyze by the computer
 *******************************************************************************/
 
-// Temp variable for IPC
-OS_EVENT* qSyncDMA1	= NULL; // type: INT8U
-
+OS_EVENT* qSyncDMA1;
 
 /*******************************************************************************
 * Private variables
@@ -55,6 +53,11 @@ static void setupDMA (void)
 	// The destination of the DMA's channel 1 is the TX register of the USB
 	// DMAxDA => destinaton address (11.3.7 doc p402)
 	__data16_write_addr((unsigned long)&DMA1DA & 0xffff, (unsigned long)&UCA1TXBUF);
+}
+
+void InitializeQSyncDMA1(void)
+{
+	qSyncDMA1 = OSQCreate(qSyncDMA1Data, QUEUE_SYNCDMA1_LENGTH);
 }
 
 /*******************************************************************************
