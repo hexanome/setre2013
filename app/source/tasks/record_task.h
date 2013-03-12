@@ -29,7 +29,7 @@ static unsigned long PlaybackPtr;
 extern unsigned char recordEn;
 
 // Queues.
-static void *qSyncDMAData[QUEUE_SYNCDMA_LENGTH];
+static void* qSyncDMAData[QUEUE_SYNCDMA_LENGTH];
 
 /*******************************************************************************
 * Function prototypes.

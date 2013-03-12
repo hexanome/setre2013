@@ -6,6 +6,11 @@
 *   Recording input and setting variables accordingly.
 *******************************************************************************/
 
+#define DATA_SIZE 1
+
+static void* data [DATA_SIZE];
+
+
 void ButtonsTask(void *args)
 {
     // Define which buttons we're interested in.
@@ -50,8 +55,7 @@ void InitializeButtons()
 
 void InitializeQueue()
 {
-    void *data[1];
-    qButtons = OSQCreate(&data[0], 1); 
+    qButtons = OSQCreate(data,DATA_SIZE); 
 }
 
 /*******************************************************************************

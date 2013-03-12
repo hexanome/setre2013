@@ -29,7 +29,7 @@
       <file>$PROJ_DIR$\source\includes.h</file>
       <file>$PROJ_DIR$\source\app.c</file>
       <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\F5xx_F6xx_Core_Lib\HAL_FLASH.c</file>
-      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\F5xx_F6xx_Core_Lib\HAL_FLASH.h</file>
+      <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\F5xx_F6xx_Core_lib\hal_flash.h</file>
       <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\F5xx_F6xx_Core_lib\HAL_MACROS.h</file>
       <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\F5xx_F6xx_Core_Lib\HAL_PMAP.c</file>
       <file>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\F5xx_F6xx_Core_Lib\HAL_PMAP.h</file>
@@ -314,11 +314,11 @@
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 10 20 142 190 155 111 87 106 94 157 118 156 128 169 125 57 51 55 48 60 54 62 53 127 119 143 163 117 19 58 50 46 76 6 2 3</file>
+          <file> 10 20 142 190 155 111 87 106 94 157 118 156 128 169 125 57 51 55 48 60 54 62 53 127 119 143 163 117 19 58 50 46 76 6 2 3 40</file>
         </tool>
         <tool>
           <name>ICC430</name>
-          <file> 10 20 142 190 155 111 87 106 94 157 118 156 128 169 125 57 51 55 48 60 54 62 53 127 119 143 163 117 19 58 50 46 76 6 2 3</file>
+          <file> 10 20 142 190 155 111 87 106 94 157 118 156 128 169 125 57 51 55 48 60 54 62 53 127 119 143 163 117 19 58 50 46 76 6 2 3 40</file>
         </tool>
       </inputs>
     </file>

@@ -19,11 +19,11 @@ unsigned char * audioBuffers[] = {audioBuffer1, audioBuffer2,
 
 void RecordTask(void *args)
 {   
-  unsigned char index= 0;
+  unsigned char index = 0;
   
   // Create the DMA Synchronization queue.
-  qSyncDMA = OSQCreate(&qSyncDMAData[0], QUEUE_SYNCDMA_LENGTH);
-  
+  qSyncDMA = OSQCreate(qSyncDMAData, QUEUE_SYNCDMA_LENGTH);
+	
   while (1) {
     
     // Start recording

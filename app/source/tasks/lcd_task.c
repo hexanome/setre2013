@@ -1,4 +1,6 @@
 #include "lcd_task.h"
+#include "hal_lcd.h"
+
 
 /*******************************************************************************
 * The LCD Task.
@@ -9,12 +11,13 @@
 
 void LcdTask(void *args)
 {
-    // TODO: Do something.
-    
-    while (1) {
-        // Delay 100ms.
-        OSTimeDlyHMSM(0, 0, 0, 100);
-    }
+	// TODO: Do something.
+	while (1)
+	{
+		halLcdPrintLine("Loading", 0, OVERWRITE_TEXT);
+  	// Delay 100ms.
+		OSTimeDlyHMSM(0, 0, 0, 100);
+	}
 }
 
 /*******************************************************************************
