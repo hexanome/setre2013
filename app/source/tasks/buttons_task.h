@@ -21,8 +21,8 @@ extern OS_STK ButtonsTaskStack[BUTTONS_TASK_STACK_SIZE];
 static ButtonFlags buttons;
 
 // Synchronization.
-static void *qButtonsData[1];
-static OS_EVENT *qButtons;
+static QueueData qButtonsData[1];
+static Queue qButtons;
 
 /*******************************************************************************
 * Function prototypes.
