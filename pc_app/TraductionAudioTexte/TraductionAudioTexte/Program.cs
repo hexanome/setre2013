@@ -9,110 +9,98 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Diagnostics;
 
 
 namespace TraductionAudioTexte
 {
     class Program
     {
+        #region Private fields.
 
-        private static FileStream fileStream;// = new FileStream(filename, FileMode.Create);
-        private static MemoryStream raw_stream;    
-        private static string message = "";
+        private static SerialPort port;
+        private static TaskCompletionSource<bool> receiveComplete;
+        private static MemoryStream audioData;
+        private static bool readStarted;
+
+        #endregion
+
+        #region Program logic.
+
         static void Main(string[] args)
         {
+            /* Initialize variables. */
 
-            Menu();
-            Console.WriteLine("Fermeture du programme !!");
-        }
-        private static void Menu()
-        {
-            string chaine = "";
-            do
+            // Port.
+            port = new SerialPort(Config.SerialPortParameters.nomPort,
+                                  Config.SerialPortParameters.vitesse,
+                                  Parity.None,
+                                  Config.SerialPortParameters.bitDonnee, StopBits.One);
+
+            // Synchronization mechanism.
+            receiveComplete = new TaskCompletionSource<bool>();
+
+            /* Start the actual program. */
+            while (true)
             {
-                Console.WriteLine("Menu");
-                Console.WriteLine(" - lecture sur le port série taper l");
-                Console.WriteLine(" - traduction du fichier audio en texte taper tr");
-                Console.WriteLine(" - transmission texte taper t");
-                Console.WriteLine(" - finir taper fin");
-                chaine = Console.ReadLine();
-
-                if (chaine == "l")
-                    LecturePort();
-
-                if (chaine == "tr")
-                 Traduction();
-
-                if (chaine == "t")
-                {
-                    Transmission();
-                }
-            } while (chaine != "fin");
-        }
-        private static void LecturePort()
-        {
-            raw_stream = new MemoryStream();
-            SerialPort p = new SerialPort(Config.SerialPortParameters.nomPort, Config.SerialPortParameters.vitesse, Parity.None, 
-                                    Config.SerialPortParameters.bitDonnee, StopBits.One);
-            p.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
-            p.Open();
-            Console.WriteLine("Port série ouvert");
-            Console.WriteLine("Lecture");
-            Console.Read();
-            Console.WriteLine("Fermeture de la liaison !!");
-            p.Close();
-            //raw_stream.Close();
-        }
-
-        private static void Traduction()
-        {
-            byte[] myBytes = raw_stream.GetBuffer(); //File.ReadAllBytes(Config.nom_fichier_8); //
-            byte[] myBytes16MHz = Utils.Convert8To16Bit(myBytes);
-            string raw_name = Config.nom_fichier_16 + ".raw";
-            FileStream bytes_StreamBG = new FileStream(raw_name, FileMode.Create);
-            bytes_StreamBG.Write(myBytes16MHz, 0, myBytes16MHz.Length);
-            bytes_StreamBG.Close();
-            System.IO.Directory.CreateDirectory(Config.outfolder);
-            Utils.RunProcess(Config.switch_exe_path, Config.options_outfolder);
-            Utils.RunProcess(Config.switch_exe_path, Config.options_switch);
-            string flac_name = Config.nom_fichier_16 + ".flac";
-            byte[] flac_Bytes = File.ReadAllBytes(Config.outfolder + "\\" + flac_name);
-            var task = Utils.DoStuff(flac_Bytes);
-            task.Wait();
-            var content = JObject.Parse(task.Result);
-            var hypotheses = content["hypotheses"];
-            if (hypotheses != null && hypotheses.Count() > 0)
-            {
-                Console.WriteLine(Environment.NewLine + "Result: " + hypotheses.First["utterance"]);
-                message = (string)hypotheses.First["utterance"];
-
+                Start().Wait();
             }
-            Console.WriteLine("Traduction effectuée !!");
-            Console.Read();
         }
 
-        private static void Transmission()
+        private static async Task Start()
+        {            
+            using (audioData = new MemoryStream())
+            {
+                // Open port and start receiving.
+                readStarted = false;
+                port.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
+                port.Open();
+
+                // Wait for the transmission to be over.
+                await receiveComplete.Task;
+
+                // Stop receiving data.
+                port.DataReceived -= new SerialDataReceivedEventHandler(DataReceivedHandler);
+
+                // Convert the raw data to flac.
+                var flacFile = Utils.ConvertToFlac(audioData.GetBuffer());
+
+                // Translate the file.
+                string textResult = await Utils.TranslateFile(flacFile);
+                if (string.IsNullOrEmpty(textResult))
+                {
+                    return;
+                }
+                
+                // Write result to serial port.
+                port.Write(textResult);
+                port.Close();
+            }
+        }
+
+        #endregion
+
+        #region Event handlers.
+
+        private static void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
-            SerialPort p = new SerialPort(Config.SerialPortParameters.nomPort, Config.SerialPortParameters.vitesse, Parity.None, 
-                                    Config.SerialPortParameters.bitDonnee, StopBits.One);
-            p.Open(); 
-            Console.WriteLine(" ");
-            Console.WriteLine("Transmission");
-            Console.WriteLine(" ");
-            p.Write(message);
-            p.Close();
+            var sp = (SerialPort)sender;
+
+            // If the transmission is over, signal it.
+            if (sp.BytesToRead == 0 && readStarted)
+            {
+                receiveComplete.SetResult(true);
+                return;
+            }
+
+            readStarted = true;
+
+            // Otherwise, copy the buffer to our resulting stream.
+            var data = new byte[sp.BytesToRead];
+            sp.Read(data, 0, data.Length);
+            audioData.Write(data, 0, data.Length);
         }
 
-        private static void DataReceivedHandler(
-                     object sender,
-                     SerialDataReceivedEventArgs e)
-        {
-            SerialPort sp = (SerialPort)sender;
-            byte[] myBytes = new byte[sp.BytesToRead];
-            sp.Read(myBytes, 0, myBytes.Length);
-            Console.WriteLine("ecriture");
-            raw_stream.Write(myBytes, 0, myBytes.Length);
-        }
-
+        #endregion
     }
 }

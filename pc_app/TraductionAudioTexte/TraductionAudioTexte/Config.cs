@@ -15,11 +15,9 @@ namespace TraductionAudioTexte
             public static int vitesse = 57600;
             public static int bitDonnee = 8;
         }
-        public static string nom_fichier_8 = "audio_bin2";// fichier qui contient les données en 8 bit
-        public static string nom_fichier_16 = "bytes_16";// fichier qui contient les données en 16 bit 
-        public static string switch_exe_path = "C:\\Program Files (x86)\\NCH Software\\Switch\\switch.exe";// switch pour convertir le .raw en .flac
-        public static string options_switch = "-hide -convert " + nom_fichier_16 + ".raw -format .flac -settings .flac 8 16000 1 -overwrite ALWAYS -hide";// options de conversion
-        public static string options_outfolder = "-hide -outfolder C:\\TraductionAudioTexte";// setter le dossier du fichier de sortie de la conversion dans switch
-        public static string outfolder = "C:\\TraductionAudioTexte";// dossier du fichier de sortie de la conversion
+
+        public static string flacFilename = "audio.flac";
+        public static string soxExe = "External\\sox.exe";
+        public static string soxArgs = "-t raw -e unsigned-integer -r 7312 -b 8 -c 1 − -b 16 -t flac {0} rate -v 16k";
     }
 }

@@ -29,33 +29,34 @@ void WaitOn(Queue queue)
     INT8U err;
     OSQPend(queue, 0, &err);
             
-    char error[1];
-    if (err == OS_ERR_NONE)
-    { 
-        error[0] = 'A';
-    }
-    else if (err == OS_ERR_Q_FULL)
-    {
-        error[0] = 'B';
-    }
-    else if (err == OS_ERR_EVENT_TYPE)
-    {
-        error[0] = 'C';
-    }
-    else if (err == OS_ERR_PEVENT_NULL)
-    {
-        error[0] = 'D';
-    }
-    else
-    {
-        error[0] = 'E';
-    }
+//    char error[1];
+//    if (err == OS_ERR_NONE)
+//    { 
+//        error[0] = 'A';
+//    }
+//    else if (err == OS_ERR_Q_FULL)
+//    {
+//        error[0] = 'B';
+//    }
+//    else if (err == OS_ERR_EVENT_TYPE)
+//    {
+//        error[0] = 'C';
+//    }
+//    else if (err == OS_ERR_PEVENT_NULL)
+//    {
+//        error[0] = 'D';
+//    }
+//    else
+//    {
+//        error[0] = 'E';
+//    }
 }
 
-INT8U PeekOn(Queue queue)
+bool PeekOn(Queue queue)
 {
   INT8U err;
-  return ((INT8U) OSQAccept(queue, &err));
+  OSQAccept(queue, &err);
+  return err == OS_ERR_NONE;
 }
     
 void Trigger(Queue queue)
