@@ -206,9 +206,20 @@ static INT32U getSegmentAddress(INT8U index)
 /*******************************************************************************
 * Interrupt routines.
 *******************************************************************************/
+extern OS_EVENT* qSyncDMA1;
 #pragma vector=DMA_VECTOR
 __interrupt void DMA_ISR(void)
 {
-  DMA0CTL &= ~ DMAIFG;
-  Trigger(qSyncDMA);
+	// Interrupt source from channel 0
+	if ( DMAIV & 0x02 )
+	{
+		DMA0CTL &= ~ DMAIFG;
+	  Trigger(qSyncDMA);
+	}
+	// Interrupt source from channel 1
+	else if ( DMAIV & 0x04 )
+	{
+		DMA1CTL &= ~DMAIFG;
+		Trigger(qSyncDMA1);
+	}
 }

@@ -1,14 +1,10 @@
 #include "tx_task.h"
-// TODO: hal_usb can be possible here again
 #include "rx_task.h"
 
 // Init the usb connection in the main task
 
 // While developping the application, error code have to be checked
 #define DEBUG 1
-
-// Elsewhere (flash chunk to read)
-#define SIZEOF_BLOCK 255
 
 // Make sure the timer code is not here (removed for now)
 #undef TIM_
@@ -20,21 +16,21 @@
 *******************************************************************************/
 
 // Temp variable for IPC
-//OS_EVENT* msgQBufferTx	= NULL; // type: struct audioChunk
 OS_EVENT* qSyncDMA1	= NULL; // type: INT8U
+
 
 /*******************************************************************************
 * Private variables
 *******************************************************************************/
 // Each chunk has fixed size
-static char blockSize = SIZEOF_BLOCK;
+//static char blockSize = BUFFER_SIZE;
 
 // Memory bounds
 static INT16U memoryBegPtr = 0;
 static INT16U memoryEndPtr = 0;
 
 // Flash content read
-static char blockToSend [SIZEOF_BLOCK] = {0};
+//static char blockToSend [BUFFER_SIZE] = {0};
 
 /*******************************************************************************
 * Private function
@@ -77,7 +73,7 @@ void TxTask(void *args)
 	setupTimerA();
 #endif
 
-	//setupDMA();
+	setupDMA();
 		
 	while (1)
 	{
@@ -112,7 +108,7 @@ void TxTask(void *args)
 			
 		// Define the amount of information to be transferred (counts downwards to 0)
 		// (11.3.9 doc p404)
-		DMA1SZ = SIZEOF_BLOCK;
+		DMA1SZ = BUFFER_SIZE;
 		
 		// Enable Long-Word write, all 32 bits will be written once
 		// 4 bytes are loaded
@@ -128,7 +124,7 @@ void TxTask(void *args)
 		else
 			printf("DMA sent back %c\n", resultDMA);
 		// For now, only one bock is transferred
-		if (DMA1SZ != SIZEOF_BLOCK)
+		if (DMA1SZ != BUFFER_SIZE)
 			printf("DMA transfert error\n");
 #endif
 		
@@ -146,25 +142,6 @@ void TxTask(void *args)
 		//halUsbSendString ( blockToSend, blockSize );
 	}
 }
-
-// DMA can handle message blocks up to 65535 bytes
-
-//// NB: In another file
-//#pragma vector=DMA_VECTOR
-//__interrupt void DMA_ISR(void)
-//{
-//	// Interrupt source from channel 0
-//	if ( DMAIV & 0x02 )
-//		DMA0CTL &= ~DMAIFG;
-//	// Interrupt source from channel 1
-//	else if ( DMAIV & 0x04 )
-//	{
-//		OSQPost(qSyncDMA1, (void*) 1);
-//		DMA1CTL &= ~DMAIFG;
-//	}
-//	// Exit LPM0 on reti
-// 	__bic_SR_register_on_exit(LPM0_bits);
-//}
 
 #if TIM_
 #pragma vector=TIMER0_A1_VECTOR
