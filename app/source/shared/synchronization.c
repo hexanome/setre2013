@@ -55,7 +55,7 @@ void WaitOn(Queue queue)
 INT8U PeekOn(Queue queue)
 {
   INT8U err;
-  return OSQAccept(queue, &err);
+  return (INT8U) OSQAccept(queue, &err);
 }
     
 void Trigger(Queue queue)
