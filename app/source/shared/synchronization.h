@@ -32,6 +32,7 @@ extern Queue qTxBuffer;
 // Public.
 void SetupSynchronization();
 void WaitOn(Queue queue);
+INT8U PeekOn(Queue queue);
 void Trigger(Queue queue);
 
 #endif

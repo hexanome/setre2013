@@ -12,11 +12,17 @@ OS_EVENT *qSyncDMA;
 
 void RecordTask(void *args)
 {   
-  unsigned char i;
+  unsigned char index= 0;
+  INT8U err;
   
-  
+  // Create the DMA Synchronization queue.
+  qSyncDMA = OSQCreate(&qSyncDMAData[0], QUEUE_SYNCDMA_LENGTH);
   
   while (1) {
+    
+    // Start recording
+    WaitOn(qToggleRecord);
+    
     setupRecord();
     
     // Erase in flash the audio sample previously recorded 
@@ -27,25 +33,27 @@ void RecordTask(void *args)
 
     // Record the user voice
     // TODO : loop on the previous segments ... 1,2,3,1,2,3 ...
-    for (i=0;i<3;i++) {  
+    while (PeekOn(qToggleRecord) == OS_ERR_Q_EMPTY)
+    {
+      index = index % 3;
       // Set the destination of the DMA to the start address in flash
       __data16_write_addr((unsigned short)DMA0DA_,
-                          (unsigned long)AUDIO_MEM_START[i]); 
+                          (unsigned long)AUDIO_MEM_START[index]); 
       // Set the size in byte of the "page"
-      DMA0SZ = AUDIO_MEM_START[i+1] - AUDIO_MEM_START[i] - 1;      
+      DMA0SZ = AUDIO_MEM_START[index+1] - AUDIO_MEM_START[index] - 1;      
 
       record();     
 
-      if (DMA0SZ != AUDIO_MEM_START[i+1] - AUDIO_MEM_START[i] - 1) {
-        lastAudioByte = AUDIO_MEM_START[i+1] - DMA0SZ;
+      if (DMA0SZ != AUDIO_MEM_START[index+1] - AUDIO_MEM_START[index] - 1) {
+        lastAudioByte = AUDIO_MEM_START[index+1] - DMA0SZ;
         break;
       }
       else 
-        lastAudioByte = AUDIO_MEM_START[i+1]-1;
+        lastAudioByte = AUDIO_MEM_START[index+1]-1;
    
       // Sending addresses for entire data
       audioChunk chunk = {
-        .startAddr = AUDIO_MEM_START[i], 
+        .startAddr = AUDIO_MEM_START[index], 
         .endAddr = lastAudioByte
       };    
       
@@ -183,6 +191,15 @@ void flashErase(INT16U Mem_start, INT16U Mem_end)
     } while (Flash_ptr < Mem_end);
     FCTL1 = FWKEY;
     FCTL3 = FWKEY +  LOCK;
+}
+
+static INT32U getSegmentAddress(INT8U index)
+{
+  if (index >= NUMBER_OF_SEGMENTS)
+  {
+     return 0;
+  }
+  return Memstart + index * SIZE_OF_SEGMENTS
 }
 
 /*******************************************************************************
