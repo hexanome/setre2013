@@ -32,9 +32,6 @@ void SetState(AppState state)
             break;
     }
     
-    // In any case, refresh the display.
-    Trigger(qLcdRefresh);
-    
     // Update the state value.
     _state = state;
 } 

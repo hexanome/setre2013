@@ -8,7 +8,7 @@
 *******************************************************************************/
 
 // Tasks.
-static OS_STK LcdTaskStack[LCD_TASK_STACK_SIZE];
+extern OS_STK LcdTaskStack[LCD_TASK_STACK_SIZE];
 
 /*******************************************************************************
 * Function prototypes.

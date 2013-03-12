@@ -2,16 +2,7 @@
 #include "hal_adc.h"
 #include "hal_flash.h"
 
-
-/* A SUPPRIMER PAR LA SUITE */
-OS_EVENT * msgQBufferTx;
-
-typedef struct {
-   unsigned long startAddr;
-   unsigned long endAddr;
-} audioChunk;
-/*******/
-
+OS_EVENT *qSyncDMA;
 
 /*******************************************************************************
 * The Record Task.
@@ -23,9 +14,10 @@ void RecordTask(void *args)
 {   
   unsigned char i;
   
+  
+  
   while (1) {
     setupRecord();
-    OSTaskSuspend(RECORD_TASK_PRIORITY);    
     
     // Erase in flash the audio sample previously recorded 
     flashEraseBank(AUDIO_MEM_START[0]);
@@ -34,6 +26,7 @@ void RecordTask(void *args)
     flashErase(AUDIO_MEM_START[3], AUDIO_MEM_START[4]); 
 
     // Record the user voice
+    // TODO : loop on the previous segments ... 1,2,3,1,2,3 ...
     for (i=0;i<3;i++) {  
       // Set the destination of the DMA to the start address in flash
       __data16_write_addr((unsigned short)DMA0DA_,
@@ -41,30 +34,26 @@ void RecordTask(void *args)
       // Set the size in byte of the "page"
       DMA0SZ = AUDIO_MEM_START[i+1] - AUDIO_MEM_START[i] - 1;      
 
-      record();      
+      record();     
 
       if (DMA0SZ != AUDIO_MEM_START[i+1] - AUDIO_MEM_START[i] - 1) {
         lastAudioByte = AUDIO_MEM_START[i+1] - DMA0SZ;
         break;
       }
-      else lastAudioByte = AUDIO_MEM_START[i+1]-1;   
-    }        
-    
-    // Wait for the end of the recording
-    while (1 /* CHTO attente msgfin */) {  
-      // TODO : Sending addresses for partial data
-       OSTimeDlyHMSM(0, 0, 0, 100);
-    }		
+      else 
+        lastAudioByte = AUDIO_MEM_START[i+1]-1;
+   
+      // Sending addresses for entire data
+      audioChunk chunk = {
+        .startAddr = AUDIO_MEM_START[i], 
+        .endAddr = lastAudioByte
+      };    
+      
+      OSQPost(qTxBuffer, (void *) &chunk);
+    }  		
 
-    stopRecord();
-    
-    // Sending addresses for entire data
-    audioChunk chunk = {
-      .startAddr = AUDIO_MEM_START[0], 
-      .endAddr = lastAudioByte
-    };
-    
-    OSQPost(msgQBufferTx, (void *) &chunk);
+    stopRecord();   
+    OSTaskSuspend(RECORD_TASK_PRIORITY);  
   }
 }
 
@@ -141,7 +130,7 @@ static void stopRecord(void)
 }
 
 static void record(void)
-{  
+{    
   // Unlock the flash for write
   FCTL3 = FWKEY; 
   // Long word write
@@ -154,13 +143,46 @@ static void record(void)
   TBCCTL1 &= ~CCIFG;
   TBCTL |= MC0;                             
   
-  __bis_SR_register(LPM0_bits + GIE);       // Enable interrupts, enter LPM0  
-  __no_operation(); 
+  // Enable interrupts 
+  __bis_SR_register(GIE);        
+  
+  WaitOn(qSyncDMA);
   
   TBCTL &= ~MC0;
   DMA0CTL &= ~( DMAEN + DMAIE);
   
   FCTL3 = FWKEY + LOCK;                     // Lock the flash from write 
+}
+
+void flashEraseBank(INT16U Flash_ptr)
+{
+    FCTL3 = FWKEY;
+    while (FCTL3 & BUSY) ;
+    FCTL1 = FWKEY + MERAS;
+
+    __data20_write_char(Flash_ptr, 0x00);      // Dummy write to start erase
+
+    while (FCTL3 & BUSY) ;
+    FCTL1 = FWKEY;
+    FCTL3 = FWKEY +  LOCK;
+}
+
+void flashErase(INT16U Mem_start, INT16U Mem_end) 
+{
+    uint16_t Flash_ptr = Mem_start;        // Start of record memory array
+    FCTL3 = FWKEY;                          // Unlock Flash memory for write
+    do {
+        if ((Flash_ptr & 0xFFFF) == 0x0000)    // Use bit 12 to toggle LED
+            P1OUT ^= 0x01;
+        FCTL1 = FWKEY + ERASE;
+        
+        __data20_write_char(Flash_ptr, 0x00);  // Dummy write to activate
+        
+        while (FCTL3 & BUSY) ;              // Segment erase
+        Flash_ptr += 0x0200;                   // Point to next segment
+    } while (Flash_ptr < Mem_end);
+    FCTL1 = FWKEY;
+    FCTL3 = FWKEY +  LOCK;
 }
 
 /*******************************************************************************
@@ -170,5 +192,5 @@ static void record(void)
 __interrupt void DMA_ISR(void)
 {
   DMA0CTL &= ~ DMAIFG;
-  __bic_SR_register_on_exit(LPM0_bits);    // Exit LPM0 on reti
+  Trigger(qSyncDMA);
 }

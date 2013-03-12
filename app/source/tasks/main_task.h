@@ -3,6 +3,8 @@
 
 #include <includes.h>
 
+#include "../shared/task_helpers.h"
+
 #include "buttons_task.h"
 #include "record_task.h"
 #include "lcd_task.h"
@@ -12,7 +14,7 @@
 *******************************************************************************/
 
 // Tasks.
-static TaskStack MainTaskStack[MAIN_TASK_STACK_SIZE];
+extern OS_STK MainTaskStack[MAIN_TASK_STACK_SIZE];
 
 /*******************************************************************************
 * Function prototypes.
@@ -23,6 +25,5 @@ void MainTask(void *args);
 
 // Private.
 static void TasksCreate();
-static void TaskStart(void (*task)(void *), int priority, TaskStack *stack, int stackSize);
 
 #endif

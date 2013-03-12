@@ -1993,6 +1993,12 @@
         <name>$PROJ_DIR$\source\shared\synchronization.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$\source\shared\task_helpers.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\source\shared\task_helpers.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$\source\shared\types.h</name>
       </file>
     </group>
@@ -2053,7 +2059,7 @@
         <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\F5xx_F6xx_Core_Lib\HAL_FLASH.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\F5xx_F6xx_Core_Lib\HAL_FLASH.h</name>
+        <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\F5xx_F6xx_Core_lib\hal_flash.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\F5xx_F6xx_Core_lib\HAL_MACROS.h</name>
@@ -2092,13 +2098,13 @@
         <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_adc.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\os\EVALBOARDS\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_board.c</name>
+        <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_board.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_board.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\os\EVALBOARDS\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_buttons.c</name>
+        <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_buttons.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_buttons.h</name>
@@ -2121,15 +2127,9 @@
       <file>
         <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_rf.h</name>
       </file>
-      <file>
-        <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_usb.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\MSP-EXP430F5438 HAL\hal_usb.h</name>
-      </file>
     </group>
     <file>
-      <name>$PROJ_DIR$\..\os\EVALBOARDS\TI\MSP-EXP430F5438\IAR\BSP\bsp.c</name>
+      <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\bsp.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\os\EvalBoards\TI\MSP-EXP430F5438\IAR\BSP\bsp.h</name>
@@ -2155,7 +2155,7 @@
     <group>
       <name>MSP430X</name>
       <file>
-        <name>$PROJ_DIR$\..\os\uC-CPU\MSP430X\IAR\cpu.h</name>
+        <name>$PROJ_DIR$\..\os\uC-CPU\msp430x\IAR\cpu.h</name>
       </file>
     </group>
     <file>

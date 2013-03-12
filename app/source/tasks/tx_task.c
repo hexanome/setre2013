@@ -1,5 +1,6 @@
 #include "tx_task.h"
-#include "hal_usb.h"
+// TODO: hal_usb can be possible here again
+#include "rx_task.h"
 
 // Init the usb connection in the main task
 
@@ -19,14 +20,8 @@
 *******************************************************************************/
 
 // Temp variable for IPC
-OS_EVENT* msgQBufferTx	= NULL; // type: struct audioChunk
-OS_EVENT* syncDMA				= NULL; // type: INT8U
-
-typedef struct
-{
-	INT16U startAddr;
-	INT16U endAddr;
-} audioChunk;
+//OS_EVENT* msgQBufferTx	= NULL; // type: struct audioChunk
+OS_EVENT* qSyncDMA1	= NULL; // type: INT8U
 
 /*******************************************************************************
 * Private variables
@@ -55,10 +50,15 @@ static void setupTimerA (void)
 }
 #endif
 
+// We'll use the DMA to transfer directly from the flash to the transmit register
 static void setupDMA (void)
 {
 	// DMA channel 1 trigger is set to USCIA0 transmit event (may be useless/false)
-	DMACTL1 = DMA0TSEL_16;
+	DMACTL1 = DMA1TSEL_17;
+	
+	// The destination of the DMA's channel 1 is the TX register of the USB
+	// DMAxDA => destinaton address (11.3.7 doc p402)
+	__data16_write_addr((unsigned long)&DMA1DA & 0xffff, (unsigned long)&UCA1TXBUF);
 }
 
 /*******************************************************************************
@@ -82,7 +82,7 @@ void TxTask(void *args)
 	while (1)
 	{
 		// Waits for a new block to read in the flash memory
-		blockToRead = (audioChunk*) OSQPend(msgQBufferTx, 0, &err);
+		blockToRead = (audioChunk*) OSQPend(qTxBuffer, 0, &err);
 		// Keeps a local copy of memory addresses
 		memoryBegPtr = blockToRead->startAddr;
 		memoryEndPtr = blockToRead->endAddr;
@@ -95,8 +95,8 @@ void TxTask(void *args)
 #endif
 
 		// Reads the flash in order to retrieve the string to be sent
-		////
 #if TIM_
+		////
 		// 1 - Re-enable the timer A
 		// Use SMCLK as Timer0_A source, enable overflow interrupt
 		TA0CTL = TASSEL_2 + TAIE;
@@ -107,12 +107,9 @@ void TxTask(void *args)
 		////
 		// 2 - Set up the DMA controller
 		// The source of the DMA's channel 1 is the pointer on the flash stored in the flash
-		// DMASA => source address (11.3.8 doc p403) 
+		// DMAxSA => source address (11.3.8 doc p403)
 		__data16_write_addr((unsigned long)&DMA1SA & 0xffff, memoryBegPtr);
-		// The destination of the DMA's channel 1 is the message to be sent
-		// DMADA => destinaton address (11.3.7 doc p402)
-		__data16_write_addr((unsigned long)&DMA1DA & 0xffff, (unsigned long)&blockToSend);
-		
+			
 		// Define the amount of information to be transferred (counts downwards to 0)
 		// (11.3.9 doc p404)
 		DMA1SZ = SIZEOF_BLOCK;
@@ -123,7 +120,7 @@ void TxTask(void *args)
 		
 		////
 		// 3 - Wait for the treatment's end
-		resultDMA = (INT8U) OSQPend(syncDMA, 0, &err);
+		resultDMA = (INT8U) OSQPend(qSyncDMA1, 0, &err);
 
 #if DEBUG > 0
 		if ( err != OS_ERR_NONE )
@@ -145,29 +142,29 @@ void TxTask(void *args)
 		TA0CTL = 0;
 #endif
 		
-		// Writes it on the serial line to communicate with the computer
-		halUsbSendString ( blockToSend, blockSize );
+		// Writes it on the USB line to communicate with the computer
+		//halUsbSendString ( blockToSend, blockSize );
 	}
 }
 
 // DMA can handle message blocks up to 65535 bytes
 
-// NB: In another file
-#pragma vector=DMA_VECTOR
-__interrupt void DMA_ISR(void)
-{
-	// Interrupt source from channel 0
-	if ( DMAIV & 0x02 )
-		DMA0CTL &= ~DMAIFG;
-	// Interrupt source from channel 1
-	else if ( DMAIV & 0x04 )
-	{
-		OSQPost(syncDMA, (void*) 1);
-		DMA1CTL &= ~DMAIFG;
-	}
-	// Exit LPM0 on reti
- 	__bic_SR_register_on_exit(LPM0_bits);
-}
+//// NB: In another file
+//#pragma vector=DMA_VECTOR
+//__interrupt void DMA_ISR(void)
+//{
+//	// Interrupt source from channel 0
+//	if ( DMAIV & 0x02 )
+//		DMA0CTL &= ~DMAIFG;
+//	// Interrupt source from channel 1
+//	else if ( DMAIV & 0x04 )
+//	{
+//		OSQPost(qSyncDMA1, (void*) 1);
+//		DMA1CTL &= ~DMAIFG;
+//	}
+//	// Exit LPM0 on reti
+// 	__bic_SR_register_on_exit(LPM0_bits);
+//}
 
 #if TIM_
 #pragma vector=TIMER0_A1_VECTOR
