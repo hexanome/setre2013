@@ -22,7 +22,7 @@ extern Queue qLcdRefresh;
 static QueueData qToggleRecordData[QUEUE_TOGGLERECORD_LENGTH];
 extern Queue qToggleRecord;
 
-static void *qTxBufferData[QUEUE_TXBUFFER_LENGTH];
+static QueueData qTxBufferData[QUEUE_TXBUFFER_LENGTH];
 extern Queue qTxBuffer;
 
 /*******************************************************************************
@@ -32,7 +32,7 @@ extern Queue qTxBuffer;
 // Public.
 void SetupSynchronization();
 void WaitOn(Queue queue);
-INT8U PeekOn(Queue queue);
+bool PeekOn(Queue queue);
 void Trigger(Queue queue);
 
 #endif

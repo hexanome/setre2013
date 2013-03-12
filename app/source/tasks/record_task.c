@@ -39,7 +39,7 @@ void RecordTask(void *args)
 
     // Record the user voice
     // TODO : loop on the previous segments ... 1,2,3,1,2,3 ...
-    while (PeekOn(qToggleRecord) == OS_ERR_Q_EMPTY)
+    while (PeekOn(qToggleRecord))
     {
       index = index % 4;
       // Set the destination of the DMA to the start address in RAM
