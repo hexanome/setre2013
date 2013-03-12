@@ -14,6 +14,7 @@
 #define REC_START                       0
 #define REC_SEND                        2
 #define QUEUE_SYNCDMA_LENGTH            1
+#define SIZE_OF_AUDIO_BUFFER            256
 
 /*******************************************************************************
 * Variables.
@@ -38,6 +39,7 @@ static void *qSyncDMAData[QUEUE_SYNCDMA_LENGTH];
 void RecordTask(void *args);
 
 // Private.
+static INT32U getSegmentAddress(INT8U index);
 static void setupRecord(void);
 static void stopRecord(void);
 static void record(void);

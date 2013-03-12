@@ -10,50 +10,57 @@ OS_EVENT *qSyncDMA;
 *   Record audio from the microphone when needed.
 *******************************************************************************/
 
+unsigned char audioBuffer1[SIZE_OF_AUDIO_BUFFER];
+unsigned char audioBuffer2[SIZE_OF_AUDIO_BUFFER];
+unsigned char audioBuffer3[SIZE_OF_AUDIO_BUFFER];
+unsigned char audioBuffer4[SIZE_OF_AUDIO_BUFFER];
+unsigned char * audioBuffers[] = {audioBuffer1, audioBuffer2, 
+                                  audioBuffer3, audioBuffer4 };
+
 void RecordTask(void *args)
 {   
-  unsigned char i;
+  unsigned char index= 0;
   
-  
+  // Create the DMA Synchronization queue.
+  qSyncDMA = OSQCreate(&qSyncDMAData[0], QUEUE_SYNCDMA_LENGTH);
   
   while (1) {
+    
+    // Start recording
+    WaitOn(qToggleRecord);
+    
     setupRecord();
     
     // Erase in flash the audio sample previously recorded 
-    flashEraseBank(AUDIO_MEM_START[0]);
+    /*flashEraseBank(AUDIO_MEM_START[0]);
     flashEraseBank(AUDIO_MEM_START[1]);
     flashEraseBank(AUDIO_MEM_START[2]);
-    flashErase(AUDIO_MEM_START[3], AUDIO_MEM_START[4]); 
+    flashErase(AUDIO_MEM_START[3], AUDIO_MEM_START[4]); */
 
     // Record the user voice
     // TODO : loop on the previous segments ... 1,2,3,1,2,3 ...
-    for (i=0;i<3;i++) {  
-      // Set the destination of the DMA to the start address in flash
+    while (PeekOn(qToggleRecord) == OS_ERR_Q_EMPTY)
+    {
+      index = index % 4;
+      // Set the destination of the DMA to the start address in RAM
       __data16_write_addr((unsigned short)DMA0DA_,
-                          (unsigned long)AUDIO_MEM_START[i]); 
+                          (unsigned long)audioBuffers[index]); 
       // Set the size in byte of the "page"
-      DMA0SZ = AUDIO_MEM_START[i+1] - AUDIO_MEM_START[i] - 1;      
+      DMA0SZ = SIZE_OF_AUDIO_BUFFER;      
 
       record();     
-
-      if (DMA0SZ != AUDIO_MEM_START[i+1] - AUDIO_MEM_START[i] - 1) {
-        lastAudioByte = AUDIO_MEM_START[i+1] - DMA0SZ;
-        break;
-      }
-      else 
-        lastAudioByte = AUDIO_MEM_START[i+1]-1;
    
       // Sending addresses for entire data
       audioChunk chunk = {
-        .startAddr = AUDIO_MEM_START[i], 
-        .endAddr = lastAudioByte
-      };    
+        .startAddr = (unsigned long)audioBuffers[index], 
+        .endAddr = (unsigned long)audioBuffers[index] + SIZE_OF_AUDIO_BUFFER
+      };
       
       OSQPost(qTxBuffer, (void *) &chunk);
-    }  		
+      index++;
+    }       
 
-    stopRecord();   
-    OSTaskSuspend(RECORD_TASK_PRIORITY);  
+    stopRecord();
   }
 }
 
@@ -101,15 +108,45 @@ static void setupRecord(void)
   __data16_write_addr((unsigned short)DMA0SA_,(unsigned long)ADC12MEM0_);
 }
 
+static void record(void)
+{    
+  /*// Unlock the flash for write
+  FCTL3 = FWKEY; 
+  // Long word write
+  FCTL1 = FWKEY + BLKWRT;   */                     
+  
+  DMA0CTL = 
+    DMADT_0 + 
+    DMASRCINCR0 +
+    DMADSTINCR_3 +  
+    DMADSTBYTE + 
+    DMASRCBYTE + 
+    DMAEN +
+    DMAIE;
+  
+  TBCCTL1 &= ~CCIFG;
+  TBCTL |= MC0;                             
+  
+  // Enable interrupts 
+  __bis_SR_register(GIE);
+  
+  WaitOn(qSyncDMA);
+}
+
 static void stopRecord(void)
 {   
   TBCTL &= ~MC0;
+  DMA0CTL &= ~( DMAEN + DMAIE);
+  
+  /*FCTL3 = FWKEY + LOCK;                     // Lock the flash from write */
+  
+  //TBCTL &= ~MC0;
   ADC12CTL0 &= ~( ADC12ENC + ADC12ON );  
 
-  // Disable Flash write
+  /*// Disable Flash write
   FCTL1 = FWKEY;
   // Lock Flash memory 
-  FCTL3 = FWKEY + LOCK;
+  FCTL3 = FWKEY + LOCK;*/
 
   // Stop conversion immediately
   ADC12CTL1 &= ~ADC12CONSEQ_2;
@@ -123,38 +160,10 @@ static void stopRecord(void)
 
   // Turn of MIC 
   AUDIO_PORT_OUT &= ~MIC_POWER_PIN;           
-  AUDIO_PORT_SEL &= ~MIC_INPUT_PIN;   
-
-  // Store lastAudioByte to Flash
-  //saveSettings();                           
+  AUDIO_PORT_SEL &= ~MIC_INPUT_PIN;                            
 }
 
-static void record(void)
-{    
-  // Unlock the flash for write
-  FCTL3 = FWKEY; 
-  // Long word write
-  FCTL1 = FWKEY + BLKWRT;                        
-  
-  DMA0CTL = DMADSTINCR_3 + DMAEN + DMADSTBYTE +  DMASRCBYTE + DMAIE;
-  // Enable Long-Word write, all 32 bits will be written once 
-  // 4 bytes are loaded
-  
-  TBCCTL1 &= ~CCIFG;
-  TBCTL |= MC0;                             
-  
-  // Enable interrupts 
-  __bis_SR_register(GIE);        
-  
-  WaitOn(qSyncDMA);
-  
-  TBCTL &= ~MC0;
-  DMA0CTL &= ~( DMAEN + DMAIE);
-  
-  FCTL3 = FWKEY + LOCK;                     // Lock the flash from write 
-}
-
-void flashEraseBank(INT16U Flash_ptr)
+/*void flashEraseBank(INT16U Flash_ptr)
 {
     FCTL3 = FWKEY;
     while (FCTL3 & BUSY) ;
@@ -185,12 +194,32 @@ void flashErase(INT16U Mem_start, INT16U Mem_end)
     FCTL3 = FWKEY +  LOCK;
 }
 
+static INT32U getSegmentAddress(INT8U index)
+{
+  if (index >= NUMBER_OF_SEGMENTS)
+  {
+     return 0;
+  }
+  return Memstart + index * SIZE_OF_SEGMENTS
+}*/
+
 /*******************************************************************************
 * Interrupt routines.
 *******************************************************************************/
+extern OS_EVENT* qSyncDMA1;
 #pragma vector=DMA_VECTOR
 __interrupt void DMA_ISR(void)
 {
-  DMA0CTL &= ~ DMAIFG;
-  Trigger(qSyncDMA);
+	// Interrupt source from channel 0
+	if ( DMAIV & 0x02 )
+	{
+		DMA0CTL &= ~ DMAIFG;
+	  Trigger(qSyncDMA);
+	}
+	// Interrupt source from channel 1
+	else if ( DMAIV & 0x04 )
+	{
+		DMA1CTL &= ~DMAIFG;
+		Trigger(qSyncDMA1);
+	}
 }

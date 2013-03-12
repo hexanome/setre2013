@@ -51,6 +51,12 @@ void WaitOn(Queue queue)
         error[0] = 'E';
     }
 }
+
+INT8U PeekOn(Queue queue)
+{
+  INT8U err;
+  return ((INT8U) OSQAccept(queue, &err));
+}
     
 void Trigger(Queue queue)
 {    

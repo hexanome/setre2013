@@ -109,47 +109,54 @@ void halUsbSendString(char string[], unsigned char length)
 		halUsbSendChar(string[i]);
 }
 
-#define SIZEOF_BLOCK 255
-
 /*******************************************************************************
 * The Reception Task.
 * Responsible for:
 *   Receiving text packet received on the serial USB link from the computer
 *******************************************************************************/
 
-// Temp variable for IPC
-OS_EVENT* qRxBuffer = NULL;
-//OS_EVENT* qLcdRefresh = NULL;
+#define DEBUG 1
 
-static void* bufferRx [SIZEOF_BLOCK];
+// The reception buffer is symbolized by a message queue
+static OS_EVENT* qRxBuffer = NULL;
+static void* bufferRx [BUFFER_SIZE];
 
-// Elsewhere (flash chunk to read)
-#define SIZEOF_BLOCK 255
 
 void RxTask(void *args)
 {
 	INT8U err;
 	INT8U receivedChar;
-	char textToRead [SIZEOF_BLOCK] = {0};
+	char textToRead [BUFFER_SIZE] = {0};
 	INT8U aLength = 0;
 	
-	qRxBuffer = OSQCreate (bufferRx, SIZEOF_BLOCK);
+	qRxBuffer = OSQCreate (bufferRx, BUFFER_SIZE);
 	
 	while (1)
 	{
+		// (Re-)Init the string's length
+		aLength = 0;
 		// Read the text
 		do
-		{	
+		{
 			// Wait for the message queue to be filled by the interrupt routine
 			receivedChar = (INT8U) OSQPend(qRxBuffer, 0, &err);
+
+#if DEBUG > 0
+			printf("Received character is %c\n", receivedChar);
+#endif
+			
 			textToRead[aLength++] = receivedChar;
 		}
 		while ( receivedChar != '\0' );
 		
+#if DEBUG > 0
+		printf("# %s #\n", textToRead);
+#endif
+		
 		//halUsbReceiveString (textToRead, &aLength);
 		
 		// Post the recognized text to be displayed on the LCD screen
-		//err = OSQPost (qLcdRefresh, textToRead);
+		err = OSQPost (qLcdRefresh, textToRead);
 	}
 }
 
