@@ -2,7 +2,7 @@
 #include "hal_adc.h"
 #include "hal_flash.h"
 
-//OS_EVENT *qSyncDMA;
+OS_EVENT *qSyncDMA;
 
 /*******************************************************************************
 * The Record Task.
@@ -52,9 +52,9 @@ void RecordTask(void *args)
    
       // Sending addresses for entire data
       audioChunk chunk = {
-        .startAddr = AUDIO_MEM_START[index], 
-        .endAddr = audioBuffer1 + SIZE_OF_AUDIO_BUFFER
-      };    
+        .startAddr = (unsigned long)audioBuffers[index], 
+        .endAddr = (unsigned long)audioBuffers[index] + SIZE_OF_AUDIO_BUFFER
+      };
       
       OSQPost(qTxBuffer, (void *) &chunk);
       index++;
@@ -117,7 +117,7 @@ static void record(void)
   
   DMA0CTL = 
     DMADT_0 + 
-    DMASRTINCR_0 +
+    DMASRCINCR0 +
     DMADSTINCR_3 +  
     DMADSTBYTE + 
     DMASRCBYTE + 
