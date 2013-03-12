@@ -33,6 +33,6 @@ void ButtonsTask(void *args);
 
 // Private.
 static void InitializeButtons();
-static void InitializeQueue();
+void InitializeQueue();
 
 #endif

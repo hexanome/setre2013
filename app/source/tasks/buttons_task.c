@@ -10,7 +10,6 @@
 
 static void* data [DATA_SIZE];
 
-
 void ButtonsTask(void *args)
 {
     // Define which buttons we're interested in.
@@ -20,7 +19,7 @@ void ButtonsTask(void *args)
     InitializeButtons();
     
     // Create the synchronization object.
-    InitializeQueue();
+    //InitializeQueue();
     
     for (;;)
     {

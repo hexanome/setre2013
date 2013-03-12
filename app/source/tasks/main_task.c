@@ -1,4 +1,5 @@
 #include "main_task.h"
+#include "buttons_task.h"
 
 /*******************************************************************************
 * The Main Task.
@@ -15,6 +16,8 @@ void MainTask(void *args)
     // Setup the shared components.
     SetupStateManager();
     SetupSynchronization();
+		
+		InitializeQueue();
 		
     // Start the child tasks.
     TasksCreate();
