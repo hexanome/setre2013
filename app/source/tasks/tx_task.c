@@ -1,5 +1,6 @@
 #include "tx_task.h"
 #include "rx_task.h"
+#include "record_task.h"
 
 // Init the usb connection in the main task
 
@@ -127,7 +128,7 @@ void TxTask(void *args)
 		else
 			printf("DMA sent back %c\n", resultDMA);
 		// For now, only one bock is transferred
-		if (DMA1SZ != BUFFER_SIZE)
+		if (DMA1SZ != SIZE_OF_AUDIO_BUFFER)
 			printf("DMA transfert error\n");
 #endif
 		
