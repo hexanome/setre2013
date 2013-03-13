@@ -14,7 +14,7 @@ void ButtonsTask(void *args)
     buttons = BUTTON_S1 | BUTTON_S2;
 
     // Setup the buttons interruptions.
-    //InitializeButtons();
+    InitializeButtons();
 
     // Create the synchronization object.
     //InitializeQueue();
