@@ -437,6 +437,10 @@
           <name>BICOMP</name>
           <file> 157</file>
         </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 39</file>
+        </tool>
       </outputs>
       <inputs>
         <tool>
@@ -491,6 +495,10 @@
         <tool>
           <name>BICOMP</name>
           <file> 150</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 26</file>
         </tool>
       </outputs>
       <inputs>

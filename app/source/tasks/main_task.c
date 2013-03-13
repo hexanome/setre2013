@@ -15,9 +15,6 @@ void MainTask(void *args)
     // Setup the shared components.
     SetupStateManager();
     SetupSynchronization();
-		
-    // Initialize needed underlying layer
-    //InitializeButtons();
     
     // Initialize the differents IPC (mainly message queues)
     InitializeQButtons();
