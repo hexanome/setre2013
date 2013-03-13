@@ -117,19 +117,18 @@ void halUsbSendString(char string[], unsigned char length)
 
 #define DEBUG 1
 
-// The reception buffer is symbolized by a message queue
-static OS_EVENT* qRxBuffer = NULL;
-static void* bufferRx [BUFFER_SIZE];
-
+void InitializeQRxBuffer(void)
+{
+	qRxBuffer = OSQCreate (bufferRx, QUEUE_RX_BUFFER_LENGTH);
+}
 
 void RxTask(void *args)
 {
 	INT8U err;
 	INT8U receivedChar;
-	char textToRead [BUFFER_SIZE] = {0};
+	char textToRead [QUEUE_RX_BUFFER_LENGTH] = {0};
 	INT8U aLength = 0;
 	
-	qRxBuffer = OSQCreate (bufferRx, BUFFER_SIZE);
 	
 	while (1)
 	{

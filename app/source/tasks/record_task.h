@@ -29,7 +29,8 @@ static unsigned long PlaybackPtr;
 extern unsigned char recordEn;
 
 // Queues.
-static void *qSyncDMAData[QUEUE_SYNCDMA_LENGTH];
+static void* qSyncDMAData[QUEUE_SYNCDMA_LENGTH];
+static OS_EVENT *qSyncDMA;
 
 /*******************************************************************************
 * Function prototypes.
@@ -37,6 +38,7 @@ static void *qSyncDMAData[QUEUE_SYNCDMA_LENGTH];
 
 // Public.
 void RecordTask(void *args);
+void InitializeQSyncDMA(void);
 
 // Private.
 static INT32U getSegmentAddress(INT8U index);

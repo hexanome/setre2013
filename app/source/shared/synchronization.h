@@ -16,14 +16,14 @@
 *******************************************************************************/
 
 // Queues.
-static QueueData qLcdRefreshData[QUEUE_LCDREFRESH_LENGTH];
-extern Queue qLcdRefresh;
+static void* qLcdRefreshData[QUEUE_LCDREFRESH_LENGTH];
+extern OS_EVENT* qLcdRefresh;
 
-static QueueData qToggleRecordData[QUEUE_TOGGLERECORD_LENGTH];
-extern Queue qToggleRecord;
+static void* qToggleRecordData[QUEUE_TOGGLERECORD_LENGTH];
+extern OS_EVENT* qToggleRecord;
 
-static QueueData qTxBufferData[QUEUE_TXBUFFER_LENGTH];
-extern Queue qTxBuffer;
+static void* qTxBufferData[QUEUE_TXBUFFER_LENGTH];
+extern OS_EVENT* qTxBuffer;
 
 /*******************************************************************************
 * Function prototypes.

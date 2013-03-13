@@ -3,12 +3,18 @@
 
 #include <includes.h>
 
+#define QUEUE_SYNCDMA1_LENGTH 1
+
 /*******************************************************************************
 * Variables.
 *******************************************************************************/
 
 // Tasks.
 static OS_STK TxTaskStack[TX_TASK_STACK_SIZE];
+
+// Queue
+static void* qSyncDMA1Data[QUEUE_SYNCDMA1_LENGTH];
+extern OS_EVENT* qSyncDMA1; // type: INT8U
 
 /*******************************************************************************
 * Function prototypes.
@@ -17,6 +23,7 @@ static OS_STK TxTaskStack[TX_TASK_STACK_SIZE];
 // Public.
 void TxTask(void *args);
 
+void InitializeQSyncDMA1(void);
 // Private.
 
 #endif
