@@ -30,7 +30,7 @@ extern unsigned char recordEn;
 
 // Queues.
 static void* qSyncDMAData[QUEUE_SYNCDMA_LENGTH];
-static OS_EVENT *qSyncDMA;
+static OS_EVENT* qSyncDMA;
 
 /*******************************************************************************
 * Function prototypes.

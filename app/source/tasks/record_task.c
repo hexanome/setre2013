@@ -23,8 +23,9 @@ void InitializeQSyncDMA()
 }
 
 void RecordTask(void *args)
-{   
-  unsigned char index = 0;
+{
+	unsigned char index = 0;
+	INT8U err;
 	
   while (1) {
     
@@ -41,7 +42,7 @@ void RecordTask(void *args)
 
     // Record the user voice
     // TODO : loop on the previous segments ... 1,2,3,1,2,3 ...
-    while (PeekOn(qToggleRecord))
+    while ( !PeekOn(qToggleRecord) )
     {
       index = index % 4;
       // Set the destination of the DMA to the start address in RAM
@@ -60,7 +61,7 @@ void RecordTask(void *args)
       
       OSQPost(qTxBuffer, (void *) &chunk);
       index++;
-    }       
+    }
 
     stopRecord();
   }
