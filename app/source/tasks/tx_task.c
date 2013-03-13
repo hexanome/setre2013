@@ -5,7 +5,7 @@
 // Init the usb connection in the main task
 
 // While developping the application, error code have to be checked
-#define DEBUG 1
+#define DEBUG 0
 
 // Make sure the timer code is not here (removed for now)
 #undef TIM_
@@ -15,6 +15,8 @@
 * Responsible for:
 *   Transmitting voice packet on the serial USB link to make them analyze by the computer
 *******************************************************************************/
+
+OS_STK TxTaskStack[TX_TASK_STACK_SIZE];
 
 OS_EVENT* qSyncDMA1;
 
@@ -53,7 +55,7 @@ static void setupDMA (void)
 	
 	// The destination of the DMA's channel 1 is the TX register of the USB
 	// DMAxDA => destinaton address (11.3.7 doc p402)
-	__data16_write_addr((unsigned long)&DMA1DA & 0xffff, (unsigned long)&UCA1TXBUF);
+	__data16_write_addr((unsigned short)DMA1DA_, (unsigned long)UCA1TXBUF_);
 }
 
 void InitializeQSyncDMA1(void)
@@ -108,19 +110,27 @@ void TxTask(void *args)
 		// 2 - Set up the DMA controller
 		// The source of the DMA's channel 1 is the pointer on the flash stored in the flash
 		// DMAxSA => source address (11.3.8 doc p403)
-		__data16_write_addr((unsigned long)&DMA1SA & 0xffff, memoryBegPtr);
+		__data16_write_addr((unsigned short)DMA1SA_, memoryBegPtr);
 			
 		// Define the amount of information to be transferred (counts downwards to 0)
 		// (11.3.9 doc p404)
-		DMA1SZ = SIZE_OF_AUDIO_BUFFER;
+		DMA1SZ = memoryEndPtr - memoryBegPtr;
+		//DMA1SZ = SIZE_OF_AUDIO_BUFFER;
 		
 		// Enable Long-Word write, all 32 bits will be written once
 		// 4 bytes are loaded
-		DMA1CTL = DMADSTINCR_3 + DMAEN + DMADSTBYTE +  DMASRCBYTE + DMAIE;
+		DMA1CTL = DMADT_0 +
+							DMASRCINCR_3 +
+							DMADSTINCR_0 +
+							DMADSTBYTE +
+							DMASRCBYTE +
+							DMAEN +
+							DMAIE;
 		
 		////
 		// 3 - Wait for the treatment's end
-		resultDMA = (INT8U) OSQPend(qSyncDMA1, 0, &err);
+		WaitOn (qSyncDMA1);
+		//resultDMA = (INT8U) OSQPend(qSyncDMA1, 0, &err);
 
 #if DEBUG > 0
 		if ( err != OS_ERR_NONE )

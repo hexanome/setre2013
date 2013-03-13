@@ -9,6 +9,8 @@
 *   Record audio from the microphone when needed.
 *******************************************************************************/
 
+OS_STK RecordTaskStack[RECORD_TASK_STACK_SIZE];
+
 unsigned char audioBuffer1[SIZE_OF_AUDIO_BUFFER];
 unsigned char audioBuffer2[SIZE_OF_AUDIO_BUFFER];
 unsigned char audioBuffer3[SIZE_OF_AUDIO_BUFFER];
@@ -120,7 +122,7 @@ static void record(void)
   
   DMA0CTL = 
     DMADT_0 + 
-    DMASRCINCR0 +
+    DMASRCINCR_0 +
     DMADSTINCR_3 +  
     DMADSTBYTE + 
     DMASRCBYTE + 

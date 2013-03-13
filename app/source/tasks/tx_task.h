@@ -10,7 +10,7 @@
 *******************************************************************************/
 
 // Tasks.
-static OS_STK TxTaskStack[TX_TASK_STACK_SIZE];
+extern OS_STK TxTaskStack[TX_TASK_STACK_SIZE];
 
 // Queue
 static void* qSyncDMA1Data[QUEUE_SYNCDMA1_LENGTH];
