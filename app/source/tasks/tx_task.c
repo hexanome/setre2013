@@ -111,7 +111,7 @@ void TxTask(void *args)
 			
 		// Define the amount of information to be transferred (counts downwards to 0)
 		// (11.3.9 doc p404)
-		DMA1SZ = BUFFER_SIZE;
+		DMA1SZ = SIZE_OF_AUDIO_BUFFER;
 		
 		// Enable Long-Word write, all 32 bits will be written once
 		// 4 bytes are loaded

@@ -111,12 +111,12 @@ void DrawText(int x, int y, char string[], unsigned char grayScale)
             
             for (int i = 0; i < 13; i++)
             {
-                offset = i & 0x07
+                offset = i & 0x07;
                 
-                if ( != 0)
-                {
-                    SetPixel(x + i, y + j, grayScale);
-                }                
+//                if ( != 0)
+//                {
+//                    SetPixel(x + i, y + j, grayScale);
+//                }                
             }
         }
         
@@ -138,7 +138,7 @@ void SetPixel(int x, int y, unsigned char grayScale)
         switch(grayScale)
         {
             case PIXEL_OFF:  
-                value &= ~(3 << (offset * 2 ));         // Both corresponding bits are off.
+                value &= ~(3 << (offset * 2));          // Both corresponding bits are off.
                 break;
             case PIXEL_LIGHT:
                 value &= ~(1 << ((offset * 2) + 1));    // Lower bit is on.

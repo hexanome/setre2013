@@ -2,8 +2,7 @@
 #define __MAINTASK_H__
 
 #include <includes.h>
-
-//#include "../shared/task_helpers.h"
+#include "../shared/task_helpers.h"
 
 #include "buttons_task.h"
 #include "record_task.h"

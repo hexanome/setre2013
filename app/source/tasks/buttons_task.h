@@ -22,7 +22,7 @@ extern OS_STK ButtonsTaskStack[BUTTONS_TASK_STACK_SIZE];
 static unsigned char buttons;
 
 // Synchronization.
-static void*			qButtonsData[QUEUE_BUTTONS_LENGTH];
+static void*	        qButtonsData[QUEUE_BUTTONS_LENGTH];
 static OS_EVENT*	qButtons;
 
 /*******************************************************************************

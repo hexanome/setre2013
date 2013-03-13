@@ -16,21 +16,21 @@ void MainTask(void *args)
     SetupStateManager();
     SetupSynchronization();
 		
-		// Initialize needed underlying layer
-		InitializeButtons();
-		
-		// Initialize the differents IPC (mainly message queues)
-		InitializeQButtons();
-		InitializeQSyncDMA();
-		InitializeQSyncDMA1();
-		InitializeQRxBuffer();
+    // Initialize needed underlying layer
+    InitializeButtons();
+    
+    // Initialize the differents IPC (mainly message queues)
+    InitializeQButtons();
+    InitializeQSyncDMA();
+    InitializeQSyncDMA1();
+    InitializeQRxBuffer();
 		
     // Start the child tasks.
     TasksCreate();
     
     // Continue running but do nothing.
     while (1)
-		{
+    {
         // Delay 100s.
         OSTimeDlyHMSM(0, 0, 100, 0);
     }
