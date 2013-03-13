@@ -1,5 +1,6 @@
 #include "tx_task.h"
 #include "rx_task.h"
+#include "record_task.h"
 
 // Init the usb connection in the main task
 
@@ -111,7 +112,7 @@ void TxTask(void *args)
 			
 		// Define the amount of information to be transferred (counts downwards to 0)
 		// (11.3.9 doc p404)
-		DMA1SZ = BUFFER_SIZE;
+		DMA1SZ = SIZE_OF_AUDIO_BUFFER;
 		
 		// Enable Long-Word write, all 32 bits will be written once
 		// 4 bytes are loaded
@@ -127,7 +128,7 @@ void TxTask(void *args)
 		else
 			printf("DMA sent back %c\n", resultDMA);
 		// For now, only one bock is transferred
-		if (DMA1SZ != BUFFER_SIZE)
+		if (DMA1SZ != SIZE_OF_AUDIO_BUFFER)
 			printf("DMA transfert error\n");
 #endif
 		

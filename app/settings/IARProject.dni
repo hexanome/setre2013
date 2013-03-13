@@ -47,23 +47,38 @@ NextState1=0
 Break=0
 State Storage=0
 [DebugChecksum]
-Checksum=-1275238741
+Checksum=430722900
 [CallStack]
 ShowArgs=0
 [Disassembly]
 MixedMode=1
+[Log file]
+LoggingEnabled=_ 0
+LogFile=_ ""
+Category=_ 0
+[TermIOLog]
+LoggingEnabled=_ 0
+LogFile=_ ""
+[CallStackLog]
+Enabled=0
+[DriverProfiling]
+Enabled=0
+Mode=0
+Graph=0
+Symbiont=0
+Exclusions=
 [Breakpoints]
-Bp0=_ "STD_CODE" "{$PROJ_DIR$\source\tasks\record_task.c}.32.5" 1 0 0 0 "" 0 ""
-Bp1=_ "STD_CODE" "{$PROJ_DIR$\source\tasks\record_task.c}.25.3" 1 0 0 0 "" 0 ""
-Bp2=_ "STD_CODE" "{$PROJ_DIR$\source\tasks\buttons_task.c}.67.17" 1 0 0 0 "" 0 ""
-Bp3=_ "STD_CODE" "{$PROJ_DIR$\source\tasks\buttons_task.c}.58.1" 1 0 0 0 "" 0 ""
+Bp0=_ "STD_CODE" "{$PROJ_DIR$\source\tasks\record_task.c}.34.8" 1 0 0 0 "" 0 ""
+Bp1=_ "STD_CODE" "{$PROJ_DIR$\source\tasks\record_task.c}.27.3" 1 0 0 0 "" 0 ""
+Bp2=_ "STD_CODE" "{$PROJ_DIR$\source\tasks\buttons_task.c}.66.3" 1 0 0 0 "" 0 ""
+Bp3=_ "STD_CODE" "{$PROJ_DIR$\source\tasks\buttons_task.c}.57.2" 1 0 0 0 "" 0 ""
 Count=4
 [FET]
 Clock mode=14
 Extended Clock mode=-1
 Secure Password=
 Extended Clock Control Enable=1
-Advanced Extended Clock Control=1
+Advanced Extended Clock Control=0
 Emulation mode=0
 Free running=0
 Shutting Down=3
@@ -78,21 +93,6 @@ SP=0
 SR=0
 all registers=0
 File name=
-[Log file]
-LoggingEnabled=_ 0
-LogFile=_ ""
-Category=_ 0
-[TermIOLog]
-LoggingEnabled=_ 0
-LogFile=_ ""
 [Aliases]
 Count=0
 SuppressDialog=0
-[CallStackLog]
-Enabled=0
-[DriverProfiling]
-Enabled=0
-Mode=0
-Graph=0
-Symbiont=0
-Exclusions=
