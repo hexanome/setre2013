@@ -8,16 +8,10 @@
 *******************************************************************************/
 
 void LcdTask(void *args)
-{
-    // Initialize the LCD.
-    halLcdInit();
-    
-    // Initialize the backlight.
-    halLcdBackLightInit();
-    // halLcdSetBackLight(); <-- Find the right value.
-    
-    // Set the default contrast level.
+{    
+    // Set the contrast level and backlight.
     halLcdSetContrast(80);
+    halLcdSetBackLight(16); 
     
     Clear();
     
@@ -34,34 +28,41 @@ void LcdTask(void *args)
 
 void Draw()
 {
-    // Clear the screen.
-    //halLcdClearScreen();
+    // Clear the center region of the screen.
+    ClearRect(0, 21, LCD_COL, LCD_ROW - 21);
     
-//    // Draw the title bar.
-//    for (int i = 0; i < 20; i++)
-//    {
-//        halLcdLine(0, i, LCD_COL, i, PIXEL_ON);
-//    }
-//    
-//    // Draw the title.
     AppState state = GetState();
+    char *title;    
     
-    char *text;    
     if (state == STATE_IDLE)
     {
-        text = "Idle";
+        title = "Idle";
     }
     else if (state == STATE_RECORDING)
     {
-        text = "Recording";      
+        title = "Recording";     
+       
+        // Draw the time interval since starting to record.
+        INT32U time = OSTimeGet();
+        INT32U timeDiff = time - recordStartTime;
+
+        INT32U sTime = timeDiff / OS_TICKS_PER_SEC;
+        
+        unsigned char sSeconds = sTime % 60;
+        unsigned char sMinutes = (sTime % 3600) / 60;
+                
+        char sTimeString[5];
+        sprintf(sTimeString, "%.2d:%.2d", sMinutes, sSeconds);
+        DrawText(48, 55, sTimeString, PIXEL_ON);
     }
     else
     {
-        text = "Result";        
+        title = "Result";        
     }
     
-    DrawRect(0, 0, LCD_COL, 20, PIXEL_ON);
-    DrawText(8, 5, text, PIXEL_OFF);
+    // Draw the title.
+    DrawRect(0, 0, LCD_COL, 21, PIXEL_ON);
+    DrawText(8, 5, title, PIXEL_OFF);
 }
 
 void Clear()
@@ -70,6 +71,11 @@ void Clear()
     {
         image[i] = 0;
     }
+}
+
+void ClearRect(int x, int y, int width, int height)
+{
+    DrawRect(x, y, width, height, PIXEL_OFF);
 }
 
 void DrawRect(int x, int y, int width, int height, unsigned char grayScale)
@@ -99,7 +105,7 @@ void DrawVLine(int x1, int y1, int y2, unsigned char grayScale)
 void DrawText(int x, int y, char string[], unsigned char grayScale)
 {
     int index = 0;
-    int fontRowValue, offset;
+    int fontRowValue;
     char lookupChar;
     unsigned char pixelValue;
     

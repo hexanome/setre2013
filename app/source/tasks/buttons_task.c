@@ -62,10 +62,12 @@ void InitializeQButtons()
 
 #pragma vector=BUTTON_PORT_VECTOR
 __interrupt void BUTTON_PORT_ISR(void)
-{
-//	qButtonsData[0] =  (void *)BUTTON_PORT_IFG;
-    // Get the pressed button (by reading IFG) and signals the buttons task
-    OSQPost(qButtons, (void *)BUTTON_PORT_IFG);
+{    
+    unsigned char pressedButtons = BUTTON_PORT_IFG;
+    
     // Acknowledge IT
     BUTTON_PORT_IFG = 0;
+    
+    // Signals the buttons task
+    OSQPost(qButtons, (void *)pressedButtons);
 }

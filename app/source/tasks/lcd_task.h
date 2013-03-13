@@ -35,6 +35,7 @@ void LcdTask(void *args);
 static void Draw();
 
 static void Clear();
+static void ClearRect(int x, int y, int width, int height);
 static void DrawRect(int x, int y, int width, int height, unsigned char grayScale);
 static void DrawHLine(int x1, int y1, int x2, unsigned char grayScale);
 static void DrawVLine(int x1, int y1, int y2, unsigned char grayScale);

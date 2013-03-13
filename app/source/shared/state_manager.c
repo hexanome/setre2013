@@ -1,5 +1,7 @@
 #include "state_manager.h"
 
+INT32U recordStartTime = 0;
+
 /*******************************************************************************
 * Method implementation.
 *******************************************************************************/
@@ -23,7 +25,10 @@ void SetState(AppState state)
     // Do something depending on the new state value.
     switch (state)
     {
-        case STATE_IDLE:
+        case STATE_IDLE:         
+            // Set the time when the recording begun.
+            recordStartTime = OSTimeGet();            
+            Trigger(qToggleRecord);            
             break;
         case STATE_RECORDING:
             Trigger(qToggleRecord);
