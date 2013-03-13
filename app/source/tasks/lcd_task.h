@@ -23,7 +23,6 @@ extern unsigned char fonts_lookup[];
 
 // Private.
 static unsigned int image[18 * 110];
-static int index = 0;
 
 /*******************************************************************************
 * Function prototypes.

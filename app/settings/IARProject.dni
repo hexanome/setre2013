@@ -47,14 +47,13 @@ NextState1=0
 Break=0
 State Storage=0
 [DebugChecksum]
-Checksum=-1390245039
+Checksum=1862997991
 [CallStack]
 ShowArgs=0
 [Disassembly]
 MixedMode=1
 [Breakpoints]
-Bp0=_ "STD_CODE" "{$PROJ_DIR$\source\tasks\buttons_task.c}.69.5" 1 0 0 0 "" 0 ""
-Count=1
+Count=0
 [FET]
 Clock mode=14
 Extended Clock mode=-1
