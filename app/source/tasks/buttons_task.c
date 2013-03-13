@@ -64,7 +64,7 @@ void InitializeQButtons()
 __interrupt void BUTTON_PORT_ISR(void)
 {
     // Get the pressed button (by reading IFG)
-    qButtonsData[0] = BUTTON_PORT_IFG;
+    qButtonsData[0] = (void *)BUTTON_PORT_IFG;
     // Signals the buttons task
     OSQPost(qButtons, qButtonsData);
     // Acknowledge IT
