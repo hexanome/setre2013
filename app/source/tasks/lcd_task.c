@@ -169,6 +169,28 @@ void SetPixel(int x, int y, unsigned char grayScale)
     }    
 }
 
+/*******************************************************************************
+* Method GetPixel
+* Return an unsigned char with the 2 LSBs corresponding to the greyscale value
+* of the (x,y) pixel inside the frame
+*******************************************************************************/
+unsigned char GetPixel(int x, int y)
+{
+    if (x >= 0 && x < LCD_COL && y >= 0 && y < LCD_ROW)
+    {
+        // Find the address for this pixel.
+        unsigned char offset = x & 0x07;
+        // index = y*18 + x >> 3
+        unsigned int index = (y << 4) + (y << 1) + (x >> 3);
+        
+        // Retrieve the corresponding pixel from the image.
+        // As we have 8 pixels in an integer, in order to retrieve the n th one,
+        // we have to shift right by 2*n (there are 2 bits per pixel)
+        return (image[index] >> 2*offset) & (BIT0|BIT1);
+        
+    }    
+}
+
 void Render()
 {
     halLcdImage(image, 18, LCD_ROW, 0, 0);
