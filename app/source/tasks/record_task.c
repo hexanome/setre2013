@@ -13,7 +13,7 @@ unsigned char audioBuffer1[SIZE_OF_AUDIO_BUFFER];
 unsigned char audioBuffer2[SIZE_OF_AUDIO_BUFFER];
 unsigned char audioBuffer3[SIZE_OF_AUDIO_BUFFER];
 unsigned char audioBuffer4[SIZE_OF_AUDIO_BUFFER];
-unsigned char * audioBuffers[] = {audioBuffer1, audioBuffer2, 
+unsigned char *audioBuffers[] = { audioBuffer1, audioBuffer2, 
                                   audioBuffer3, audioBuffer4 };
 
 void InitializeQSyncDMA()
