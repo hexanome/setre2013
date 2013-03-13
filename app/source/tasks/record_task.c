@@ -80,7 +80,7 @@ static void setupRecord(void)
   TBR = 0;
   // Set TIMER B comparison value
   TBCCR0 = 2047;
-  TBCCR1= 2047- 100;
+  TBCCR1= 2047 - 100;
   // Set ouput mode to reset/set
   TBCCTL1 = OUTMOD_7;   
 
