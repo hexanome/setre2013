@@ -8,16 +8,10 @@
 *******************************************************************************/
 
 void LcdTask(void *args)
-{
-    // Initialize the LCD.
-    halLcdInit();
-    
-    // Initialize the backlight.
-    halLcdBackLightInit();
-    // halLcdSetBackLight(); <-- Find the right value.
-    
-    // Set the default contrast level.
+{    
+    // Set the contrast level and backlight.
     halLcdSetContrast(80);
+    halLcdSetBackLight(16); 
     
     Clear();
     
