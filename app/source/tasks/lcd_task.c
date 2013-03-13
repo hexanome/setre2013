@@ -44,23 +44,24 @@ void Draw()
 //    }
 //    
 //    // Draw the title.
-//    AppState state = GetState();
-//    if (state == STATE_IDLE)
-//    {
-//        halLcdPrintXY("Idle", 10, 4, INVERT_TEXT | OVERWRITE_TEXT);
-//    }
-//    else if (state == STATE_RECORDING)
-//    {
-//        halLcdPrintXY("Recording", 10, 4, INVERT_TEXT | OVERWRITE_TEXT);        
-//    }
-//    else
-//    {
-//        halLcdPrintXY("Result", 10, 4, INVERT_TEXT | OVERWRITE_TEXT);        
-//    }
+    AppState state = GetState();
+    
+    char *text;    
+    if (state == STATE_IDLE)
+    {
+        text = "Idle";
+    }
+    else if (state == STATE_RECORDING)
+    {
+        text = "Recording";      
+    }
+    else
+    {
+        text = "Result";        
+    }
     
     DrawRect(0, 0, LCD_COL, 20, PIXEL_ON);
-    DrawVLine(index, 30, LCD_ROW, PIXEL_ON);
-    index++;
+    DrawText(8, 5, text, PIXEL_OFF);
 }
 
 void Clear()
@@ -100,6 +101,7 @@ void DrawText(int x, int y, char string[], unsigned char grayScale)
     int index = 0;
     int fontRowValue, offset;
     char lookupChar;
+    unsigned char pixelValue;
     
     while (string[index] != 0)
     {        
@@ -109,16 +111,19 @@ void DrawText(int x, int y, char string[], unsigned char grayScale)
         {
             fontRowValue = fonts[lookupChar * 13 + j];
             
-            for (int i = 0; i < 13; i++)
+            for (int i = 0; i < 8; i++)
             {
-                offset = i & 0x07;
+                pixelValue = (fontRowValue >> (i * 2)) & (BIT1 | BIT0);
                 
-//                if ( != 0)
-//                {
-//                    SetPixel(x + i, y + j, grayScale);
-//                }                
+                // Extract corresponding pixel in FontRow.
+                if (pixelValue != 0)
+                {
+                    SetPixel(x + i, y + j, grayScale);
+                }              
             }
         }
+        
+        x += 8;
         
         index++;
     }
@@ -149,7 +154,7 @@ void SetPixel(int x, int y, unsigned char grayScale)
                 value |= (1 << ((offset * 2) + 1));  
                 break;
             case PIXEL_ON: 
-                value |= (3 << (offset * 2));           // Both bits on.
+                value |= (3 << (offset * 2));            // Both bits on.
                 break;
         }
         

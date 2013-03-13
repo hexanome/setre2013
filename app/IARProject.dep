@@ -847,6 +847,10 @@
           <name>ICC430</name>
           <file> 62</file>
         </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 39</file>
+        </tool>
       </outputs>
       <inputs>
         <tool>
@@ -915,6 +919,10 @@
         <tool>
           <name>ICC430</name>
           <file> 49</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 26</file>
         </tool>
       </outputs>
       <inputs>
