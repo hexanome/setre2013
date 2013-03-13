@@ -55,7 +55,7 @@ static void setupDMA (void)
 	
 	// The destination of the DMA's channel 1 is the TX register of the USB
 	// DMAxDA => destinaton address (11.3.7 doc p402)
-	__data16_write_addr((unsigned short)DMA1DA_, (unsigned long)UCA1TXBUF_);
+	__data16_write_addr((unsigned long)&DMA1DA & 0xffff, (unsigned long)&UCA1TXBUF);
 }
 
 void InitializeQSyncDMA1(void)
@@ -110,7 +110,7 @@ void TxTask(void *args)
 		// 2 - Set up the DMA controller
 		// The source of the DMA's channel 1 is the pointer on the flash stored in the flash
 		// DMAxSA => source address (11.3.8 doc p403)
-		__data16_write_addr((unsigned short)DMA1SA_, memoryBegPtr);
+		__data16_write_addr((unsigned short)&DMA1SA & 0xffff, memoryBegPtr);
 			
 		// Define the amount of information to be transferred (counts downwards to 0)
 		// (11.3.9 doc p404)
