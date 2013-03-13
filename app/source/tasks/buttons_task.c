@@ -23,7 +23,7 @@ void ButtonsTask(void *args)
     {
         // Wait on the buttons queue.
         INT8U err;
-        pressedButtons = *(unsigned char *)OSQPend(qButtons, 0, &err);
+        pressedButtons = (unsigned char)OSQPend(qButtons, 0, &err);
         
         if ((pressedButtons & buttons) == 0) continue;
 
@@ -63,10 +63,9 @@ void InitializeQButtons()
 #pragma vector=BUTTON_PORT_VECTOR
 __interrupt void BUTTON_PORT_ISR(void)
 {
-    // Get the pressed button (by reading IFG)
-    qButtonsData[0] = (void *)BUTTON_PORT_IFG;
     // Signals the buttons task
-    OSQPost(qButtons, qButtonsData);
+    unsigned char test = BUTTON_PORT_IFG;
+    OSQPost(qButtons, (void *)BUTTON_PORT_IFG);
     // Acknowledge IT
     BUTTON_PORT_IFG = 0;
 }

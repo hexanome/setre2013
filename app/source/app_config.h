@@ -17,7 +17,7 @@
 #define MAIN_TASK_STACK_SIZE            256
 #define RECORD_TASK_STACK_SIZE          256
 #define BUTTONS_TASK_STACK_SIZE         256
-#define LCD_TASK_STACK_SIZE             256
+#define LCD_TASK_STACK_SIZE             512
 
 #define RX_TASK_STACK_SIZE              256
 #define TX_TASK_STACK_SIZE              256
