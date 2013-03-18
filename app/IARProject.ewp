@@ -2034,12 +2034,6 @@
       <file>
         <name>$PROJ_DIR$\source\tasks\rx_task.h</name>
       </file>
-      <file>
-        <name>$PROJ_DIR$\source\tasks\tx_task.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\source\tasks\tx_task.h</name>
-      </file>
     </group>
     <file>
       <name>$PROJ_DIR$\source\app.c</name>

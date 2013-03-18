@@ -7,9 +7,6 @@
 * Defines.
 *******************************************************************************/
 
-#define REC_TERM                        1
-#define REC_START                       0
-#define REC_SEND                        2
 #define QUEUE_SYNCDMA_LENGTH            1
 #define SIZE_OF_AUDIO_BUFFER            512
 
