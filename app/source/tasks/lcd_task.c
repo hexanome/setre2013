@@ -37,6 +37,7 @@ void Draw()
     if (state == STATE_IDLE)
     {
         title = "Idle";
+        localScrollPosition = 0;
     }
     else if (state == STATE_RECORDING)
     {
@@ -57,7 +58,25 @@ void Draw()
     }
     else
     {
-        title = "Result";        
+        title = "Result";      
+      
+        // Update the text scroll position.
+        int scrollOffset = scrollPosition - lastScrollPosition;
+        lastScrollPosition = scrollPosition;
+        localScrollPosition += scrollOffset;
+        
+        if (localScrollPosition < 0)
+        {
+            localScrollPosition = 0;
+        }
+        else if (localScrollPosition > lastTextHeight)
+        {
+            localScrollPosition = lastTextHeight;
+        }        
+        
+        // Draw the resulting text.
+        char *text = "This is a super duper text to demonstrate the fantastic multiple line capabilities of this almighty - one might even call it 'godlike' - advanced speech recognition software.";        
+        lastTextHeight = DrawTextBlock(5, 25 - localScrollPosition, LCD_COL - 10, text, PIXEL_ON) - 82;
     }
     
     // Draw the title.
@@ -104,6 +123,11 @@ void DrawVLine(int x1, int y1, int y2, unsigned char grayScale)
 
 void DrawText(int x, int y, char string[], unsigned char grayScale)
 {
+    DrawTextCustomSpacing(x, y, 0, string, grayScale);
+}
+
+void DrawTextCustomSpacing(int x, int y, int spacing, char string[], unsigned char grayScale)
+{
     int index = 0;
     int fontRowValue;
     char lookupChar;
@@ -117,7 +141,7 @@ void DrawText(int x, int y, char string[], unsigned char grayScale)
         {
             fontRowValue = fonts[lookupChar * 13 + j];
             
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < FONT_WIDTH; i++)
             {
                 pixelValue = (fontRowValue >> (i * 2)) & (BIT1 | BIT0);
                 
@@ -129,10 +153,50 @@ void DrawText(int x, int y, char string[], unsigned char grayScale)
             }
         }
         
-        x += 8;
+        x += FONT_WIDTH + spacing;
         
         index++;
     }
+}
+
+int DrawTextBlock(int x, int y, int width, char string[], unsigned char grayScale)
+{
+    return DrawTextBlockCustomSpacing(x, y, width, 0, string, grayScale);
+}
+
+int DrawTextBlockCustomSpacing(int x, int y, int width, int spacing, char string[], unsigned char grayScale)
+{
+    int index = 0;
+    int lineIndex;
+    int baseY = y;
+    
+    while (string[index] != 0)
+    {
+        // Create the buffer for one line.
+        lineIndex = 0;
+        
+        while (((lineIndex + 1) * (FONT_WIDTH + spacing)) <= width && string[index] != 0)
+        {
+            // Additional logic to prevent a line to start with a space.
+            if (string[index] != ' ' || lineIndex > 0)
+            {
+                lineBuffer[lineIndex] = string[index];
+                lineIndex++;
+            }
+            index++;
+        }        
+        
+        // Add the "end" char to the line.
+        lineBuffer[lineIndex] = 0;
+        
+        // Draw that line to the screen.
+        DrawTextCustomSpacing(x, y, spacing, lineBuffer, grayScale);
+        
+        // Update coordinates for the next line.
+        y += FONT_HEIGHT + 2;
+    }
+    
+    return y - baseY;
 }
 
 void SetPixel(int x, int y, unsigned char grayScale)

@@ -17,6 +17,7 @@
 
 static AppState _state;
 extern INT32U recordStartTime;
+extern int scrollPosition;
 
 /*******************************************************************************
 * Function prototypes.
@@ -27,5 +28,6 @@ void SetupStateManager();
 AppState GetState();
 void SetState(AppState state);
 void SetNextState();
+void AddVerticalScrollPositionOffset(int direction);
 
 #endif

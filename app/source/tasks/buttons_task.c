@@ -11,24 +11,54 @@ void ButtonsTask(void *args)
     unsigned char pressedButtons;
     
     // Define which buttons we're interested in.
-    buttons = BUTTON_S1 | BUTTON_S2;
+    unsigned char stateButtons = BUTTON_S1 | BUTTON_S2;
+    unsigned char joystickButtons = BUTTON_DOWN | BUTTON_UP;
+    
+    buttons = stateButtons | joystickButtons;
 
     // Setup the buttons interruptions.
     InitializeButtons();
-
-    // Create the synchronization object.
-    //InitializeQueue();
     
     for (;;)
-    {
+    {        
         // Wait on the buttons queue.
         INT8U err;
-        pressedButtons = (unsigned char)OSQPend(qButtons, 0, &err);
+        pressedButtons = (unsigned char)OSQPend(qButtons, 100, &err);
         
-        if ((pressedButtons & buttons) == 0) continue;
+        // If there was an interrupt, regular process.
+        if (err == OS_ERR_NONE)
+        {
+            // Prevent hardware error.
+            clickTime = OSTimeGet();
+            if (((float)(clickTime - lastClickTime) / OS_TICKS_PER_SEC) < BUTTON_DCLICK_DELAY)
+            {
+                continue;
+            }
+            
+            lastClickTime = clickTime;
+        
+            // React to the pressed buttons.
+            if ((pressedButtons & stateButtons) != 0)
+            {
+                SetNextState();
+            }
+        }
+        // Otherwise, and only for the joystick, poll the buttons.
+        else
+        {
+            pressedButtons = halButtonsPressed();
+        }
 
-        // React to the pressed buttons.
-        SetNextState();
+        // React to the joystick.
+        if ((pressedButtons & BUTTON_DOWN) != 0)
+        {
+            AddVerticalScrollPositionOffset(-1);
+        }
+        
+        if ((pressedButtons & BUTTON_UP) != 0)
+        {
+            AddVerticalScrollPositionOffset(1);
+        }
     }
 }
 
@@ -67,7 +97,7 @@ __interrupt void BUTTON_PORT_ISR(void)
     
     // Acknowledge IT
     BUTTON_PORT_IFG = 0;
-    
+     
     // Signals the buttons task
     OSQPost(qButtons, (void *)pressedButtons);
 }

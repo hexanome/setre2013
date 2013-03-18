@@ -1,6 +1,7 @@
 #include "state_manager.h"
 
 INT32U recordStartTime = 0;
+int scrollPosition = 0;
 
 /*******************************************************************************
 * Method implementation.
@@ -51,4 +52,9 @@ void SetNextState()
         newState = _state + 1;
     
     SetState(newState);
+}
+
+void AddVerticalScrollPositionOffset(int direction)
+{
+    scrollPosition -= (direction * 5);
 }
