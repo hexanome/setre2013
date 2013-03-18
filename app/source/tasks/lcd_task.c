@@ -56,6 +56,10 @@ void Draw()
         sprintf(sTimeString, "%.2d:%.2d", sMinutes, sSeconds);
         DrawText(48, 55, sTimeString, PIXEL_ON);
     }
+    else if (state == STATE_LOADING)
+    {
+        title = "Loading...";
+    }
     else
     {
         title = "Result";      
@@ -251,8 +255,9 @@ unsigned char GetPixel(int x, int y)
         // As we have 8 pixels in an integer, in order to retrieve the n th one,
         // we have to shift right by 2*n (there are 2 bits per pixel)
         return (image[index] >> 2*offset) & (BIT0|BIT1);
-        
     }    
+    
+    return 0;
 }
 
 void Render()

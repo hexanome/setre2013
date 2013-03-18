@@ -26,15 +26,13 @@ void SetState(AppState state)
     // Do something depending on the new state value.
     switch (state)
     {
-        case STATE_IDLE:         
+        case STATE_RECORDING:    
             // Set the time when the recording begun.
-            recordStartTime = OSTimeGet();            
-            Trigger(qToggleRecord);            
-            break;
-        case STATE_RECORDING:
-            Trigger(qToggleRecord);
+            recordStartTime = OSTimeGet();      
+            //Trigger(qToggleRecord);   
             break;
         case STATE_LOADING:
+            //Trigger(qToggleRecord);
             break;
     }
     
@@ -46,7 +44,7 @@ void SetNextState()
 {
     AppState newState;
     
-    if (_state == STATE_LOADING)
+    if (_state == STATE_RESULT)
         newState = STATE_IDLE;
     else
         newState = _state + 1;

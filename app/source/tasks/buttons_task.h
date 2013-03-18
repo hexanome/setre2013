@@ -10,7 +10,7 @@
 
 #define BUTTON_PORT_VECTOR      PORT2_VECTOR
 #define QUEUE_BUTTONS_LENGTH    1
-#define BUTTON_DCLICK_DELAY     0.05
+#define BUTTON_DCLICK_DELAY     0.1
 
 /*******************************************************************************
 * Variables.
