@@ -11,6 +11,9 @@ void SetupStateManager()
 {
     // Set the default state.
     _state = STATE_IDLE;
+    
+    // Setup LEDs.
+    LED_PORT_DIR |= LED_1 | LED_2;
 }
 
 AppState GetState()
@@ -26,13 +29,30 @@ void SetState(AppState state)
     // Do something depending on the new state value.
     switch (state)
     {
+        case STATE_IDLE:
+            // Enable the LED.
+            LED_PORT_OUT &= ~LED_2;
+            break;
         case STATE_RECORDING:    
             // Set the time when the recording begun.
             recordStartTime = OSTimeGet();      
+            
+            // Start the recording.
             //Trigger(qToggleRecord);   
+            
+            // Enable the LED.
+            LED_PORT_OUT |= LED_1;
             break;
-        case STATE_LOADING:
+        case STATE_LOADING:          
+            // End the recording.
             //Trigger(qToggleRecord);
+            
+            // Disable the LED.
+            LED_PORT_OUT &= ~LED_1;
+            break;
+        case STATE_RESULT:
+            // Enable the LED.
+            LED_PORT_OUT |= LED_2;
             break;
     }
     
@@ -41,7 +61,7 @@ void SetState(AppState state)
 } 
 
 void SetNextState()
-{
+{    
     AppState newState;
     
     if (_state == STATE_RESULT)
