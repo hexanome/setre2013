@@ -79,6 +79,7 @@ namespace TraductionAudioTexte
                 string textResult = await Utils.TranslateFile(flacFile);
                 if (string.IsNullOrEmpty(textResult))
                 {
+                    port.Write("\0");
                     port.Close();
                     return;
                 }

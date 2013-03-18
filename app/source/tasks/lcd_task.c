@@ -72,16 +72,15 @@ void Draw()
         if (localScrollPosition < 0)
         {
             localScrollPosition = 0;
-        }
-        else if (localScrollPosition > lastTextHeight)
+        }  
+        else
         {
-            localScrollPosition = lastTextHeight;
-        }        
+            
+        }
         
         // Draw the resulting text.
         //char *text = "This is a super duper text to demonstrate the fantastic multiple line capabilities of this almighty - one might even call it 'godlike' - advanced speech recognition software.";        
-        lastTextHeight = DrawTextBlock(5, 25 - localScrollPosition, LCD_COL - 10, 
-																			 textToRead, PIXEL_ON);
+        lastTextHeight = DrawTextBlock(5, 25 - localScrollPosition, LCD_COL - 10, textToRead, PIXEL_ON);
     }
     
     // Draw the title.

@@ -38,7 +38,7 @@ void ButtonsTask(void *args)
             lastClickTime = clickTime;
         
             // React to the pressed buttons.
-            if ((pressedButtons & stateButtons) != 0)
+            if ((pressedButtons & stateButtons) != 0 && GetState() != STATE_LOADING)
             {
                 SetNextState();
             }
