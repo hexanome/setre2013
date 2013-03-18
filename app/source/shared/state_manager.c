@@ -38,14 +38,14 @@ void SetState(AppState state)
             recordStartTime = OSTimeGet();      
             
             // Start the recording.
-            //Trigger(qToggleRecord);   
+            Trigger(qToggleRecord);   
             
             // Enable the LED.
             LED_PORT_OUT |= LED_1;
             break;
         case STATE_LOADING:          
             // End the recording.
-            //Trigger(qToggleRecord);
+            Trigger(qToggleRecord);
             
             // Disable the LED.
             LED_PORT_OUT &= ~LED_1;

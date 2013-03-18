@@ -1,6 +1,7 @@
 #include "record_task.h"
 #include "hal_adc.h"
 #include "hal_flash.h"
+#include "rx_task.h"
 
 
 /*******************************************************************************
@@ -13,10 +14,12 @@ OS_STK RecordTaskStack[RECORD_TASK_STACK_SIZE];
 
 unsigned char audioBuffer1[SIZE_OF_AUDIO_BUFFER];
 unsigned char audioBuffer2[SIZE_OF_AUDIO_BUFFER];
-unsigned char audioBuffer3[SIZE_OF_AUDIO_BUFFER];
-unsigned char audioBuffer4[SIZE_OF_AUDIO_BUFFER];
-unsigned char *audioBuffers[] = { audioBuffer1, audioBuffer2, 
-                                  audioBuffer3, audioBuffer4 };
+//unsigned char audioBuffer3[SIZE_OF_AUDIO_BUFFER];
+//unsigned char audioBuffer4[SIZE_OF_AUDIO_BUFFER];
+unsigned char *audioBuffers[] = { audioBuffer1, audioBuffer2/*, 
+                                  audioBuffer3, audioBuffer4*/ };
+
+unsigned char firstTime = 1;
 
 void InitializeQSyncDMA()
 {
@@ -27,7 +30,6 @@ void InitializeQSyncDMA()
 void RecordTask(void *args)
 {
 	unsigned char index = 0;
-	INT8U err;
 	
   while (1) {
     
@@ -36,35 +38,46 @@ void RecordTask(void *args)
     
     setupRecord();
     
-    // Erase in flash the audio sample previously recorded 
-    /*flashEraseBank(AUDIO_MEM_START[0]);
-    flashEraseBank(AUDIO_MEM_START[1]);
-    flashEraseBank(AUDIO_MEM_START[2]);
-    flashErase(AUDIO_MEM_START[3], AUDIO_MEM_START[4]); */
 
     // Record the user voice
-    // TODO : loop on the previous segments ... 1,2,3,1,2,3 ...
     while ( !PeekOn(qToggleRecord) )
     {
-      index = index % 4;
+      index = index % 2;
       // Set the destination of the DMA to the start address in RAM
       __data16_write_addr((unsigned short)DMA0DA_,
-                          (unsigned long)audioBuffers[index]); 
+                          (unsigned long)audioBuffers[index]);
       // Set the size in byte of the "page"
-      DMA0SZ = SIZE_OF_AUDIO_BUFFER;      
+      DMA0SZ = SIZE_OF_AUDIO_BUFFER;
 
-      record();     
-   
-      // Sending addresses for entire data
-      audioChunk chunk = {
-        .startAddr = (unsigned long)audioBuffers[index], 
-        .endAddr = (unsigned long)audioBuffers[index] + SIZE_OF_AUDIO_BUFFER
-      };
-      
-      OSQPost(qTxBuffer, (void *) &chunk);
+			DMA0CTL = 
+				DMADT_0 + 
+				DMASRCINCR_0 +
+				DMADSTINCR_3 +  
+				DMADSTBYTE + 
+				DMASRCBYTE + 
+				DMAEN +
+				DMAIE;
+
+			TBCCTL1 &= ~CCIFG;
+			TBCTL |= MC0;                             
+
+			// Enable interrupts 
+			__bis_SR_register(GIE);
+
+			// Sending addresses for entire data
+
+			if (firstTime)
+			{
+				firstTime = 0;
+			}
+			else
+			{
+				halUsbSendString2 ( audioBuffers[(index+1)%2], SIZE_OF_AUDIO_BUFFER );
+			}
+			WaitOn(qSyncDMA);
+					
       index++;
     }
-
     stopRecord();
   }
 }
@@ -75,6 +88,7 @@ void RecordTask(void *args)
 
 static void setupRecord(void)
 {
+	AUDIO_PORT_DIR |= MIC_POWER_PIN;
   AUDIO_PORT_OUT |= MIC_POWER_PIN;
   AUDIO_PORT_OUT &= ~MIC_INPUT_PIN;
   AUDIO_PORT_SEL |= MIC_INPUT_PIN;
@@ -84,8 +98,8 @@ static void setupRecord(void)
   // Initialize the TIMER B count
   TBR = 0;
   // Set TIMER B comparison value
-  TBCCR0 = 2047;
-  TBCCR1= 2047 - 100;
+  TBCCR0 = 3051; // 2047
+  TBCCR1= 3051 - 100;
   // Set ouput mode to reset/set
   TBCCTL1 = OUTMOD_7;   
 
@@ -113,45 +127,14 @@ static void setupRecord(void)
   __data16_write_addr((unsigned short)DMA0SA_,(unsigned long)ADC12MEM0_);
 }
 
-static void record(void)
-{    
-  /*// Unlock the flash for write
-  FCTL3 = FWKEY; 
-  // Long word write
-  FCTL1 = FWKEY + BLKWRT;   */                     
-  
-  DMA0CTL = 
-    DMADT_0 + 
-    DMASRCINCR_0 +
-    DMADSTINCR_3 +  
-    DMADSTBYTE + 
-    DMASRCBYTE + 
-    DMAEN +
-    DMAIE;
-  
-  TBCCTL1 &= ~CCIFG;
-  TBCTL |= MC0;                             
-  
-  // Enable interrupts 
-  __bis_SR_register(GIE);
-  
-  WaitOn(qSyncDMA);
-}
-
 static void stopRecord(void)
 {   
   TBCTL &= ~MC0;
   DMA0CTL &= ~( DMAEN + DMAIE);
   
-  /*FCTL3 = FWKEY + LOCK;                     // Lock the flash from write */
   
   //TBCTL &= ~MC0;
-  ADC12CTL0 &= ~( ADC12ENC + ADC12ON );  
-
-  /*// Disable Flash write
-  FCTL1 = FWKEY;
-  // Lock Flash memory 
-  FCTL3 = FWKEY + LOCK;*/
+  ADC12CTL0 &= ~( ADC12ENC + ADC12ON );
 
   // Stop conversion immediately
   ADC12CTL1 &= ~ADC12CONSEQ_2;
@@ -168,63 +151,17 @@ static void stopRecord(void)
   AUDIO_PORT_SEL &= ~MIC_INPUT_PIN;                            
 }
 
-/*void flashEraseBank(INT16U Flash_ptr)
-{
-    FCTL3 = FWKEY;
-    while (FCTL3 & BUSY) ;
-    FCTL1 = FWKEY + MERAS;
-
-    __data20_write_char(Flash_ptr, 0x00);      // Dummy write to start erase
-
-    while (FCTL3 & BUSY) ;
-    FCTL1 = FWKEY;
-    FCTL3 = FWKEY +  LOCK;
-}
-
-void flashErase(INT16U Mem_start, INT16U Mem_end) 
-{
-    uint16_t Flash_ptr = Mem_start;        // Start of record memory array
-    FCTL3 = FWKEY;                          // Unlock Flash memory for write
-    do {
-        if ((Flash_ptr & 0xFFFF) == 0x0000)    // Use bit 12 to toggle LED
-            P1OUT ^= 0x01;
-        FCTL1 = FWKEY + ERASE;
-        
-        __data20_write_char(Flash_ptr, 0x00);  // Dummy write to activate
-        
-        while (FCTL3 & BUSY) ;              // Segment erase
-        Flash_ptr += 0x0200;                   // Point to next segment
-    } while (Flash_ptr < Mem_end);
-    FCTL1 = FWKEY;
-    FCTL3 = FWKEY +  LOCK;
-}
-
-static INT32U getSegmentAddress(INT8U index)
-{
-  if (index >= NUMBER_OF_SEGMENTS)
-  {
-     return 0;
-  }
-  return Memstart + index * SIZE_OF_SEGMENTS
-}*/
-
 /*******************************************************************************
 * Interrupt routines.
 *******************************************************************************/
-extern OS_EVENT* qSyncDMA1;
 #pragma vector=DMA_VECTOR
 __interrupt void DMA_ISR(void)
 {
+	INT16U tmpDMAIV = DMAIV;
 	// Interrupt source from channel 0
-	if ( DMAIV & 0x02 )
+	if ( tmpDMAIV & 0x02 )
 	{
 		DMA0CTL &= ~ DMAIFG;
 	  Trigger(qSyncDMA);
-	}
-	// Interrupt source from channel 1
-	else if ( DMAIV & 0x04 )
-	{
-		DMA1CTL &= ~DMAIFG;
-		Trigger(qSyncDMA1);
 	}
 }

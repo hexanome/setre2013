@@ -24,6 +24,9 @@ extern OS_EVENT* qSyncDMA1; // type: INT8U
 void TxTask(void *args);
 
 void InitializeQSyncDMA1(void);
+
+void setupDMA (void);
+
 // Private.
 
 #endif

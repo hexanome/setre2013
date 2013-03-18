@@ -16,7 +16,7 @@
 #define USB_PIN_RXD       BIT7
 
 #define QUEUE_RX_BUFFER_LENGTH 255
-
+#define TEXT_SIZE 512
 /*-------------------------------------------------------------
  *                  Function Prototypes
  * ------------------------------------------------------------*/
@@ -25,8 +25,8 @@ extern void halUsbShutDown(void);
 extern void halUsbSendChar(char character);
 
 
-extern void halUsbSendString(char string[], unsigned char length);
-extern void halUsbReceiveString(char string[], unsigned char *length);
+void halUsbSendString2(unsigned char string[], INT16U length);
+void halUsbReceiveString(char string[], unsigned char *length);
 
 
 /*-------------------------------------------------------------
@@ -38,6 +38,8 @@ static OS_STK RxTaskStack[RX_TASK_STACK_SIZE];
 // The reception buffer is symbolized by a message queue
 static OS_EVENT* qRxBuffer = NULL;
 static void* bufferRx [QUEUE_RX_BUFFER_LENGTH];
+
+extern char textToRead [TEXT_SIZE];
 
 /*-------------------------------------------------------------
  *                  Function Prototypes

@@ -8,7 +8,6 @@
 #include "record_task.h"
 #include "lcd_task.h"
 #include "rx_task.h"
-#include "tx_task.h"
 
 /*******************************************************************************
 * Variables.
