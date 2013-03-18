@@ -21,6 +21,7 @@ namespace TraductionAudioTexte
         private static SerialPort port;
         private static TaskCompletionSource<bool> receiveComplete;
         private static MemoryStream audioData;
+        private static DateTime lastReceived;
         private static bool readStarted;
 
         #endregion
@@ -32,10 +33,10 @@ namespace TraductionAudioTexte
             /* Initialize variables. */
 
             // Port.
-            port = new SerialPort(Config.SerialPortParameters.nomPort,
-                                  Config.SerialPortParameters.vitesse,
+            port = new SerialPort(Config.SerialPortParameters.NomPort,
+                                  Config.SerialPortParameters.Vitesse,
                                   Parity.None,
-                                  Config.SerialPortParameters.bitDonnee, StopBits.One);
+                                  Config.SerialPortParameters.BitDonnee, StopBits.One);
 
             // Synchronization mechanism.
             receiveComplete = new TaskCompletionSource<bool>();
@@ -57,10 +58,19 @@ namespace TraductionAudioTexte
                 port.Open();
 
                 // Wait for the transmission to be over.
-                await receiveComplete.Task;
+                while (!readStarted || DateTime.UtcNow - lastReceived < TimeSpan.FromSeconds(1))
+                {
+                    await Task.Delay(TimeSpan.FromSeconds(0.5));
+                }
 
                 // Stop receiving data.
                 port.DataReceived -= new SerialDataReceivedEventHandler(DataReceivedHandler);
+
+                if (audioData.Length < 8000)
+                {
+                    port.Close();
+                    return;
+                }
 
                 // Convert the raw data to flac.
                 var flacFile = Utils.ConvertToFlac(audioData.GetBuffer());
@@ -69,11 +79,15 @@ namespace TraductionAudioTexte
                 string textResult = await Utils.TranslateFile(flacFile);
                 if (string.IsNullOrEmpty(textResult))
                 {
+                    port.Close();
                     return;
                 }
+
+                // Show the received text.
+                Console.WriteLine(textResult);
                 
                 // Write result to serial port.
-                port.Write(textResult);
+                port.Write(Utils.RemoveDiacritics(textResult) + '\0');
                 port.Close();
             }
         }
@@ -86,19 +100,13 @@ namespace TraductionAudioTexte
         {
             var sp = (SerialPort)sender;
 
-            // If the transmission is over, signal it.
-            if (sp.BytesToRead == 0 && readStarted)
-            {
-                receiveComplete.SetResult(true);
-                return;
-            }
-
-            readStarted = true;
-
             // Otherwise, copy the buffer to our resulting stream.
             var data = new byte[sp.BytesToRead];
             sp.Read(data, 0, data.Length);
             audioData.Write(data, 0, data.Length);
+
+            lastReceived = DateTime.UtcNow;
+            readStarted = true;
         }
 
         #endregion

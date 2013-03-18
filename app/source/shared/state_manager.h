@@ -2,6 +2,7 @@
 #define __STATEMANAGER_H__
 
 #include "includes.h"
+#include "hal_board.h"
 
 /*******************************************************************************
 * Defines.
