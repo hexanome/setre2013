@@ -9,9 +9,16 @@
 
 void MainTask(void *args)
 {    
-    // Initialize BSP functions.
-    BSP_Init();
+		halBoardInit();
     
+		// Initialize BSP functions.
+    BSP_Init();
+		
+		halUsbInit();
+    setupDMA();
+		
+		LED1_Init();
+		
     // Setup the shared components.
     SetupStateManager();
     SetupSynchronization();
@@ -56,5 +63,5 @@ void TasksCreate()
     TaskStart(LcdTask, LCD_TASK_PRIORITY, LcdTaskStack, LCD_TASK_STACK_SIZE);
 		
 		// Start the Tx task.
-		TaskStart(TxTask, TX_TASK_PRIORITY, TxTaskStack, TX_TASK_STACK_SIZE);
+		//TaskStart(TxTask, TX_TASK_PRIORITY, TxTaskStack, TX_TASK_STACK_SIZE);
 }

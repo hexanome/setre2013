@@ -1,14 +1,15 @@
 #include "tx_task.h"
 #include "rx_task.h"
 #include "record_task.h"
+#include "lcd_task.h"
 
 // Init the usb connection in the main task
 
 // While developping the application, error code have to be checked
 #define DEBUG 0
 
-// Make sure the timer code is not here (removed for now)
-#undef TIM_
+// Test without DMA
+#define WO_DMA 1
 
 /*******************************************************************************
 * The Transmission Task.
@@ -30,32 +31,27 @@ OS_EVENT* qSyncDMA1;
 static INT16U memoryBegPtr = 0;
 static INT16U memoryEndPtr = 0;
 
+#if WO_DMA > 0
 // Flash content read
-//static char blockToSend [BUFFER_SIZE] = {0};
+static char blockToSend [SIZE_OF_AUDIO_BUFFER] = {0};
+#endif
 
 /*******************************************************************************
 * Private function
 *******************************************************************************/
-#if TIM_
-static void setupTimerA (void)
-{
-	// Set output resolution (8 bit. Add 10 counts of headroom for loading TBCCR1
-	TA0CCR0 = 255;
-	TA0CCR4 = 255 >> 1;                      // Default output ~Vcc/2
-	// Reset OUT1 on EQU1, set on EQU0. Load TBCCR1 when TBR counts to 0.
-	TA0CCTL4 = OUTMOD_7 + CLLD_1;
-}
-#endif
-
 // We'll use the DMA to transfer directly from the flash to the transmit register
-static void setupDMA (void)
+void setupDMA (void)
 {
-	// DMA channel 1 trigger is set to USCIA0 transmit event (may be useless/false)
-	DMACTL1 = DMA1TSEL_17;
+	// Round-robin DMA
+	DMACTL4 |= ROUNDROBIN;
+	
+	// DMA channel 1 trigger is set to USCIA1 transmit event
+	DMACTL1 = DMA1TSEL_21;
 	
 	// The destination of the DMA's channel 1 is the TX register of the USB
 	// DMAxDA => destinaton address (11.3.7 doc p402)
-	__data16_write_addr((unsigned long)&DMA1DA & 0xffff, (unsigned long)&UCA1TXBUF);
+	//__data16_write_addr((unsigned long)&DMA1DA & 0xffff, (unsigned long)&UCA1TXBUF);
+	__data16_write_addr((unsigned short)DMA1DA_, (unsigned long)&UCA1TXBUF);
 }
 
 void InitializeQSyncDMA1(void)
@@ -72,15 +68,13 @@ void TxTask(void *args)
 	audioChunk* blockToRead = NULL;
 	INT8U err;
 	INT8U resultDMA;
-    
-	halUsbInit();
-
-#if TIM_
-	setupTimerA();
+#if WO_DMA > 0
+	// Chunk size
+	INT16U blockSize = QUEUE_RX_BUFFER_LENGTH;
+	INT8U currentIdx = 0;
+	INT16U currentPtr = 0;
 #endif
-
-	setupDMA();
-		
+	
 	while (1)
 	{
 		// Waits for a new block to read in the flash memory
@@ -91,26 +85,18 @@ void TxTask(void *args)
 				
 #if DEBUG > 0
 		if ( err != OS_ERR_NONE )
-			printf("Problem to withdraw information in msgQBufferTx\n");
+			DrawText(10, 30, "Pb qTxBuffer", PIXEL_ON);
 		else
-			printf("Ready to read from 0x%x to 0x%x\n", memoryBegPtr, memoryEndPtr);
+			DrawText(10, 50, "Ready", PIXEL_ON);
 #endif
 
-		// Reads the flash in order to retrieve the string to be sent
-#if TIM_
+#if WO_DMA == 0
+		// Reads the flash in order to retrieve the string to be sent		
 		////
-		// 1 - Re-enable the timer A
-		// Use SMCLK as Timer0_A source, enable overflow interrupt
-		TA0CTL = TASSEL_2 + TAIE;
-		// Start Timer_A in UP mode (counts up to TBCCR0)
-		TA0CTL |= MC0;
-#endif
-		
-		////
-		// 2 - Set up the DMA controller
+		// 1 - Set up the DMA controller
 		// The source of the DMA's channel 1 is the pointer on the flash stored in the flash
 		// DMAxSA => source address (11.3.8 doc p403)
-		__data16_write_addr((unsigned short)&DMA1SA & 0xffff, memoryBegPtr);
+		__data16_write_addr((unsigned short)DMA1SA_, memoryBegPtr);
 			
 		// Define the amount of information to be transferred (counts downwards to 0)
 		// (11.3.9 doc p404)
@@ -128,55 +114,45 @@ void TxTask(void *args)
 							DMAIE;
 		
 		////
-		// 3 - Wait for the treatment's end
+		// 2 - Wait for the treatment's end
+		// Initiate the transfer with a dummy character
+		//halUsbSendChar ('S');
 		WaitOn (qSyncDMA1);
+		halUsbSendChar ('E');
+#else
+		// Read the memory block
+		currentIdx = 0;
+		currentPtr = memoryBegPtr;
+		while ( currentPtr != memoryEndPtr )
+		{
+			blockToSend [currentIdx++] = *( (char*) currentPtr);
+			currentPtr++;
+		}
 		//resultDMA = (INT8U) OSQPend(qSyncDMA1, 0, &err);
-
-#if DEBUG > 0
+#endif
+		
+#if WO_DMA == 0 && DEBUG > 0
 		if ( err != OS_ERR_NONE )
-			printf("Problem to withdraw information in syncDMA\n");
+			DrawText(10, 70, "syncDMA", PIXEL_ON);
 		else
-			printf("DMA sent back %c\n", resultDMA);
+			DrawText(10, 90, resultDMA, PIXEL_ON);
 		// For now, only one bock is transferred
 		if (DMA1SZ != SIZE_OF_AUDIO_BUFFER)
-			printf("DMA transfert error\n");
+			DrawText(10, 110, "DMA error", PIXEL_ON);
 #endif
 		
+#if WO_DMA == 0
 		////
-		// 4 - Reset/disable
+		// 3 - Reset/disable
 		// For the DMA
 		DMA1CTL &= ~(DMAEN + DMAIE);
-
-#if TIM_
-		// For the TimerA_0
-		TA0CTL = 0;
-#endif
-		
+#else		
 		// Writes it on the USB line to communicate with the computer
-		//halUsbSendString ( blockToSend, blockSize );
-	}
-}
-
-#if TIM_
-#pragma vector=TIMER0_A1_VECTOR
-__interrupt void TIMERA1_ISR(void)
-{
-	static int counter  = 0;
-	switch (TA0IV)
-	{
-		case 14:
-			if (++counter == 8)
-			{
-				counter  = 0;
-				TA0CCR4 = (*((unsigned char*)PlaybackPtr));
-				PlaybackPtr++;
-				if ((unsigned long) PlaybackPtr >= (lastAudioByte))
-				{
-					TA0CTL = 0;
-					__bic_SR_register_on_exit(LPM0_bits);
-				}
-			}
-		default: break;
-	}
-}
+		//printf("%s\n", blockToSend);
+		//halUsbSendChar ('S');
+		halUsbSendString2 ( blockToSend, blockSize );
+		LED1_Blink();
+		//halUsbSendChar ('E');
 #endif
+	}
+}

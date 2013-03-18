@@ -33,15 +33,18 @@ void halUsbInit(void)
 	// 8bit char
 	UCA1CTL0 &= ~UC7BIT;
 	UCA1CTL1 |= UCSSEL_2;
-	// With a frequency of 16 Mhz, UCA1BR register must be filled with:
+	// With a frequency of 16 MHz, UCA1BR register must be filled with:
 	// 16MHz/57600 = 278 = 256 + 22
 	// (57600 is the baud rate we should use)
 	// Meaning 1 in the high-order register and 22 in the low-order
-	// With a frequency of 25 Mhz, this register must be filled with:
+	// With a frequency of 25 MHz, this register must be filled with:
 	// 25MHz/57600 = 434 = 256 + 178
 	// Meaning 1 in HO register and 178 in LO
-	UCA1BR0 = 178; //22;
-	UCA1BR1 = 1;
+	// With a frequency of 25MHz and a baud-rate of 115200, this register must be filled with:
+	// 25MHz/115200 = 217
+	// Meaning 0 in HO register and 217 in LO
+	UCA1BR0 = 108;//217; //178 //22;
+	UCA1BR1 = 0; //1
 	// Select modulation stage and disable oversampling (34.4.5 doc p916)
 	UCA1MCTL = 0xE;
 	// Disable software reset (34.4.2 doc p915)
@@ -101,9 +104,9 @@ void halUsbSendChar(char character)
 * @return none
 **************************************************************************/
 
-void halUsbSendString(char string[], unsigned char length)
+void halUsbSendString2(char string[], INT16U length)
 {
-	unsigned char i;
+	INT16U i;
 
 	for (i = 0; i < length; i++)
 		halUsbSendChar(string[i]);
@@ -167,13 +170,14 @@ void RxTask(void *args)
 #pragma vector=USCI_A1_VECTOR
 __interrupt void USCI_A1_ISR(void)
 {
+	INT16U tmpUCA1IFG = UCA1IFG;
 	// RX IT => UCA1IFG[0] (e.g. UCRXIFG == 1)
-	if (UCA1IFG & UCRXIFG)
+	if (tmpUCA1IFG & UCRXIFG)
 	{
 		OSQPost(qRxBuffer, (void*) UCA1RXBUF);
 	}
 	// TX IT => UCA1IFG[1] (e.g. UCTXIFG == 1)
-	else if (UCA1IFG & UCTXIFG)
+	else if (tmpUCA1IFG & UCTXIFG)
 	{
 		// TODO: If the writing were to be done using interrupt instead of pooling
 	}

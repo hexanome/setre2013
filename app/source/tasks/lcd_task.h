@@ -18,8 +18,8 @@
 extern OS_STK LcdTaskStack[LCD_TASK_STACK_SIZE];
 
 // External variables.
-extern unsigned int fonts[];
-extern unsigned char fonts_lookup[];
+extern const unsigned int fonts[];
+extern const unsigned char fonts_lookup[];
 
 // Private.
 static unsigned int image[18 * 110];

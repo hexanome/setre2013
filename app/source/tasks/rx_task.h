@@ -25,8 +25,8 @@ extern void halUsbShutDown(void);
 extern void halUsbSendChar(char character);
 
 
-extern void halUsbSendString(char string[], unsigned char length);
-extern void halUsbReceiveString(char string[], unsigned char *length);
+void halUsbSendString2(char string[], INT16U length);
+void halUsbReceiveString(char string[], unsigned char *length);
 
 
 /*-------------------------------------------------------------
