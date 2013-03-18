@@ -15,9 +15,6 @@ void MainTask(void *args)
     BSP_Init();
 		
 		halUsbInit();
-    setupDMA();
-		
-		LED1_Init();
 		
     // Setup the shared components.
     SetupStateManager();
@@ -26,7 +23,6 @@ void MainTask(void *args)
     // Initialize the differents IPC (mainly message queues)
     InitializeQButtons();
     InitializeQSyncDMA();
-    InitializeQSyncDMA1();
     InitializeQRxBuffer();
 		
     // Start the child tasks.
@@ -62,6 +58,6 @@ void TasksCreate()
     // Start the LCD task.
     TaskStart(LcdTask, LCD_TASK_PRIORITY, LcdTaskStack, LCD_TASK_STACK_SIZE);
 		
-		// Start the Tx task.
-		//TaskStart(TxTask, TX_TASK_PRIORITY, TxTaskStack, TX_TASK_STACK_SIZE);
+		// Start the Rx task.
+		TaskStart(RxTask, RX_TASK_PRIORITY, RxTaskStack, RX_TASK_STACK_SIZE);
 }

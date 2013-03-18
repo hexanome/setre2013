@@ -104,7 +104,7 @@ void halUsbSendChar(char character)
 * @return none
 **************************************************************************/
 
-void halUsbSendString2(char string[], INT16U length)
+void halUsbSendString2(unsigned char string[], INT16U length)
 {
 	INT16U i;
 
@@ -112,24 +112,23 @@ void halUsbSendString2(char string[], INT16U length)
 		halUsbSendChar(string[i]);
 }
 
-/*******************************************************************************
-* The Reception Task.
-* Responsible for:
-*   Receiving text packet received on the serial USB link from the computer
-*******************************************************************************/
-
-#define DEBUG 1
-
 void InitializeQRxBuffer(void)
 {
 	qRxBuffer = OSQCreate (bufferRx, QUEUE_RX_BUFFER_LENGTH);
 }
 
+
+/*******************************************************************************
+* The Reception Task.
+* Responsible for:
+*   Receiving text packet received on the serial USB link from the computer
+*******************************************************************************/
+char textToRead [TEXT_SIZE] = {0};
+
 void RxTask(void *args)
 {
 	INT8U err;
 	INT8U receivedChar;
-	char textToRead [QUEUE_RX_BUFFER_LENGTH] = {0};
 	INT8U aLength = 0;
 	
 	
@@ -142,23 +141,16 @@ void RxTask(void *args)
 		{
 			// Wait for the message queue to be filled by the interrupt routine
 			receivedChar = (INT8U) OSQPend(qRxBuffer, 0, &err);
-
-#if DEBUG > 0
-			printf("Received character is %c\n", receivedChar);
-#endif
 			
 			textToRead[aLength++] = receivedChar;
 		}
 		while ( receivedChar != '\0' );
 		
-#if DEBUG > 0
-		printf("# %s #\n", textToRead);
-#endif
-		
 		//halUsbReceiveString (textToRead, &aLength);
 		
 		// Post the recognized text to be displayed on the LCD screen
-		err = OSQPost (qLcdRefresh, textToRead);
+		//err = OSQPost (qLcdRefresh, textToRead);
+		SetNextState();
 	}
 }
 

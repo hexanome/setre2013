@@ -29,10 +29,10 @@ void SetState(AppState state)
         case STATE_RECORDING:    
             // Set the time when the recording begun.
             recordStartTime = OSTimeGet();      
-            //Trigger(qToggleRecord);   
+            Trigger(qToggleRecord);   
             break;
         case STATE_LOADING:
-            //Trigger(qToggleRecord);
+            Trigger(qToggleRecord);
             break;
     }
     
