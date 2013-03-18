@@ -9,6 +9,8 @@
 *   Record audio from the microphone when needed.
 *******************************************************************************/
 
+OS_STK RecordTaskStack[RECORD_TASK_STACK_SIZE];
+
 unsigned char audioBuffer1[SIZE_OF_AUDIO_BUFFER];
 unsigned char audioBuffer2[SIZE_OF_AUDIO_BUFFER];
 unsigned char audioBuffer3[SIZE_OF_AUDIO_BUFFER];
@@ -23,8 +25,9 @@ void InitializeQSyncDMA()
 }
 
 void RecordTask(void *args)
-{   
-  unsigned char index = 0;
+{
+	unsigned char index = 0;
+	INT8U err;
 	
   while (1) {
     
@@ -41,7 +44,7 @@ void RecordTask(void *args)
 
     // Record the user voice
     // TODO : loop on the previous segments ... 1,2,3,1,2,3 ...
-    while (PeekOn(qToggleRecord))
+    while ( !PeekOn(qToggleRecord) )
     {
       index = index % 4;
       // Set the destination of the DMA to the start address in RAM
@@ -60,7 +63,7 @@ void RecordTask(void *args)
       
       OSQPost(qTxBuffer, (void *) &chunk);
       index++;
-    }       
+    }
 
     stopRecord();
   }
@@ -119,7 +122,7 @@ static void record(void)
   
   DMA0CTL = 
     DMADT_0 + 
-    DMASRCINCR0 +
+    DMASRCINCR_0 +
     DMADSTINCR_3 +  
     DMADSTBYTE + 
     DMASRCBYTE + 

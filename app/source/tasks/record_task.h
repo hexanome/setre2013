@@ -21,16 +21,16 @@
 *******************************************************************************/
 
 // Tasks.
-static OS_STK RecordTaskStack[RECORD_TASK_STACK_SIZE];
+extern OS_STK RecordTaskStack[RECORD_TASK_STACK_SIZE];
 
-static unsigned long AUDIO_MEM_START[] = {0x10000, 0x20000, 0x30000, 0x40000, 0x46000};
+//static unsigned long AUDIO_MEM_START[] = {0x10000, 0x20000, 0x30000, 0x40000, 0x46000};
 static unsigned long lastAudioByte = 0;
-static unsigned long PlaybackPtr;
-extern unsigned char recordEn;
+//static unsigned long PlaybackPtr;
+//extern unsigned char recordEn;
 
 // Queues.
 static void* qSyncDMAData[QUEUE_SYNCDMA_LENGTH];
-static OS_EVENT *qSyncDMA;
+static OS_EVENT* qSyncDMA;
 
 /*******************************************************************************
 * Function prototypes.
