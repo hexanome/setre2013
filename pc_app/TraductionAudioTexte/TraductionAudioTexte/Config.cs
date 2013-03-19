@@ -11,7 +11,7 @@ namespace TraductionAudioTexte
         public struct SerialPortParameters
         {
             public static int NbBytes = 30;
-            public static String NomPort = "COM12";
+            public static String NomPort = "COM13";
             public static int Vitesse = 230400;
             public static int BitDonnee = 8;
         }
