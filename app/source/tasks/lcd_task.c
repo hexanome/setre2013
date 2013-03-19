@@ -58,7 +58,20 @@ void Draw()
     }
     else if (state == STATE_LOADING)
     {
-        title = "Loading...";
+		INT32U time = OSTimeGet();
+		INT32U timeDiff = time - recordStartTime;
+		
+		INT32U sTime = timeDiff / (OS_TICKS_PER_SEC/6);
+		int sSeconds = sTime % 2;
+		if(sSeconds!=secLoading)
+		{
+		  stickGrey++;
+		  if(stickGrey>7)
+			stickGrey =0;
+		}
+		secLoading = sSeconds;
+		title = "Loading...";
+		Draw8PointsCircleStick(LCD_COL/2,(LCD_ROW/2)+10,10,7,stickGrey);
     }
     else
     {
@@ -109,7 +122,73 @@ void DrawRect(int x, int y, int width, int height, unsigned char grayScale)
         DrawHLine(x, iy, x + width - 1, grayScale);
     }
 }
-
+void Draw8PointsCircleStick(int cx, int cy,int r,int l, int stick)
+{
+  for(int i=0;i<l;i++)
+    Draw8PointsCircle(cx,cy,r+i,stick);
+}
+void Draw8PointsCircle(int cx, int cy,int r,int stick)
+{
+  int level = 2;
+  int diff = 0;
+  for(int i=0;i<8;i++)
+  {
+    diff = 0;
+    if(stick>i)
+      diff = stick - i;
+    if(stick<i)
+    {
+      diff = i - stick;
+      if(diff==7)
+        diff = 1;
+      else
+        diff = 0;
+    }
+    if(stick==i)
+      level = 2;
+    else if (diff==1)
+      level = 1;
+    else
+      level = 0;
+    Draw1PointCircle(cx,cy,r,i,level);
+  }
+  
+}
+void Draw1PointCircle(int cx, int cy,int r,int stick,int level)
+{
+  unsigned char grayScale=PIXEL_LIGHT;
+  if(level==0)
+    grayScale = PIXEL_ON;
+  if(level==1)
+    grayScale = PIXEL_DARK;
+  switch(stick)
+  {
+    case 0:
+      SetPixel(cx-r*COS_45, cy-r*COS_45, grayScale);
+      break;
+    case 1:
+      SetPixel(cx, cy-r, grayScale);
+      break;
+    case 2:
+       SetPixel(cx+r*COS_45, cy-r*COS_45, grayScale);
+      break;
+    case 3:
+      SetPixel(cx+r, cy, grayScale);
+      break;
+    case 4:
+      SetPixel(cx+r*COS_45, cy+r*COS_45, grayScale);
+      break;
+    case 5:
+      SetPixel(cx, cy+r, grayScale);
+      break;
+    case 6:
+      SetPixel(cx-r*COS_45, cy+r*COS_45, grayScale);
+      break;
+    case 7:
+      SetPixel(cx-r, cy, grayScale);
+      break;
+  }
+}
 void DrawHLine(int x1, int y1, int x2, unsigned char grayScale)
 {
     for (int x = x1; x <= x2; x++)

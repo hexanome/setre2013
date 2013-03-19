@@ -11,6 +11,8 @@
 
 #define FONT_HEIGHT     12 
 #define FONT_WIDTH      8
+#define SQRT_2          1.4142
+#define COS_45          SQRT_2/2
 
 /*******************************************************************************
 * Variables.
@@ -29,7 +31,8 @@ static char lineBuffer[20];
 static int lastScrollPosition = 0;
 static int localScrollPosition = 0;
 static int lastTextHeight = 10000;
-
+static int stickGrey =0;
+static int secLoading =0;
 /*******************************************************************************
 * Function prototypes.
 *******************************************************************************/
@@ -43,6 +46,9 @@ static void Draw();
 static void Clear();
 static void ClearRect(int x, int y, int width, int height);
 static void DrawRect(int x, int y, int width, int height, unsigned char grayScale);
+static void Draw8PointsCircleStick(int cx, int cy,int r,int l, int stick);
+static void Draw8PointsCircle(int cx, int cy,int r,int stick);
+static void Draw1PointCircle(int cx, int cy,int r,int stick,int level);
 static void DrawHLine(int x1, int y1, int x2, unsigned char grayScale);
 static void DrawVLine(int x1, int y1, int y2, unsigned char grayScale);
 static void DrawText(int x, int y, char string[], unsigned char grayScale);
