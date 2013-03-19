@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 using System.IO;
+using System.Globalization;
 
 namespace TraductionAudioTexte
 {
@@ -91,27 +92,51 @@ namespace TraductionAudioTexte
 
         public static async Task<string> TranslateFile(byte[] data)
         {
-            var url = "https://www.google.com/speech-api/v1/recognize?xjerr=1&client=chromium&lang=fr-FR";
+            try
+            {
+                var url = "https://www.google.com/speech-api/v1/recognize?xjerr=1&client=chromium&lang=fr-FR";
 
-            // Create the HTTP request.
-            var message = new HttpRequestMessage(HttpMethod.Post, url);
-            message.Content = new ByteArrayContent(data);
-            message.Content.Headers.ContentType = new MediaTypeHeaderValue("audio/x-flac");
-            message.Content.Headers.ContentType.Parameters.Add(new NameValueHeaderValue("rate", "16000"));
+                // Create the HTTP request.
+                var message = new HttpRequestMessage(HttpMethod.Post, url);
+                message.Content = new ByteArrayContent(data);
+                message.Content.Headers.ContentType = new MediaTypeHeaderValue("audio/x-flac");
+                message.Content.Headers.ContentType.Parameters.Add(new NameValueHeaderValue("rate", "16000"));
 
-            // Perform the request.
-            var http = new HttpClient();
-            var response = await http.SendAsync(message);
-            
-            // Parse the result as JSON.
-            var content = JObject.Parse(await response.Content.ReadAsStringAsync());
-            var hypotheses = content["hypotheses"];
-            if (hypotheses == null || hypotheses.Count() == 0)
+                // Perform the request.
+                var http = new HttpClient();
+                var response = await http.SendAsync(message);
+
+                // Parse the result as JSON.
+                var content = JObject.Parse(await response.Content.ReadAsStringAsync());
+                var hypotheses = content["hypotheses"];
+                if (hypotheses == null || hypotheses.Count() == 0)
+                {
+                    return null;
+                }
+
+                return (string)hypotheses.First["utterance"];
+            }
+            catch
             {
                 return null;
             }
+        }
 
-            return (string)hypotheses.First["utterance"];
+        public static string RemoveDiacritics(string stIn)
+        {
+            string stFormD = stIn.Normalize(NormalizationForm.FormD);
+            StringBuilder sb = new StringBuilder();
+
+            for (int ich = 0; ich < stFormD.Length; ich++)
+            {
+                var uc = CharUnicodeInfo.GetUnicodeCategory(stFormD[ich]);
+                if (uc != UnicodeCategory.NonSpacingMark)
+                {
+                    sb.Append(stFormD[ich]);
+                }
+            }
+
+            return (sb.ToString().Normalize(NormalizationForm.FormC));
         }
     }
 }

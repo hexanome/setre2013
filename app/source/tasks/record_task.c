@@ -13,10 +13,9 @@ OS_STK RecordTaskStack[RECORD_TASK_STACK_SIZE];
 
 unsigned char audioBuffer1[SIZE_OF_AUDIO_BUFFER];
 unsigned char audioBuffer2[SIZE_OF_AUDIO_BUFFER];
-unsigned char audioBuffer3[SIZE_OF_AUDIO_BUFFER];
-unsigned char audioBuffer4[SIZE_OF_AUDIO_BUFFER];
-unsigned char *audioBuffers[] = { audioBuffer1, audioBuffer2, 
-                                  audioBuffer3, audioBuffer4 };
+unsigned char *audioBuffers[] = { audioBuffer1, audioBuffer2};
+
+unsigned char firstTime = 1;
 
 void InitializeQSyncDMA()
 {
@@ -27,44 +26,60 @@ void InitializeQSyncDMA()
 void RecordTask(void *args)
 {
 	unsigned char index = 0;
-	INT8U err;
 	
-  while (1) {
-    
+  while (1) 
+	{    
     // Start recording
     WaitOn(qToggleRecord);
     
     setupRecord();
     
-    // Erase in flash the audio sample previously recorded 
-    /*flashEraseBank(AUDIO_MEM_START[0]);
-    flashEraseBank(AUDIO_MEM_START[1]);
-    flashEraseBank(AUDIO_MEM_START[2]);
-    flashErase(AUDIO_MEM_START[3], AUDIO_MEM_START[4]); */
-
     // Record the user voice
-    // TODO : loop on the previous segments ... 1,2,3,1,2,3 ...
     while ( !PeekOn(qToggleRecord) )
     {
-      index = index % 4;
+      index = index % NUMBER_OF_BUFFER;
       // Set the destination of the DMA to the start address in RAM
       __data16_write_addr((unsigned short)DMA0DA_,
-                          (unsigned long)audioBuffers[index]); 
+                          (unsigned long)audioBuffers[index]);
       // Set the size in byte of the "page"
-      DMA0SZ = SIZE_OF_AUDIO_BUFFER;      
+      DMA0SZ = SIZE_OF_AUDIO_BUFFER;
 
-      record();     
-   
-      // Sending addresses for entire data
-      audioChunk chunk = {
-        .startAddr = (unsigned long)audioBuffers[index], 
-        .endAddr = (unsigned long)audioBuffers[index] + SIZE_OF_AUDIO_BUFFER
-      };
-      
-      OSQPost(qTxBuffer, (void *) &chunk);
+			// Configure DMA chan 0
+			DMA0CTL = 
+				DMADT_0 + 
+				DMASRCINCR_0 +
+				DMADSTINCR_3 +  
+				DMADSTBYTE + 
+				DMASRCBYTE + 
+				DMAEN +
+				DMAIE;
+
+			TBCCTL1 &= ~CCIFG;
+			TBCTL |= MC0;                             
+
+			// Enable interrupts 
+			__bis_SR_register(GIE);
+
+			// Ignore the first step in the loop
+			if (firstTime)
+			{
+				firstTime = 0;
+			}
+			else
+			{
+				// Send the buffer of the previous index
+				halUsbSendStringINT16U ( audioBuffers[(index+1)%NUMBER_OF_BUFFER], SIZE_OF_AUDIO_BUFFER );
+			}
+			// Waiting DMA finishes its work
+			WaitOn(qSyncDMA);
+					
       index++;
     }
-
+		
+		// Send the the last buffer
+// TODO : Size may differ from SIZE_OF_AUDIO_BUFFER
+		halUsbSendStringINT16U ( audioBuffers[(index+1)%NUMBER_OF_BUFFER], SIZE_OF_AUDIO_BUFFER );
+		
     stopRecord();
   }
 }
@@ -75,6 +90,8 @@ void RecordTask(void *args)
 
 static void setupRecord(void)
 {
+	// Setup mic
+	AUDIO_PORT_DIR |= MIC_POWER_PIN;
   AUDIO_PORT_OUT |= MIC_POWER_PIN;
   AUDIO_PORT_OUT &= ~MIC_INPUT_PIN;
   AUDIO_PORT_SEL |= MIC_INPUT_PIN;
@@ -84,8 +101,8 @@ static void setupRecord(void)
   // Initialize the TIMER B count
   TBR = 0;
   // Set TIMER B comparison value
-  TBCCR0 = 2047;
-  TBCCR1= 2047 - 100;
+  TBCCR0 = TIMERB_COMP_VALUE;
+  TBCCR1= TIMERB_COMP_VALUE - 100;
   // Set ouput mode to reset/set
   TBCCTL1 = OUTMOD_7;   
 
@@ -113,45 +130,13 @@ static void setupRecord(void)
   __data16_write_addr((unsigned short)DMA0SA_,(unsigned long)ADC12MEM0_);
 }
 
-static void record(void)
-{    
-  /*// Unlock the flash for write
-  FCTL3 = FWKEY; 
-  // Long word write
-  FCTL1 = FWKEY + BLKWRT;   */                     
-  
-  DMA0CTL = 
-    DMADT_0 + 
-    DMASRCINCR_0 +
-    DMADSTINCR_3 +  
-    DMADSTBYTE + 
-    DMASRCBYTE + 
-    DMAEN +
-    DMAIE;
-  
-  TBCCTL1 &= ~CCIFG;
-  TBCTL |= MC0;                             
-  
-  // Enable interrupts 
-  __bis_SR_register(GIE);
-  
-  WaitOn(qSyncDMA);
-}
-
 static void stopRecord(void)
 {   
   TBCTL &= ~MC0;
   DMA0CTL &= ~( DMAEN + DMAIE);
   
-  /*FCTL3 = FWKEY + LOCK;                     // Lock the flash from write */
-  
   //TBCTL &= ~MC0;
-  ADC12CTL0 &= ~( ADC12ENC + ADC12ON );  
-
-  /*// Disable Flash write
-  FCTL1 = FWKEY;
-  // Lock Flash memory 
-  FCTL3 = FWKEY + LOCK;*/
+  ADC12CTL0 &= ~( ADC12ENC + ADC12ON );
 
   // Stop conversion immediately
   ADC12CTL1 &= ~ADC12CONSEQ_2;
@@ -168,63 +153,124 @@ static void stopRecord(void)
   AUDIO_PORT_SEL &= ~MIC_INPUT_PIN;                            
 }
 
-/*void flashEraseBank(INT16U Flash_ptr)
+/*-------------------------------------------------------------
+ *                  USB 
+ * ------------------------------------------------------------*/
+
+/**********************************************************************//**
+* @brief  Initializes the serial communications peripheral and GPIO ports
+*         to communicate with the TUSB3410.
+*
+* @param  none
+*
+* @return none
+**************************************************************************/
+void halUsbInit(void)
 {
-    FCTL3 = FWKEY;
-    while (FCTL3 & BUSY) ;
-    FCTL1 = FWKEY + MERAS;
+	// The USB module is plugged on port 5 :
+	//  - .6 for TXD
+	//  - .7 for RXD
+	// and we want to activate this features instead of GPIO
+	USB_PORT_SEL |= USB_PIN_RXD + USB_PIN_TXD;
+  // P5DIR.6 is set to 1, meaning the TXD is output
+  USB_PORT_DIR |= USB_PIN_TXD;
+	// P5DIR.7 is set to 0, meaning the RXD is input
+	USB_PORT_DIR &= ~USB_PIN_RXD;
 
-    __data20_write_char(Flash_ptr, 0x00);      // Dummy write to start erase
+	// Reset State
+	UCA1CTL1 |= UCSWRST;
+	UCA1CTL0 = UCMODE_0;
 
-    while (FCTL3 & BUSY) ;
-    FCTL1 = FWKEY;
-    FCTL3 = FWKEY +  LOCK;
+	// 8bit char
+	UCA1CTL0 &= ~UC7BIT;
+	UCA1CTL1 |= UCSSEL_2;
+	// With a frequency of 16 MHz, UCA1BR register must be filled with:
+	// 16MHz/57600 = 278 = 256 + 22
+	// (57600 is the baud rate we should use)
+	// Meaning 1 in the high-order register and 22 in the low-order
+	// With a frequency of 25 MHz, this register must be filled with:
+	// 25MHz/57600 = 434 = 256 + 178
+	// Meaning 1 in HO register and 178 in LO
+	// With a frequency of 25MHz and a baud-rate of 115200, this register must be filled with:
+	// 25MHz/115200 = 217
+	// Meaning 0 in HO register and 217 in LO
+	UCA1BR0 = 108;//217; //178 //22;
+	UCA1BR1 = 0; //1
+	// Select modulation stage and disable oversampling (34.4.5 doc p916)
+	UCA1MCTL = 0xE;
+	// Disable software reset (34.4.2 doc p915)
+	UCA1CTL1 &= ~UCSWRST;
+	// Enables interrupt register on the USCI peripheral (34.4.12 doc p921)
+	UCA1IE |= UCRXIE;
+	
+	// Enable Interrupts
+	__bis_SR_register(GIE);
 }
 
-void flashErase(INT16U Mem_start, INT16U Mem_end) 
+/**********************************************************************//**
+* @brief  Disables the serial communications peripheral and clears the GPIO
+*         settings used to communicate with the TUSB3410.
+*
+* @param  none
+*
+* @return none
+**************************************************************************/
+void halUsbShutDown(void)
 {
-    uint16_t Flash_ptr = Mem_start;        // Start of record memory array
-    FCTL3 = FWKEY;                          // Unlock Flash memory for write
-    do {
-        if ((Flash_ptr & 0xFFFF) == 0x0000)    // Use bit 12 to toggle LED
-            P1OUT ^= 0x01;
-        FCTL1 = FWKEY + ERASE;
-        
-        __data20_write_char(Flash_ptr, 0x00);  // Dummy write to activate
-        
-        while (FCTL3 & BUSY) ;              // Segment erase
-        Flash_ptr += 0x0200;                   // Point to next segment
-    } while (Flash_ptr < Mem_end);
-    FCTL1 = FWKEY;
-    FCTL3 = FWKEY +  LOCK;
+	// Disable RX interrupts
+	UCA1IE &= ~UCRXIE;
+	//Reset State
+	UCA1CTL1 = UCSWRST;                
+	USB_PORT_SEL &= ~(USB_PIN_RXD + USB_PIN_TXD);
+	USB_PORT_DIR |= USB_PIN_TXD;
+	USB_PORT_DIR |= USB_PIN_RXD;
+	USB_PORT_OUT &= ~(USB_PIN_TXD + USB_PIN_RXD);
 }
 
-static INT32U getSegmentAddress(INT8U index)
+/**********************************************************************//**
+* @brief  Sends a character over UART to the TUSB3410.
+*
+* @param  character The character to be sent.
+*
+* @return none
+**************************************************************************/
+// TODO: Maybe using interrupts
+void halUsbSendChar(char character)
 {
-  if (index >= NUMBER_OF_SEGMENTS)
-  {
-     return 0;
-  }
-  return Memstart + index * SIZE_OF_SEGMENTS
-}*/
+	// Waits until the transitting buffer is empty (34.4.13 doc p921)
+	while (!(UCA1IFG & UCTXIFG)) ;
+	// Fills in the transmitting buffer
+	UCA1TXBUF = character;
+}
+
+/**********************************************************************//**
+* @brief  Sends a string of characters to the TUSB3410
+*
+* @param  string[] The array of characters to be transmit to the TUSB3410.
+*
+* @param  length   The length of the string.
+*
+* @return none
+**************************************************************************/
+void halUsbSendStringINT16U(unsigned char string[], INT16U length)
+{
+	INT16U i;
+
+	for (i = 0; i < length; i++)
+		halUsbSendChar(string[i]);
+}
 
 /*******************************************************************************
 * Interrupt routines.
 *******************************************************************************/
-extern OS_EVENT* qSyncDMA1;
 #pragma vector=DMA_VECTOR
 __interrupt void DMA_ISR(void)
 {
+	INT16U tmpDMAIV = DMAIV;
 	// Interrupt source from channel 0
-	if ( DMAIV & 0x02 )
+	if ( tmpDMAIV & 0x02 )
 	{
 		DMA0CTL &= ~ DMAIFG;
 	  Trigger(qSyncDMA);
-	}
-	// Interrupt source from channel 1
-	else if ( DMAIV & 0x04 )
-	{
-		DMA1CTL &= ~DMAIFG;
-		Trigger(qSyncDMA1);
 	}
 }

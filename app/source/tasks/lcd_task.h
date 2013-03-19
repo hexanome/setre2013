@@ -3,6 +3,7 @@
 
 #include <includes.h>
 #include <hal_lcd.h>
+#include "rx_task.h"
 
 /*******************************************************************************
 * Defines.
